@@ -5,6 +5,7 @@ import flatten = require("lodash.flatten");
 import uniq = require("lodash.uniq");
 import * as glob from "glob";
 import * as minimatch from "minimatch";
+import * as path from "path";
 import * as packageJson from "../package.json";
 
 let suppressError = false;
@@ -451,25 +452,6 @@ type Result = {
     trees: Tree[];
 };
 
-function saveResult(out: string, results: Result[]) {
-    if (out.endsWith(".json")) {
-        const jsonResult = results.map(result => ({
-            file: result.file,
-            results: result.trees.map(tree => getJsonResult(tree)),
-        }));
-        fs.writeFileSync(out, JSON.stringify(jsonResult, null, "  "));
-    } else {
-        let textResult = "";
-        for (const result of results) {
-            textResult += `${result.file}\n`;
-            for (const tree of result.trees) {
-                textResult += getTextResult(tree, 1);
-            }
-        }
-        fs.writeFileSync(out, textResult);
-    }
-}
-
 async function executeCommandLine() {
     const argv = minimist(process.argv.slice(2), { "--": true });
 
@@ -489,7 +471,7 @@ async function executeCommandLine() {
         uniqFiles = uniqFiles.filter(file => excludes.every(excludeFile => !minimatch(file, excludeFile)));
     }
 
-    const out = argv.o;
+    const out: string | string | undefined = argv.o;
 
     const languageService = ts.createLanguageService({
         getCompilationSettings() {
@@ -543,13 +525,61 @@ async function executeCommandLine() {
 
     printInConsole(`${(Date.now() - now) / 1000.0} s`);
 
+    let jsonOutput: string[] = [];
+    let htmlOutput: string[] = [];
+    let othersOutput: string[] = [];
+    let outPaths: string[] = [];
     if (typeof out === "string") {
-        saveResult(out, results);
+        outPaths.push(out);
     } else if (Array.isArray(out)) {
-        for (const outpath of out) {
-            if (typeof outpath === "string") {
-                saveResult(outpath, results);
+        outPaths = out;
+    }
+    for (const outpath of outPaths) {
+        if (typeof outpath === "string") {
+            if (outpath.endsWith(".json")) {
+                jsonOutput.push(outpath);
+            } else if (outpath.endsWith(".html")) {
+                htmlOutput.push(outpath);
+            } else {
+                othersOutput.push(outpath);
             }
+        }
+    }
+    jsonOutput = uniq(jsonOutput);
+    htmlOutput = uniq(htmlOutput);
+    othersOutput = uniq(othersOutput);
+
+    if (jsonOutput.length > 0 || htmlOutput.length > 0) {
+        const jsonResult = results.map(result => ({
+            file: result.file,
+            results: result.trees.map(tree => getJsonResult(tree)),
+        }));
+        if (jsonOutput.length > 0) {
+            for (const outpath of jsonOutput) {
+                fs.writeFileSync(outpath, JSON.stringify(jsonResult, null, "  "));
+            }
+        }
+        if (htmlOutput.length > 0) {
+            for (const outpath of htmlOutput) {
+                const dirname = path.dirname(outpath);
+                fs.createWriteStream(path.resolve(dirname, "data.bundle.js")).write(`var data = \"${JSON.stringify(jsonResult)}\";`);
+                fs.createReadStream(path.resolve(__dirname, "../html/index.html")).pipe(fs.createWriteStream(outpath));
+                for (const filename of ["index.bundle.js", "vendor.bundle.js", "vendor.bundle.css"]) {
+                    fs.createReadStream(path.resolve(__dirname, `../html/${filename}`)).pipe(fs.createWriteStream(path.resolve(dirname, filename)));
+                }
+            }
+        }
+    }
+    if (othersOutput.length > 0) {
+        let textResult = "";
+        for (const result of results) {
+            textResult += `${result.file}\n`;
+            for (const tree of result.trees) {
+                textResult += getTextResult(tree, 1);
+            }
+        }
+        for (const outpath of othersOutput) {
+            fs.writeFileSync(outpath, textResult);
         }
     }
 }

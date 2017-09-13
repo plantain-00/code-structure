@@ -65,8 +65,8 @@ dist
 **/*.css
 !*.config.js
 !**/*-*.js
-!**/*.index.bundle.js
-!**/*-*.css
+!**/*.bundle.js
+!**/*.bundle.css
 service-worker.js
 !*.index.bundle.js
 #**/*-*.png
