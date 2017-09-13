@@ -1,6 +1,10 @@
 import * as minimist from "minimist";
 import * as ts from "typescript";
 import * as fs from "fs";
+import flatten = require("lodash.flatten");
+import uniq = require("lodash.uniq");
+import * as glob from "glob";
+import * as minimatch from "minimatch";
 import * as packageJson from "../package.json";
 
 let suppressError = false;
@@ -15,6 +19,18 @@ function printInConsole(message: any) {
 
 function showToolVersion() {
     printInConsole(`Version: ${packageJson.version}`);
+}
+
+function globAsync(pattern: string) {
+    return new Promise<string[]>((resolve, reject) => {
+        glob(pattern, (error, matches) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(matches);
+            }
+        });
+    });
 }
 
 function findNodeAtDefinition(program: ts.Program, definition: ts.DefinitionInfo) {
@@ -455,7 +471,13 @@ async function executeCommandLine() {
 
     suppressError = argv.suppressError;
 
-    const uniqFiles = argv._;
+    let uniqFiles = uniq(flatten(await Promise.all(argv._.map(file => globAsync(file)))));
+
+    const exclude: string | string[] | undefined = argv.exclude;
+    if (exclude) {
+        const excludes = Array.isArray(exclude) ? exclude : [exclude];
+        uniqFiles = uniqFiles.filter(file => excludes.every(excludeFile => !minimatch(file, excludeFile)));
+    }
 
     const out = argv.o;
 

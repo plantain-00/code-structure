@@ -2,15 +2,26 @@
 # yarn lockfile v1
 
 
+"@types/glob@5.0.32":
+  version "5.0.32"
+  resolved "https://registry.yarnpkg.com/@types/glob/-/glob-5.0.32.tgz#aec5cfe987c72f099fdb1184452986aa506d5e8f"
+  dependencies:
+    "@types/minimatch" "*"
+    "@types/node" "*"
+
 "@types/jasmine@2.5.54":
   version "2.5.54"
   resolved "https://registry.yarnpkg.com/@types/jasmine/-/jasmine-2.5.54.tgz#a6b5f2ae2afb6e0307774e8c7c608e037d491c63"
+
+"@types/minimatch@*", "@types/minimatch@3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.1.tgz#b683eb60be358304ef146f5775db4c0e3696a550"
 
 "@types/minimist@1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@types/minimist/-/minimist-1.2.0.tgz#69a23a3ad29caf0097f06eda59b361ee2f0639f6"
 
-"@types/node@8.0.28":
+"@types/node@*", "@types/node@8.0.28":
   version "8.0.28"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.0.28.tgz#86206716f8d9251cf41692e384264cbd7058ad60"
 
@@ -1410,6 +1421,14 @@ user-home@^2.0.0:
 util-deprecate@~1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
+
+vue-class-component@5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/vue-class-component/-/vue-class-component-5.0.2.tgz#3dcdc005c58c4e88d8ec2d46e01c74f4d90135c8"
+
+vue@2.4.2:
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/vue/-/vue-2.4.2.tgz#a9855261f191c978cc0dc1150531b8d08149b58c"
 
 wordwrap@~1.0.0:
   version "1.0.0"

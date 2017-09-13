@@ -14,4 +14,4 @@ A CLI tool to generate code structure for typescript.
 
 #### usage
 
-run `code-structure foo.ts -o foo.txt`
+run `code-structure *.ts -o foo.txt -o foo.json --exclude bar.ts`

@@ -16,7 +16,7 @@ module.exports = {
   test: [
     'tsc -p spec',
     'jasmine',
-    `node dist/index.js src/index.ts -o spec/result.txt -o spec/result.json`,
+    `node dist/index.js src/*.ts -o spec/result.txt -o spec/result.json --exclude src/*.d.ts`,
     async () => {
       const { stdout } = await execAsync('git status -s')
       if (stdout) {
