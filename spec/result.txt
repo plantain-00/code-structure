@@ -1,14 +1,14 @@
 src/index.ts
-  490 executeCommandLine().then(() => {
-    490 executeCommandLine().then(() => {
-      async function executeCommandLine() { src/index.ts 403
-        404 minimist(process.argv.slice(2), { "--": true });
+  533 executeCommandLine().then(() => {
+    533 executeCommandLine().then(() => {
+      async function executeCommandLine() { src/index.ts 447
+        448 minimist(process.argv.slice(2), { "--": true });
           declare function minimist(args?: string[], opts?: minimist.Opts): minimist.ParsedArgs; node_modules/@types/minimist/index.d.ts 12
-        408 showToolVersion();
+        452 showToolVersion();
           function showToolVersion() { src/index.ts 16
             17 printInConsole(`Version: ${packageJson.version}`);
               function printInConsole(message: any) { src/index.ts 8
-        454 handle(node, {
+        498 handle(node, {
           function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 116
             130 handleCallExpression(callExpression.expression, context, sourceFile, file);
               function handleCallExpression(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 91
@@ -110,11 +110,21 @@ src/index.ts
               function showSyntaxKind(node: ts.Node) { src/index.ts 33
                 37 printInConsole(node.kind);
                   function printInConsole(message: any) { src/index.ts 8
-        476 printInConsole(`${(Date.now() - now) / 1000.0} s`);
+        520 printInConsole(`${(Date.now() - now) / 1000.0} s`);
           function printInConsole(message: any) { src/index.ts 8
-        482 getTextResult(tree, 1);
-          function getTextResult(tree: Tree, intent: number) { src/index.ts 374
-  491 printInConsole("code-structure success.");
+        523 saveResult(out, results);
+          function saveResult(out: string, results: Result[]) { src/index.ts 428
+            432 getJsonResult(tree)),
+              function getJsonResult(tree: Tree): JsonResult { src/index.ts 398
+            440 getTextResult(tree, 1);
+              function getTextResult(tree: Tree, intent: number) { src/index.ts 374
+        527 saveResult(outpath, results);
+          function saveResult(out: string, results: Result[]) { src/index.ts 428
+            432 getJsonResult(tree)),
+              function getJsonResult(tree: Tree): JsonResult { src/index.ts 398
+            440 getTextResult(tree, 1);
+              function getTextResult(tree: Tree, intent: number) { src/index.ts 374
+  534 printInConsole("code-structure success.");
     function printInConsole(message: any) { src/index.ts 8
-  493 printInConsole(error);
+  536 printInConsole(error);
     function printInConsole(message: any) { src/index.ts 8

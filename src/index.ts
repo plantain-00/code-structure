@@ -387,6 +387,31 @@ function getTextResult(tree: Tree, intent: number) {
     return textResult;
 }
 
+type JsonResult = {
+    children: JsonResult[];
+    type: "definition" | "call";
+    file: string;
+    line: number;
+    text: string;
+};
+
+function getJsonResult(tree: Tree): JsonResult {
+    const startPosition = tree.node.getStart(tree.sourceFile);
+    const { line } = ts.getLineAndCharacterOfPosition(tree.sourceFile, startPosition);
+    const text = tree.sourceFile.text.substring(startPosition, tree.sourceFile.getLineEndOfPosition(startPosition)).trim();
+    const jsonResult: JsonResult = {
+        type: tree.type,
+        file: tree.file,
+        line,
+        text,
+        children: [],
+    };
+    for (const child of tree.children) {
+        jsonResult.children.push(getJsonResult(child));
+    }
+    return jsonResult;
+}
+
 type Tree = {
     children: Tree[];
     node: ts.Node;
@@ -399,6 +424,25 @@ type Result = {
     file: string;
     trees: Tree[];
 };
+
+function saveResult(out: string, results: Result[]) {
+    if (out.endsWith(".json")) {
+        const jsonResult = results.map(result => ({
+            file: result.file,
+            results: result.trees.map(tree => getJsonResult(tree)),
+        }));
+        fs.writeFileSync(out, JSON.stringify(jsonResult, null, "  "));
+    } else {
+        let textResult = "";
+        for (const result of results) {
+            textResult += `${result.file}\n`;
+            for (const tree of result.trees) {
+                textResult += getTextResult(tree, 1);
+            }
+        }
+        fs.writeFileSync(out, textResult);
+    }
+}
 
 async function executeCommandLine() {
     const argv = minimist(process.argv.slice(2), { "--": true });
@@ -475,15 +519,14 @@ async function executeCommandLine() {
 
     printInConsole(`${(Date.now() - now) / 1000.0} s`);
 
-    let textResult = "";
-    for (const result of results) {
-        textResult += `${result.file}\n`;
-        for (const tree of result.trees) {
-            textResult += getTextResult(tree, 1);
+    if (typeof out === "string") {
+        saveResult(out, results);
+    } else if (Array.isArray(out)) {
+        for (const outpath of out) {
+            if (typeof outpath === "string") {
+                saveResult(outpath, results);
+            }
         }
-    }
-    if (out) {
-        fs.writeFileSync(out, textResult);
     }
 }
 
