@@ -47,7 +47,7 @@ function findNodeAtDefinition(program: ts.Program, definition: ts.DefinitionInfo
 }
 
 function showSyntaxKind(node: ts.Node) {
-    // if (node.kind === ts.SyntaxKind.CallExpression) {
+    // if (node.kind === ts.SyntaxKind.ParenthesizedExpression) {
     //     printInConsole(node);
     // }
     printInConsole(node.kind);
@@ -121,7 +121,9 @@ function handleCallExpression(node: ts.Node, context: Context, sourceFile: ts.So
     } else if (node.kind === ts.SyntaxKind.NewExpression) {
         const newExpression = node as ts.NewExpression;
         return handleDefinition(newExpression.expression, context, sourceFile, file);
-    } else if (node.kind === ts.SyntaxKind.CallExpression) {
+    } else if (node.kind === ts.SyntaxKind.CallExpression
+        || node.kind === ts.SyntaxKind.ElementAccessExpression
+        || node.kind === ts.SyntaxKind.ParenthesizedExpression) {
         return handle(node, context, sourceFile, file);
     } else {
         showSyntaxKind(node);
@@ -184,7 +186,6 @@ function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file
     } else if (node.kind === ts.SyntaxKind.TemplateSpan
         || node.kind === ts.SyntaxKind.ReturnStatement
         || node.kind === ts.SyntaxKind.AsExpression
-        || node.kind === ts.SyntaxKind.ElementAccessExpression
         || node.kind === ts.SyntaxKind.SpreadElement
         || node.kind === ts.SyntaxKind.ExpressionStatement
         || node.kind === ts.SyntaxKind.AwaitExpression
@@ -198,7 +199,6 @@ function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file
         const expression = node as ts.TemplateSpan
             | ts.ReturnStatement
             | ts.AsExpression
-            | ts.ElementAccessExpression
             | ts.SpreadElement
             | ts.ExpressionStatement
             | ts.AwaitExpression
@@ -359,6 +359,15 @@ function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file
 
             const expressionTree = handle(whileStatement.expression, context, sourceFile, file);
             pushIntoTrees(trees, expressionTree);
+        } else if (node.kind === ts.SyntaxKind.ElementAccessExpression) {
+            const elementAccessExpression = node as ts.ElementAccessExpression;
+            const statementTree = handle(elementAccessExpression.expression, context, sourceFile, file);
+            pushIntoTrees(trees, statementTree);
+
+            if (elementAccessExpression.argumentExpression) {
+                const argumentExpression = handle(elementAccessExpression.argumentExpression, context, sourceFile, file);
+                pushIntoTrees(trees, argumentExpression);
+            }
         } else if (node.kind === ts.SyntaxKind.EndOfFileToken
             || node.kind === ts.SyntaxKind.NumericLiteral
             || node.kind === ts.SyntaxKind.StringLiteral
@@ -377,7 +386,8 @@ function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file
             || node.kind === ts.SyntaxKind.TrueKeyword
             || node.kind === ts.SyntaxKind.FalseKeyword
             || node.kind === ts.SyntaxKind.BreakStatement
-            || node.kind === ts.SyntaxKind.ContinueStatement) {
+            || node.kind === ts.SyntaxKind.ContinueStatement
+            || node.kind === ts.SyntaxKind.RegularExpressionLiteral) {
             return undefined;
         } else {
             showSyntaxKind(node);
@@ -516,26 +526,18 @@ async function executeCommandLine() {
         const sourceFile = program.getSourceFile(file);
 
         if (sourceFile) {
+            const trees: Tree[] = [];
             sourceFile.forEachChild(node => {
                 const tree = handle(node, {
                     nodes: [],
                     program,
                     languageService,
                 }, sourceFile, file);
-                if (tree) {
-                    if (Array.isArray(tree)) {
-                        results.push({
-                            file,
-                            trees: tree,
-                        });
-                    } else {
-                        results.push({
-                            file,
-                            trees: [tree],
-                        });
-                    }
-                }
+                pushIntoTrees(trees, tree);
             });
+            if (trees.length > 0) {
+                results.push({ file, trees });
+            }
         }
     }
 

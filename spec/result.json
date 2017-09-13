@@ -5,25 +5,25 @@
       {
         "type": "call",
         "file": "src/index.ts",
-        "line": 554,
+        "line": 556,
         "text": "executeCommandLine().then(() => {",
         "children": [
           {
             "type": "call",
             "file": "src/index.ts",
-            "line": 554,
+            "line": 556,
             "text": "executeCommandLine().then(() => {",
             "children": [
               {
                 "type": "definition",
                 "file": "src/index.ts",
-                "line": 462,
+                "line": 472,
                 "text": "async function executeCommandLine() {",
                 "children": [
                   {
                     "type": "call",
                     "file": "src/index.ts",
-                    "line": 463,
+                    "line": 473,
                     "text": "minimist(process.argv.slice(2), { \"--\": true });",
                     "children": [
                       {
@@ -38,7 +38,7 @@
                   {
                     "type": "call",
                     "file": "src/index.ts",
-                    "line": 467,
+                    "line": 477,
                     "text": "showToolVersion();",
                     "children": [
                       {
@@ -69,7 +69,7 @@
                   {
                     "type": "call",
                     "file": "src/index.ts",
-                    "line": 473,
+                    "line": 483,
                     "text": "globAsync(file)))));",
                     "children": [
                       {
@@ -84,7 +84,7 @@
                   {
                     "type": "call",
                     "file": "src/index.ts",
-                    "line": 478,
+                    "line": 488,
                     "text": "minimatch(file, excludeFile)));",
                     "children": [
                       {
@@ -99,19 +99,19 @@
                   {
                     "type": "call",
                     "file": "src/index.ts",
-                    "line": 519,
+                    "line": 530,
                     "text": "handle(node, {",
                     "children": [
                       {
                         "type": "definition",
                         "file": "src/index.ts",
-                        "line": 131,
+                        "line": 133,
                         "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                         "children": [
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 145,
+                            "line": 147,
                             "text": "handleCallExpression(callExpression.expression, context, sourceFile, file);",
                             "children": [
                               {
@@ -291,7 +291,7 @@
                                   {
                                     "type": "call",
                                     "file": "src/index.ts",
-                                    "line": 126,
+                                    "line": 128,
                                     "text": "showSyntaxKind(node);",
                                     "children": [
                                       {
@@ -326,7 +326,7 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 146,
+                            "line": 148,
                             "text": "pushIntoTrees(tree.children, functionTree);",
                             "children": [
                               {
@@ -341,7 +341,7 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 156,
+                            "line": 158,
                             "text": "pushIntoTrees(trees, parameterTree);",
                             "children": [
                               {
@@ -836,7 +836,37 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 382,
+                            "line": 364,
+                            "text": "pushIntoTrees(trees, statementTree);",
+                            "children": [
+                              {
+                                "type": "definition",
+                                "file": "src/index.ts",
+                                "line": 55,
+                                "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "type": "call",
+                            "file": "src/index.ts",
+                            "line": 368,
+                            "text": "pushIntoTrees(trees, argumentExpression);",
+                            "children": [
+                              {
+                                "type": "definition",
+                                "file": "src/index.ts",
+                                "line": 55,
+                                "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "type": "call",
+                            "file": "src/index.ts",
+                            "line": 392,
                             "text": "showSyntaxKind(node);",
                             "children": [
                               {
@@ -871,7 +901,22 @@
                   {
                     "type": "call",
                     "file": "src/index.ts",
-                    "line": 541,
+                    "line": 535,
+                    "text": "pushIntoTrees(trees, tree);",
+                    "children": [
+                      {
+                        "type": "definition",
+                        "file": "src/index.ts",
+                        "line": 55,
+                        "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "type": "call",
+                    "file": "src/index.ts",
+                    "line": 543,
                     "text": "printInConsole(`${(Date.now() - now) / 1000.0} s`);",
                     "children": [
                       {
@@ -886,25 +931,25 @@
                   {
                     "type": "call",
                     "file": "src/index.ts",
-                    "line": 544,
+                    "line": 546,
                     "text": "saveResult(out, results);",
                     "children": [
                       {
                         "type": "definition",
                         "file": "src/index.ts",
-                        "line": 443,
+                        "line": 453,
                         "text": "function saveResult(out: string, results: Result[]) {",
                         "children": [
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 447,
+                            "line": 457,
                             "text": "getJsonResult(tree)),",
                             "children": [
                               {
                                 "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 413,
+                                "line": 423,
                                 "text": "function getJsonResult(tree: Tree): JsonResult {",
                                 "children": []
                               }
@@ -913,13 +958,13 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 455,
+                            "line": 465,
                             "text": "getTextResult(tree, 1);",
                             "children": [
                               {
                                 "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 389,
+                                "line": 399,
                                 "text": "function getTextResult(tree: Tree, intent: number) {",
                                 "children": []
                               }
@@ -932,25 +977,25 @@
                   {
                     "type": "call",
                     "file": "src/index.ts",
-                    "line": 548,
+                    "line": 550,
                     "text": "saveResult(outpath, results);",
                     "children": [
                       {
                         "type": "definition",
                         "file": "src/index.ts",
-                        "line": 443,
+                        "line": 453,
                         "text": "function saveResult(out: string, results: Result[]) {",
                         "children": [
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 447,
+                            "line": 457,
                             "text": "getJsonResult(tree)),",
                             "children": [
                               {
                                 "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 413,
+                                "line": 423,
                                 "text": "function getJsonResult(tree: Tree): JsonResult {",
                                 "children": []
                               }
@@ -959,13 +1004,13 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 455,
+                            "line": 465,
                             "text": "getTextResult(tree, 1);",
                             "children": [
                               {
                                 "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 389,
+                                "line": 399,
                                 "text": "function getTextResult(tree: Tree, intent: number) {",
                                 "children": []
                               }
@@ -984,7 +1029,7 @@
       {
         "type": "call",
         "file": "src/index.ts",
-        "line": 555,
+        "line": 557,
         "text": "printInConsole(\"code-structure success.\");",
         "children": [
           {
@@ -999,7 +1044,7 @@
       {
         "type": "call",
         "file": "src/index.ts",
-        "line": 557,
+        "line": 559,
         "text": "printInConsole(error);",
         "children": [
           {

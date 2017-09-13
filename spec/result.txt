@@ -1,20 +1,20 @@
 src/index.ts
-  555 executeCommandLine().then(() => {
-    555 executeCommandLine().then(() => {
-      async function executeCommandLine() { src/index.ts 463
-        464 minimist(process.argv.slice(2), { "--": true });
+  557 executeCommandLine().then(() => {
+    557 executeCommandLine().then(() => {
+      async function executeCommandLine() { src/index.ts 473
+        474 minimist(process.argv.slice(2), { "--": true });
           declare function minimist(args?: string[], opts?: minimist.Opts): minimist.ParsedArgs; node_modules/@types/minimist/index.d.ts 12
-        468 showToolVersion();
+        478 showToolVersion();
           function showToolVersion() { src/index.ts 20
             21 printInConsole(`Version: ${packageJson.version}`);
               function printInConsole(message: any) { src/index.ts 12
-        474 globAsync(file)))));
+        484 globAsync(file)))));
           function globAsync(pattern: string) { src/index.ts 24
-        479 minimatch(file, excludeFile)));
+        489 minimatch(file, excludeFile)));
           declare function M(target: string, pattern: string, options?: M.IOptions): boolean; node_modules/@types/minimatch/index.d.ts 10
-        520 handle(node, {
-          function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 132
-            146 handleCallExpression(callExpression.expression, context, sourceFile, file);
+        531 handle(node, {
+          function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 134
+            148 handleCallExpression(callExpression.expression, context, sourceFile, file);
               function handleCallExpression(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 107
                 110 handleDefinition(identifier, context, sourceFile, file);
                   function handleDefinition(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | Tree[] | undefined { src/index.ts 72
@@ -38,13 +38,13 @@ src/index.ts
                       function findNodeAtDefinition(program: ts.Program, definition: ts.DefinitionInfo) { src/index.ts 36
                     91 pushIntoTrees(tree.children, statementTree);
                       function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 56
-                127 showSyntaxKind(node);
+                129 showSyntaxKind(node);
                   function showSyntaxKind(node: ts.Node) { src/index.ts 49
                     53 printInConsole(node.kind);
                       function printInConsole(message: any) { src/index.ts 12
-            147 pushIntoTrees(tree.children, functionTree);
+            149 pushIntoTrees(tree.children, functionTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 56
-            157 pushIntoTrees(trees, parameterTree);
+            159 pushIntoTrees(trees, parameterTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 56
             220 pushIntoTrees(trees, childTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 56
@@ -110,25 +110,31 @@ src/index.ts
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 56
             361 pushIntoTrees(trees, expressionTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 56
-            383 showSyntaxKind(node);
+            365 pushIntoTrees(trees, statementTree);
+              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 56
+            369 pushIntoTrees(trees, argumentExpression);
+              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 56
+            393 showSyntaxKind(node);
               function showSyntaxKind(node: ts.Node) { src/index.ts 49
                 53 printInConsole(node.kind);
                   function printInConsole(message: any) { src/index.ts 12
-        542 printInConsole(`${(Date.now() - now) / 1000.0} s`);
+        536 pushIntoTrees(trees, tree);
+          function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 56
+        544 printInConsole(`${(Date.now() - now) / 1000.0} s`);
           function printInConsole(message: any) { src/index.ts 12
-        545 saveResult(out, results);
-          function saveResult(out: string, results: Result[]) { src/index.ts 444
-            448 getJsonResult(tree)),
-              function getJsonResult(tree: Tree): JsonResult { src/index.ts 414
-            456 getTextResult(tree, 1);
-              function getTextResult(tree: Tree, intent: number) { src/index.ts 390
-        549 saveResult(outpath, results);
-          function saveResult(out: string, results: Result[]) { src/index.ts 444
-            448 getJsonResult(tree)),
-              function getJsonResult(tree: Tree): JsonResult { src/index.ts 414
-            456 getTextResult(tree, 1);
-              function getTextResult(tree: Tree, intent: number) { src/index.ts 390
-  556 printInConsole("code-structure success.");
+        547 saveResult(out, results);
+          function saveResult(out: string, results: Result[]) { src/index.ts 454
+            458 getJsonResult(tree)),
+              function getJsonResult(tree: Tree): JsonResult { src/index.ts 424
+            466 getTextResult(tree, 1);
+              function getTextResult(tree: Tree, intent: number) { src/index.ts 400
+        551 saveResult(outpath, results);
+          function saveResult(out: string, results: Result[]) { src/index.ts 454
+            458 getJsonResult(tree)),
+              function getJsonResult(tree: Tree): JsonResult { src/index.ts 424
+            466 getTextResult(tree, 1);
+              function getTextResult(tree: Tree, intent: number) { src/index.ts 400
+  558 printInConsole("code-structure success.");
     function printInConsole(message: any) { src/index.ts 12
-  558 printInConsole(error);
+  560 printInConsole(error);
     function printInConsole(message: any) { src/index.ts 12
