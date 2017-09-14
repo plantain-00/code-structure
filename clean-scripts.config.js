@@ -28,6 +28,24 @@ module.exports = {
     'jasmine',
     `node dist/index.js src/*.ts -o demo/result.txt -o demo/result.json -o demo/result.html --exclude src/*.d.ts`,
     async () => {
+      const { createServer } = require('http-server')
+      const puppeteer = require('puppeteer')
+      const fs = require('fs')
+      const beautify = require('js-beautify').html
+      const server = createServer()
+      server.listen(8000)
+      const browser = await puppeteer.launch()
+      const page = await browser.newPage()
+      await page.emulate({ viewport: { width: 1440, height: 900 }, userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36' })
+      await page.goto(`http://localhost:8000/demo/result.html`)
+      await page.screenshot({ path: `demo/screenshot.png`, fullPage: true })
+      const content = await page.content()
+      fs.writeFileSync(`demo/screenshot-src.html`, beautify(content))
+      server.close()
+      browser.close()
+    },
+    'git checkout demo/screenshot.png',
+    async () => {
       const { stdout } = await execAsync('git status -s')
       if (stdout) {
         console.log(stdout)
