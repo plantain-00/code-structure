@@ -1,132 +1,132 @@
 src/index.ts
-  587 executeCommandLine().then(() => {
-    587 executeCommandLine().then(() => {
-      async function executeCommandLine() { src/index.ts 455
-        456 minimist(process.argv.slice(2), { "--": true });
+  580 executeCommandLine().then(() => {
+    580 executeCommandLine().then(() => {
+      async function executeCommandLine() { src/index.ts 448
+        449 minimist(process.argv.slice(2), { "--": true });
           declare function minimist(args?: string[], opts?: minimist.Opts): minimist.ParsedArgs; node_modules/@types/minimist/index.d.ts 12
-        460 showToolVersion();
-          function showToolVersion() { src/index.ts 21
-            22 printInConsole(`Version: ${packageJson.version}`);
-              function printInConsole(message: any) { src/index.ts 13
-        466 globAsync(file)))));
-          function globAsync(pattern: string) { src/index.ts 25
-        471 minimatch(file, excludeFile)));
+        453 showToolVersion();
+          function showToolVersion() { src/index.ts 22
+            23 printInConsole(`Version: ${packageJson.version}`);
+              function printInConsole(message: any) { src/index.ts 14
+        459 globAsync(file)))));
+          function globAsync(pattern: string) { src/index.ts 26
+        464 minimatch(file, excludeFile)));
           declare function M(target: string, pattern: string, options?: M.IOptions): boolean; node_modules/@types/minimatch/index.d.ts 10
-        513 handle(node, {
-          function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 135
-            149 handleCallExpression(callExpression.expression, context, sourceFile, file);
-              function handleCallExpression(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 108
-                111 handleDefinition(identifier, context, sourceFile, file);
-                  function handleDefinition(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | Tree[] | undefined { src/index.ts 73
-                    77 findNodeAtDefinition(context.program, definition);
-                      function findNodeAtDefinition(program: ts.Program, definition: ts.DefinitionInfo) { src/index.ts 37
-                    92 pushIntoTrees(tree.children, statementTree);
-                      function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-                116 pushIntoTrees(trees, expressionTree);
-                  function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-                118 handleDefinition(propertyAccessExpression.name, context, sourceFile, file);
-                  function handleDefinition(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | Tree[] | undefined { src/index.ts 73
-                    77 findNodeAtDefinition(context.program, definition);
-                      function findNodeAtDefinition(program: ts.Program, definition: ts.DefinitionInfo) { src/index.ts 37
-                    92 pushIntoTrees(tree.children, statementTree);
-                      function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-                119 pushIntoTrees(trees, nameTree);
-                  function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-                124 handleDefinition(newExpression.expression, context, sourceFile, file);
-                  function handleDefinition(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | Tree[] | undefined { src/index.ts 73
-                    77 findNodeAtDefinition(context.program, definition);
-                      function findNodeAtDefinition(program: ts.Program, definition: ts.DefinitionInfo) { src/index.ts 37
-                    92 pushIntoTrees(tree.children, statementTree);
-                      function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-                130 showSyntaxKind(node);
-                  function showSyntaxKind(node: ts.Node) { src/index.ts 50
-                    54 printInConsole(node.kind);
-                      function printInConsole(message: any) { src/index.ts 13
-            150 pushIntoTrees(tree.children, functionTree);
-              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-            160 pushIntoTrees(trees, parameterTree);
-              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-            221 pushIntoTrees(trees, childTree);
-              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-            226 pushIntoTrees(trees, ifTree);
-              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-            229 pushIntoTrees(trees, thenTree);
-              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-            233 pushIntoTrees(trees, elseTree);
-              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-            238 pushIntoTrees(trees, leftTree);
-              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-            241 pushIntoTrees(trees, rightTree);
-              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-            245 pushIntoTrees(trees, declarationListTree);
-              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-            250 pushIntoTrees(trees, spanTree);
-              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-            256 pushIntoTrees(trees, elementTree);
-              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-            262 pushIntoTrees(trees, propertyTree);
-              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-            268 pushIntoTrees(trees, elementTree);
-              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-            274 pushIntoTrees(trees, statementTree);
-              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-            279 pushIntoTrees(trees, switchTree);
-              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-            282 pushIntoTrees(trees, caseTree);
-              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-            286 pushIntoTrees(trees, trueTree);
-              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-            289 pushIntoTrees(trees, falseTree);
-              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-            294 pushIntoTrees(trees, clauseTree);
-              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-            300 pushIntoTrees(trees, initializerTree);
-              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-            305 pushIntoTrees(trees, conditionTree);
-              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-            310 pushIntoTrees(trees, incrementorTree);
-              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-            314 pushIntoTrees(trees, statementTree);
-              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-            318 pushIntoTrees(trees, tryBlockTree);
-              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-            322 pushIntoTrees(trees, catchClauseTree);
-              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-            327 pushIntoTrees(trees, finallyBlockTree);
-              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-            334 pushIntoTrees(trees, childTree);
-              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-            341 pushIntoTrees(trees, variableDeclarationTree);
-              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-            345 pushIntoTrees(trees, blockTree);
-              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-            349 pushIntoTrees(trees, initializerTree);
-              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-            352 pushIntoTrees(trees, expressionTree);
-              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-            355 pushIntoTrees(trees, statementTree);
-              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-            359 pushIntoTrees(trees, statementTree);
-              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-            362 pushIntoTrees(trees, expressionTree);
-              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-            366 pushIntoTrees(trees, statementTree);
-              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-            370 pushIntoTrees(trees, argumentExpression);
-              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-            394 showSyntaxKind(node);
-              function showSyntaxKind(node: ts.Node) { src/index.ts 50
-                54 printInConsole(node.kind);
-                  function printInConsole(message: any) { src/index.ts 13
-        518 pushIntoTrees(trees, tree);
-          function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 57
-        526 printInConsole(`${(Date.now() - now) / 1000.0} s`);
-          function printInConsole(message: any) { src/index.ts 13
-        555 getJsonResult(tree)),
-          function getJsonResult(tree: Tree): JsonResult { src/index.ts 425
-        578 getTextResult(tree, 1);
-          function getTextResult(tree: Tree, intent: number) { src/index.ts 401
-  588 printInConsole("code-structure success.");
-    function printInConsole(message: any) { src/index.ts 13
-  590 printInConsole(error);
-    function printInConsole(message: any) { src/index.ts 13
+        506 handle(node, {
+          function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 136
+            150 handleCallExpression(callExpression.expression, context, sourceFile, file);
+              function handleCallExpression(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 109
+                112 handleDefinition(identifier, context, sourceFile, file);
+                  function handleDefinition(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | Tree[] | undefined { src/index.ts 74
+                    78 findNodeAtDefinition(context.program, definition);
+                      function findNodeAtDefinition(program: ts.Program, definition: ts.DefinitionInfo) { src/index.ts 38
+                    93 pushIntoTrees(tree.children, statementTree);
+                      function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+                117 pushIntoTrees(trees, expressionTree);
+                  function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+                119 handleDefinition(propertyAccessExpression.name, context, sourceFile, file);
+                  function handleDefinition(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | Tree[] | undefined { src/index.ts 74
+                    78 findNodeAtDefinition(context.program, definition);
+                      function findNodeAtDefinition(program: ts.Program, definition: ts.DefinitionInfo) { src/index.ts 38
+                    93 pushIntoTrees(tree.children, statementTree);
+                      function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+                120 pushIntoTrees(trees, nameTree);
+                  function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+                125 handleDefinition(newExpression.expression, context, sourceFile, file);
+                  function handleDefinition(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | Tree[] | undefined { src/index.ts 74
+                    78 findNodeAtDefinition(context.program, definition);
+                      function findNodeAtDefinition(program: ts.Program, definition: ts.DefinitionInfo) { src/index.ts 38
+                    93 pushIntoTrees(tree.children, statementTree);
+                      function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+                131 showSyntaxKind(node);
+                  function showSyntaxKind(node: ts.Node) { src/index.ts 51
+                    55 printInConsole(node.kind);
+                      function printInConsole(message: any) { src/index.ts 14
+            151 pushIntoTrees(tree.children, functionTree);
+              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+            161 pushIntoTrees(trees, parameterTree);
+              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+            222 pushIntoTrees(trees, childTree);
+              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+            227 pushIntoTrees(trees, ifTree);
+              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+            230 pushIntoTrees(trees, thenTree);
+              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+            234 pushIntoTrees(trees, elseTree);
+              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+            239 pushIntoTrees(trees, leftTree);
+              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+            242 pushIntoTrees(trees, rightTree);
+              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+            246 pushIntoTrees(trees, declarationListTree);
+              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+            251 pushIntoTrees(trees, spanTree);
+              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+            257 pushIntoTrees(trees, elementTree);
+              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+            263 pushIntoTrees(trees, propertyTree);
+              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+            269 pushIntoTrees(trees, elementTree);
+              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+            275 pushIntoTrees(trees, statementTree);
+              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+            280 pushIntoTrees(trees, switchTree);
+              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+            283 pushIntoTrees(trees, caseTree);
+              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+            287 pushIntoTrees(trees, trueTree);
+              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+            290 pushIntoTrees(trees, falseTree);
+              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+            295 pushIntoTrees(trees, clauseTree);
+              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+            301 pushIntoTrees(trees, initializerTree);
+              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+            306 pushIntoTrees(trees, conditionTree);
+              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+            311 pushIntoTrees(trees, incrementorTree);
+              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+            315 pushIntoTrees(trees, statementTree);
+              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+            319 pushIntoTrees(trees, tryBlockTree);
+              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+            323 pushIntoTrees(trees, catchClauseTree);
+              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+            328 pushIntoTrees(trees, finallyBlockTree);
+              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+            335 pushIntoTrees(trees, childTree);
+              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+            342 pushIntoTrees(trees, variableDeclarationTree);
+              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+            346 pushIntoTrees(trees, blockTree);
+              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+            350 pushIntoTrees(trees, initializerTree);
+              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+            353 pushIntoTrees(trees, expressionTree);
+              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+            356 pushIntoTrees(trees, statementTree);
+              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+            360 pushIntoTrees(trees, statementTree);
+              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+            363 pushIntoTrees(trees, expressionTree);
+              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+            367 pushIntoTrees(trees, statementTree);
+              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+            371 pushIntoTrees(trees, argumentExpression);
+              function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+            395 showSyntaxKind(node);
+              function showSyntaxKind(node: ts.Node) { src/index.ts 51
+                55 printInConsole(node.kind);
+                  function printInConsole(message: any) { src/index.ts 14
+        511 pushIntoTrees(trees, tree);
+          function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 58
+        519 printInConsole(`${(Date.now() - now) / 1000.0} s`);
+          function printInConsole(message: any) { src/index.ts 14
+        548 getJsonResult(tree)),
+          function getJsonResult(tree: Tree): JsonResult { src/index.ts 418
+        571 getTextResult(tree, 1);
+          function getTextResult(tree: Tree, intent: number) { src/index.ts 402
+  581 printInConsole("code-structure success.");
+    function printInConsole(message: any) { src/index.ts 14
+  583 printInConsole(error);
+    function printInConsole(message: any) { src/index.ts 14

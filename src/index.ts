@@ -7,6 +7,7 @@ import * as glob from "glob";
 import * as minimatch from "minimatch";
 import * as path from "path";
 import * as packageJson from "../package.json";
+import { JsonResult, JsonDataResult } from "./types";
 
 let suppressError = false;
 
@@ -414,14 +415,6 @@ function getTextResult(tree: Tree, intent: number) {
     return textResult;
 }
 
-type JsonResult = {
-    children: JsonResult[];
-    type: "definition" | "call";
-    file: string;
-    line: number;
-    text: string;
-};
-
 function getJsonResult(tree: Tree): JsonResult {
     const startPosition = tree.node.getStart(tree.sourceFile);
     const { line } = ts.getLineAndCharacterOfPosition(tree.sourceFile, startPosition);
@@ -550,7 +543,7 @@ async function executeCommandLine() {
     othersOutput = uniq(othersOutput);
 
     if (jsonOutput.length > 0 || htmlOutput.length > 0) {
-        const jsonResult = results.map(result => ({
+        const jsonResult: JsonDataResult[] = results.map(result => ({
             file: result.file,
             results: result.trees.map(tree => getJsonResult(tree)),
         }));
@@ -562,7 +555,7 @@ async function executeCommandLine() {
         if (htmlOutput.length > 0) {
             for (const outpath of htmlOutput) {
                 const dirname = path.dirname(outpath);
-                fs.createWriteStream(path.resolve(dirname, "data.bundle.js")).write(`var data = \"${JSON.stringify(jsonResult)}\";`);
+                fs.createWriteStream(path.resolve(dirname, "data.bundle.js")).write(`var data = ${JSON.stringify(jsonResult)};`);
                 fs.createReadStream(path.resolve(__dirname, "../html/index.html")).pipe(fs.createWriteStream(outpath));
                 for (const filename of ["index.bundle.js", "vendor.bundle.js", "vendor.bundle.css"]) {
                     fs.createReadStream(path.resolve(__dirname, `../html/${filename}`)).pipe(fs.createWriteStream(path.resolve(dirname, filename)));
