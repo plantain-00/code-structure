@@ -6,6 +6,7 @@ import uniq = require("lodash.uniq");
 import * as glob from "glob";
 import * as minimatch from "minimatch";
 import * as path from "path";
+import * as mkdirp from "mkdirp";
 import * as packageJson from "../package.json";
 import { JsonResult, JsonDataResult } from "./types";
 
@@ -197,7 +198,8 @@ function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file
         || node.kind === ts.SyntaxKind.NonNullExpression
         || node.kind === ts.SyntaxKind.ThrowStatement
         || node.kind === ts.SyntaxKind.ExportAssignment
-        || node.kind === ts.SyntaxKind.DeleteExpression) {
+        || node.kind === ts.SyntaxKind.DeleteExpression
+        || node.kind === ts.SyntaxKind.VoidExpression) {
         const expression = node as ts.TemplateSpan
             | ts.ReturnStatement
             | ts.AsExpression
@@ -210,7 +212,8 @@ function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file
             | ts.NonNullExpression
             | ts.ThrowStatement
             | ts.ExportAssignment
-            | ts.DeleteExpression;
+            | ts.DeleteExpression
+            | ts.VoidExpression;
         return expression.expression ? handle(expression.expression, context, sourceFile, file) : undefined;
     } else {
         const trees: Tree[] = [];
@@ -367,8 +370,17 @@ function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file
             pushIntoTrees(trees, statementTree);
 
             if (elementAccessExpression.argumentExpression) {
-                const argumentExpression = handle(elementAccessExpression.argumentExpression, context, sourceFile, file);
-                pushIntoTrees(trees, argumentExpression);
+                const argumentExpressionTree = handle(elementAccessExpression.argumentExpression, context, sourceFile, file);
+                pushIntoTrees(trees, argumentExpressionTree);
+            }
+        } else if (node.kind === ts.SyntaxKind.FunctionExpression) {
+            const functionExpression = node as ts.FunctionExpression;
+            const bodyTree = handle(functionExpression.body, context, sourceFile, file);
+            pushIntoTrees(trees, bodyTree);
+
+            if (functionExpression.name) {
+                const nameTree = handle(functionExpression.name, context, sourceFile, file);
+                pushIntoTrees(trees, nameTree);
             }
         } else if (node.kind === ts.SyntaxKind.EndOfFileToken
             || node.kind === ts.SyntaxKind.NumericLiteral
@@ -387,6 +399,7 @@ function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file
             || node.kind === ts.SyntaxKind.NullKeyword
             || node.kind === ts.SyntaxKind.TrueKeyword
             || node.kind === ts.SyntaxKind.FalseKeyword
+            || node.kind === ts.SyntaxKind.ThisKeyword
             || node.kind === ts.SyntaxKind.BreakStatement
             || node.kind === ts.SyntaxKind.ContinueStatement
             || node.kind === ts.SyntaxKind.RegularExpressionLiteral) {
@@ -466,9 +479,10 @@ async function executeCommandLine() {
 
     const out: string | string | undefined = argv.o;
 
+    const compilerOptions: ts.CompilerOptions = { target: ts.ScriptTarget.ESNext, allowJs: true };
     const languageService = ts.createLanguageService({
         getCompilationSettings() {
-            return {};
+            return compilerOptions;
         },
         getScriptFileNames() {
             return uniqFiles;
@@ -491,7 +505,7 @@ async function executeCommandLine() {
         readDirectory: ts.sys.readDirectory,
     });
 
-    const program = ts.createProgram(uniqFiles, { target: ts.ScriptTarget.ESNext });
+    const program = ts.createProgram(uniqFiles, compilerOptions);
 
     const results: Result[] = [];
 
@@ -549,17 +563,30 @@ async function executeCommandLine() {
         }));
         if (jsonOutput.length > 0) {
             for (const outpath of jsonOutput) {
-                fs.writeFileSync(outpath, JSON.stringify(jsonResult, null, "  "));
+                const dirname = path.dirname(outpath);
+                mkdirp(dirname, error => {
+                    if (error) {
+                        printInConsole(error);
+                    } else {
+                        fs.writeFileSync(outpath, JSON.stringify(jsonResult, null, "  "));
+                    }
+                });
             }
         }
         if (htmlOutput.length > 0) {
             for (const outpath of htmlOutput) {
                 const dirname = path.dirname(outpath);
-                fs.createWriteStream(path.resolve(dirname, "data.bundle.js")).write(`var data = ${JSON.stringify(jsonResult)};`);
-                fs.createReadStream(path.resolve(__dirname, "../html/index.html")).pipe(fs.createWriteStream(outpath));
-                for (const filename of ["index.bundle.js", "vendor.bundle.js", "vendor.bundle.css"]) {
-                    fs.createReadStream(path.resolve(__dirname, `../html/${filename}`)).pipe(fs.createWriteStream(path.resolve(dirname, filename)));
-                }
+                mkdirp(dirname, error => {
+                    if (error) {
+                        printInConsole(error);
+                    } else {
+                        fs.createWriteStream(path.resolve(dirname, "data.bundle.js")).write(`var data = ${JSON.stringify(jsonResult)};`);
+                        fs.createReadStream(path.resolve(__dirname, "../html/index.html")).pipe(fs.createWriteStream(outpath));
+                        for (const filename of ["index.bundle.js", "vendor.bundle.js", "vendor.bundle.css"]) {
+                            fs.createReadStream(path.resolve(__dirname, `../html/${filename}`)).pipe(fs.createWriteStream(path.resolve(dirname, filename)));
+                        }
+                    }
+                });
             }
         }
     }
@@ -572,7 +599,14 @@ async function executeCommandLine() {
             }
         }
         for (const outpath of othersOutput) {
-            fs.writeFileSync(outpath, textResult);
+            const dirname = path.dirname(outpath);
+            mkdirp(dirname, error => {
+                if (error) {
+                    printInConsole(error);
+                } else {
+                    fs.writeFileSync(outpath, textResult);
+                }
+            });
         }
     }
 }
