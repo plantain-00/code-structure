@@ -1,7 +1,7 @@
 import * as Vue from "vue";
 import Component from "vue-class-component";
 import { EventData, TreeData, DropPosition } from "tree-component/vue";
-import { JsonDataResult, JsonResult } from "../src/types";
+import { JsonDataResult, JsonResult, JsonResultType } from "../src/types";
 
 import { indexTemplateHtml } from "./variables";
 
@@ -79,7 +79,7 @@ class App extends Vue {
 }
 
 type Value = {
-    type: "definition" | "call";
+    type: JsonResultType;
     file: string;
     line: number;
     text: string;

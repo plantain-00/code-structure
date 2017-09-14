@@ -8,7 +8,7 @@ import * as minimatch from "minimatch";
 import * as path from "path";
 import * as mkdirp from "mkdirp";
 import * as packageJson from "../package.json";
-import { JsonResult, JsonDataResult } from "./types";
+import { JsonResult, JsonDataResult, JsonResultType } from "./types";
 
 let suppressError = false;
 
@@ -77,30 +77,41 @@ function handleDefinition(node: ts.Node, context: Context, sourceFile: ts.Source
     if (definitions && definitions.length > 0) {
         const definition = definitions[0];
         const definitionNode = findNodeAtDefinition(context.program, definition);
-        if (definitionNode && context.nodes.indexOf(definitionNode.node) === -1) {
-            if (definitionNode.node.kind === ts.SyntaxKind.FunctionDeclaration) {
-                const declaration = definitionNode.node as ts.FunctionDeclaration;
-                const tree: Tree = {
-                    node: declaration,
+        if (definitionNode) {
+            const nestedNode = context.nodes.find(n => n === definitionNode.node);
+            if (nestedNode) {
+                return {
+                    node: nestedNode,
                     sourceFile: definitionNode.sourceFile,
-                    type: "definition",
+                    type: JsonResultType.nested,
                     children: [],
                     file: definition.fileName,
                 };
-                if (declaration.body) {
-                    context.nodes.push(definitionNode.node);
-                    for (const statement of declaration.body.statements) {
-                        const statementTree = handle(statement, context, definitionNode.sourceFile, definition.fileName);
-                        pushIntoTrees(tree.children, statementTree);
-                    }
-                    context.nodes.pop();
-                }
-                return tree;
             } else {
-                context.nodes.push(definitionNode.node);
-                const tree = handle(definitionNode.node, context, definitionNode.sourceFile, definition.fileName);
-                context.nodes.pop();
-                return tree;
+                if (definitionNode.node.kind === ts.SyntaxKind.FunctionDeclaration) {
+                    const declaration = definitionNode.node as ts.FunctionDeclaration;
+                    const tree: Tree = {
+                        node: declaration,
+                        sourceFile: definitionNode.sourceFile,
+                        type: JsonResultType.definition,
+                        children: [],
+                        file: definition.fileName,
+                    };
+                    if (declaration.body) {
+                        context.nodes.push(definitionNode.node);
+                        for (const statement of declaration.body.statements) {
+                            const statementTree = handle(statement, context, definitionNode.sourceFile, definition.fileName);
+                            pushIntoTrees(tree.children, statementTree);
+                        }
+                        context.nodes.pop();
+                    }
+                    return tree;
+                } else {
+                    context.nodes.push(definitionNode.node);
+                    const tree = handle(definitionNode.node, context, definitionNode.sourceFile, definition.fileName);
+                    context.nodes.pop();
+                    return tree;
+                }
             }
         }
     }
@@ -144,7 +155,7 @@ function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file
             node: callExpression,
             sourceFile,
             children: [],
-            type: "call",
+            type: JsonResultType.call,
             file,
         };
         const trees: Tree[] = [];
@@ -417,11 +428,14 @@ function getTextResult(tree: Tree, intent: number) {
     const { line } = ts.getLineAndCharacterOfPosition(tree.sourceFile, startPosition);
     const text = tree.sourceFile.text.substring(startPosition, tree.sourceFile.getLineEndOfPosition(startPosition)).trim();
     let textResult = "";
-    if (tree.type === "call") {
+    if (tree.type === JsonResultType.call) {
         textResult += `${"  ".repeat(intent)}${line + 1} ${text}\n`;
-    } else {
+    } else if (tree.type === JsonResultType.definition) {
+        textResult += `${"  ".repeat(intent)}${text} ${tree.file} ${line + 1}\n`;
+    } else if (tree.type === JsonResultType.nested) {
         textResult += `${"  ".repeat(intent)}${text} ${tree.file} ${line + 1}\n`;
     }
+
     for (const child of tree.children) {
         textResult += getTextResult(child, intent + 1);
     }
@@ -449,7 +463,7 @@ type Tree = {
     children: Tree[];
     node: ts.Node;
     sourceFile: ts.SourceFile;
-    type: "definition" | "call";
+    type: JsonResultType;
     file: string;
 };
 
