@@ -36,19 +36,6 @@ function globAsync(pattern: string) {
     });
 }
 
-function findNodeAtDefinition(program: ts.Program, definition: ts.DefinitionInfo) {
-    const sourceFile = program.getSourceFile(definition.fileName);
-    if (sourceFile) {
-        return sourceFile.forEachChild(child => {
-            if (child.pos < definition.textSpan.start && child.end > definition.textSpan.start + definition.textSpan.length) {
-                return { sourceFile, node: child };
-            }
-            return undefined;
-        });
-    }
-    return undefined;
-}
-
 function showSyntaxKind(node: ts.Node) {
     // if (node.kind === ts.SyntaxKind.ParenthesizedExpression) {
     //     printInConsole(node);
@@ -72,80 +59,68 @@ type Context = {
     nodes: ts.Node[];
 };
 
-function handleDefinition(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | Tree[] | undefined {
+const definitionsCache = new Map<ts.Node, Tree | Tree[] | undefined>();
+
+function getCodeStructureOfDefinition(node: ts.Node, context: Context, file: string): Tree | Tree[] | undefined {
     const definitions = context.languageService.getDefinitionAtPosition(file, node.end);
     if (definitions && definitions.length > 0) {
         const definition = definitions[0];
-        const definitionNode = findNodeAtDefinition(context.program, definition);
-        if (definitionNode) {
-            const nestedNode = context.nodes.find(n => n === definitionNode.node);
-            if (nestedNode) {
-                return {
-                    node: nestedNode,
-                    sourceFile: definitionNode.sourceFile,
-                    type: JsonResultType.nested,
-                    children: [],
-                    file: definition.fileName,
-                };
-            } else {
-                if (definitionNode.node.kind === ts.SyntaxKind.FunctionDeclaration) {
-                    const declaration = definitionNode.node as ts.FunctionDeclaration;
-                    const tree: Tree = {
-                        node: declaration,
-                        sourceFile: definitionNode.sourceFile,
-                        type: JsonResultType.definition,
+        const sourceFile = context.program.getSourceFile(definition.fileName);
+        if (sourceFile) {
+            const definitionNode = sourceFile.forEachChild(child => {
+                if (child.pos < definition.textSpan.start && child.end > definition.textSpan.start + definition.textSpan.length) {
+                    return child;
+                }
+                return undefined;
+            });
+
+            if (definitionNode) {
+                if (definitionsCache.has(definitionNode)) {
+                    return definitionsCache.get(definitionNode);
+                }
+                const nestedNode = context.nodes.find(n => n === definitionNode);
+                let tree: Tree | Tree[] | undefined;
+                if (nestedNode) {
+                    tree = {
+                        node: nestedNode,
+                        sourceFile,
+                        type: JsonResultType.nested,
                         children: [],
                         file: definition.fileName,
                     };
-                    if (declaration.body) {
-                        context.nodes.push(definitionNode.node);
-                        for (const statement of declaration.body.statements) {
-                            const statementTree = handle(statement, context, definitionNode.sourceFile, definition.fileName);
-                            pushIntoTrees(tree.children, statementTree);
+                } else {
+                    if (definitionNode.kind === ts.SyntaxKind.FunctionDeclaration) {
+                        const declaration = definitionNode as ts.FunctionDeclaration;
+                        tree = {
+                            node: declaration,
+                            sourceFile,
+                            type: JsonResultType.definition,
+                            children: [],
+                            file: definition.fileName,
+                        };
+                        if (declaration.body) {
+                            context.nodes.push(definitionNode);
+                            for (const statement of declaration.body.statements) {
+                                const statementTree = getCodeStructure(statement, context, sourceFile, definition.fileName);
+                                pushIntoTrees(tree.children, statementTree);
+                            }
+                            context.nodes.pop();
                         }
+                    } else {
+                        context.nodes.push(definitionNode);
+                        tree = getCodeStructure(definitionNode, context, sourceFile, definition.fileName);
                         context.nodes.pop();
                     }
-                    return tree;
-                } else {
-                    context.nodes.push(definitionNode.node);
-                    const tree = handle(definitionNode.node, context, definitionNode.sourceFile, definition.fileName);
-                    context.nodes.pop();
-                    return tree;
                 }
+                definitionsCache.set(definitionNode, tree);
+                return tree;
             }
         }
     }
     return undefined;
 }
 
-function handleCallExpression(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {
-    if (node.kind === ts.SyntaxKind.Identifier) {
-        const identifier = node as ts.Identifier;
-        return handleDefinition(identifier, context, sourceFile, file);
-    } else if (node.kind === ts.SyntaxKind.PropertyAccessExpression) {
-        const propertyAccessExpression = node as ts.PropertyAccessExpression;
-        const trees: Tree[] = [];
-        const expressionTree = handle(propertyAccessExpression.expression, context, sourceFile, file);
-        pushIntoTrees(trees, expressionTree);
-
-        const nameTree = handleDefinition(propertyAccessExpression.name, context, sourceFile, file);
-        pushIntoTrees(trees, nameTree);
-
-        return trees.length > 0 ? trees : undefined;
-    } else if (node.kind === ts.SyntaxKind.NewExpression) {
-        const newExpression = node as ts.NewExpression;
-        return handleDefinition(newExpression.expression, context, sourceFile, file);
-    } else if (node.kind === ts.SyntaxKind.CallExpression
-        || node.kind === ts.SyntaxKind.ElementAccessExpression
-        || node.kind === ts.SyntaxKind.ParenthesizedExpression) {
-        return handle(node, context, sourceFile, file);
-    } else {
-        showSyntaxKind(node);
-    }
-    return undefined;
-}
-
-function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {
+function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {
     if (node === undefined) {
         return undefined;
     }
@@ -159,8 +134,31 @@ function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file
             file,
         };
         const trees: Tree[] = [];
-        const functionTree = handleCallExpression(callExpression.expression, context, sourceFile, file);
-        pushIntoTrees(tree.children, functionTree);
+        let callTree: Tree | Tree[] | undefined;
+        if (callExpression.expression.kind === ts.SyntaxKind.Identifier) {
+            const identifier = callExpression.expression as ts.Identifier;
+            callTree = getCodeStructureOfDefinition(identifier, context, file);
+        } else if (callExpression.expression.kind === ts.SyntaxKind.PropertyAccessExpression) {
+            const propertyAccessExpression = callExpression.expression as ts.PropertyAccessExpression;
+            const propertyAccessTrees: Tree[] = [];
+            const expressionTree = getCodeStructure(propertyAccessExpression.expression, context, sourceFile, file);
+            pushIntoTrees(propertyAccessTrees, expressionTree);
+
+            const nameTree = getCodeStructureOfDefinition(propertyAccessExpression.name, context, file);
+            pushIntoTrees(propertyAccessTrees, nameTree);
+
+            callTree = propertyAccessTrees.length > 0 ? propertyAccessTrees : undefined;
+        } else if (callExpression.expression.kind === ts.SyntaxKind.NewExpression) {
+            const newExpression = callExpression.expression as ts.NewExpression;
+            callTree = getCodeStructureOfDefinition(newExpression.expression, context, file);
+        } else if (callExpression.expression.kind === ts.SyntaxKind.CallExpression
+            || callExpression.expression.kind === ts.SyntaxKind.ElementAccessExpression
+            || callExpression.expression.kind === ts.SyntaxKind.ParenthesizedExpression) {
+            callTree = getCodeStructure(callExpression.expression, context, sourceFile, file);
+        } else {
+            showSyntaxKind(callExpression.expression);
+        }
+        pushIntoTrees(tree.children, callTree);
 
         if (tree.children.length > 0) {
             trees.push(tree);
@@ -169,7 +167,7 @@ function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file
         const parameters = callExpression.arguments;
         if (parameters && parameters.length > 0) {
             for (const parameter of parameters) {
-                const parameterTree = handle(parameter, context, sourceFile, file);
+                const parameterTree = getCodeStructure(parameter, context, sourceFile, file);
                 pushIntoTrees(trees, parameterTree);
             }
         }
@@ -177,26 +175,26 @@ function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file
         return trees.length > 0 ? trees : undefined;
     } else if (node.kind === ts.SyntaxKind.ForOfStatement) {
         const forOfStatement = node as ts.ForOfStatement;
-        return handle(forOfStatement.statement, context, sourceFile, file);
+        return getCodeStructure(forOfStatement.statement, context, sourceFile, file);
     } else if (node.kind === ts.SyntaxKind.ArrowFunction
         || node.kind === ts.SyntaxKind.ModuleDeclaration) {
         const declaration = node as ts.ArrowFunction | ts.ModuleDeclaration;
-        return declaration.body ? handle(declaration.body, context, sourceFile, file) : undefined;
+        return declaration.body ? getCodeStructure(declaration.body, context, sourceFile, file) : undefined;
     } else if (node.kind === ts.SyntaxKind.PropertyAssignment) {
         const propertyAssignmentExpression = node as ts.PropertyAssignment;
-        return handle(propertyAssignmentExpression.initializer, context, sourceFile, file);
+        return getCodeStructure(propertyAssignmentExpression.initializer, context, sourceFile, file);
     } else if (node.kind === ts.SyntaxKind.PrefixUnaryExpression
         || node.kind === ts.SyntaxKind.PostfixUnaryExpression) {
         const prefixUnaryExpression = node as ts.PrefixUnaryExpression | ts.PostfixUnaryExpression;
-        return handle(prefixUnaryExpression.operand, context, sourceFile, file);
+        return getCodeStructure(prefixUnaryExpression.operand, context, sourceFile, file);
     } else if (node.kind === ts.SyntaxKind.PropertyAccessExpression
         || node.kind === ts.SyntaxKind.ExportSpecifier
         || node.kind === ts.SyntaxKind.VariableDeclaration) {
         const expression = node as ts.PropertyAccessExpression | ts.ExportSpecifier | ts.VariableDeclaration;
-        return handle(expression.name, context, sourceFile, file);
+        return getCodeStructure(expression.name, context, sourceFile, file);
     } else if (node.kind === ts.SyntaxKind.ExportDeclaration) {
         const exportDeclaration = node as ts.ExportDeclaration;
-        return exportDeclaration.exportClause ? handle(exportDeclaration.exportClause, context, sourceFile, file) : undefined;
+        return exportDeclaration.exportClause ? getCodeStructure(exportDeclaration.exportClause, context, sourceFile, file) : undefined;
     } else if (node.kind === ts.SyntaxKind.TemplateSpan
         || node.kind === ts.SyntaxKind.ReturnStatement
         || node.kind === ts.SyntaxKind.AsExpression
@@ -225,172 +223,172 @@ function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file
             | ts.ExportAssignment
             | ts.DeleteExpression
             | ts.VoidExpression;
-        return expression.expression ? handle(expression.expression, context, sourceFile, file) : undefined;
+        return expression.expression ? getCodeStructure(expression.expression, context, sourceFile, file) : undefined;
     } else {
         const trees: Tree[] = [];
         if (node.kind === ts.SyntaxKind.Block
             || node.kind === ts.SyntaxKind.CaseClause) {
             const statements = (node as ts.Block | ts.CaseClause).statements;
             for (const statement of statements) {
-                const childTree = handle(statement, context, sourceFile, file);
+                const childTree = getCodeStructure(statement, context, sourceFile, file);
                 pushIntoTrees(trees, childTree);
             }
         } else if (node.kind === ts.SyntaxKind.IfStatement) {
             const ifStatement = node as ts.IfStatement;
-            const ifTree = handle(ifStatement.expression, context, sourceFile, file);
+            const ifTree = getCodeStructure(ifStatement.expression, context, sourceFile, file);
             pushIntoTrees(trees, ifTree);
 
-            const thenTree = handle(ifStatement.thenStatement, context, sourceFile, file);
+            const thenTree = getCodeStructure(ifStatement.thenStatement, context, sourceFile, file);
             pushIntoTrees(trees, thenTree);
 
             if (ifStatement.elseStatement) {
-                const elseTree = handle(ifStatement.elseStatement, context, sourceFile, file);
+                const elseTree = getCodeStructure(ifStatement.elseStatement, context, sourceFile, file);
                 pushIntoTrees(trees, elseTree);
             }
         } else if (node.kind === ts.SyntaxKind.BinaryExpression) {
             const binaryExpression = node as ts.BinaryExpression;
-            const leftTree = handle(binaryExpression.left, context, sourceFile, file);
+            const leftTree = getCodeStructure(binaryExpression.left, context, sourceFile, file);
             pushIntoTrees(trees, leftTree);
 
-            const rightTree = handle(binaryExpression.right, context, sourceFile, file);
+            const rightTree = getCodeStructure(binaryExpression.right, context, sourceFile, file);
             pushIntoTrees(trees, rightTree);
         } else if (node.kind === ts.SyntaxKind.VariableStatement) {
             const variableStatement = node as ts.VariableStatement;
-            const declarationListTree = handle(variableStatement.declarationList, context, sourceFile, file);
+            const declarationListTree = getCodeStructure(variableStatement.declarationList, context, sourceFile, file);
             pushIntoTrees(trees, declarationListTree);
         } else if (node.kind === ts.SyntaxKind.TemplateExpression) {
             const templateExpression = node as ts.TemplateExpression;
             for (const span of templateExpression.templateSpans) {
-                const spanTree = handle(span, context, sourceFile, file);
+                const spanTree = getCodeStructure(span, context, sourceFile, file);
                 pushIntoTrees(trees, spanTree);
             }
         } else if (node.kind === ts.SyntaxKind.ArrayLiteralExpression) {
             const arrayLiteralExpression = node as ts.ArrayLiteralExpression;
             for (const element of arrayLiteralExpression.elements) {
-                const elementTree = handle(element, context, sourceFile, file);
+                const elementTree = getCodeStructure(element, context, sourceFile, file);
                 pushIntoTrees(trees, elementTree);
             }
         } else if (node.kind === ts.SyntaxKind.ObjectLiteralExpression) {
             const objectLiteralExpression = node as ts.ObjectLiteralExpression;
             for (const property of objectLiteralExpression.properties) {
-                const propertyTree = handle(property, context, sourceFile, file);
+                const propertyTree = getCodeStructure(property, context, sourceFile, file);
                 pushIntoTrees(trees, propertyTree);
             }
         } else if (node.kind === ts.SyntaxKind.NamedExports) {
             const namedExports = node as ts.NamedExports;
             for (const element of namedExports.elements) {
-                const elementTree = handle(element, context, sourceFile, file);
+                const elementTree = getCodeStructure(element, context, sourceFile, file);
                 pushIntoTrees(trees, elementTree);
             }
         } else if (node.kind === ts.SyntaxKind.ModuleBlock) {
             const moduleBlock = node as ts.ModuleBlock;
             for (const statement of moduleBlock.statements) {
-                const statementTree = handle(statement, context, sourceFile, file);
+                const statementTree = getCodeStructure(statement, context, sourceFile, file);
                 pushIntoTrees(trees, statementTree);
             }
         } else if (node.kind === ts.SyntaxKind.SwitchStatement) {
             const switchStatement = node as ts.SwitchStatement;
-            const switchTree = handle(switchStatement.expression, context, sourceFile, file);
+            const switchTree = getCodeStructure(switchStatement.expression, context, sourceFile, file);
             pushIntoTrees(trees, switchTree);
 
-            const caseTree = handle(switchStatement.caseBlock, context, sourceFile, file);
+            const caseTree = getCodeStructure(switchStatement.caseBlock, context, sourceFile, file);
             pushIntoTrees(trees, caseTree);
         } else if (node.kind === ts.SyntaxKind.ConditionalExpression) {
             const conditionalExpression = node as ts.ConditionalExpression;
-            const trueTree = handle(conditionalExpression.whenTrue, context, sourceFile, file);
+            const trueTree = getCodeStructure(conditionalExpression.whenTrue, context, sourceFile, file);
             pushIntoTrees(trees, trueTree);
 
-            const falseTree = handle(conditionalExpression.whenFalse, context, sourceFile, file);
+            const falseTree = getCodeStructure(conditionalExpression.whenFalse, context, sourceFile, file);
             pushIntoTrees(trees, falseTree);
         } else if (node.kind === ts.SyntaxKind.CaseBlock) {
             const caseBlock = node as ts.CaseBlock;
             for (const clause of caseBlock.clauses) {
-                const clauseTree = handle(clause, context, sourceFile, file);
+                const clauseTree = getCodeStructure(clause, context, sourceFile, file);
                 pushIntoTrees(trees, clauseTree);
             }
         } else if (node.kind === ts.SyntaxKind.ForStatement) {
             const forStatement = node as ts.ForStatement;
             if (forStatement.initializer) {
-                const initializerTree = handle(forStatement.initializer, context, sourceFile, file);
+                const initializerTree = getCodeStructure(forStatement.initializer, context, sourceFile, file);
                 pushIntoTrees(trees, initializerTree);
             }
 
             if (forStatement.condition) {
-                const conditionTree = handle(forStatement.condition, context, sourceFile, file);
+                const conditionTree = getCodeStructure(forStatement.condition, context, sourceFile, file);
                 pushIntoTrees(trees, conditionTree);
             }
 
             if (forStatement.incrementor) {
-                const incrementorTree = handle(forStatement.incrementor, context, sourceFile, file);
+                const incrementorTree = getCodeStructure(forStatement.incrementor, context, sourceFile, file);
                 pushIntoTrees(trees, incrementorTree);
             }
 
-            const statementTree = handle(forStatement.statement, context, sourceFile, file);
+            const statementTree = getCodeStructure(forStatement.statement, context, sourceFile, file);
             pushIntoTrees(trees, statementTree);
         } else if (node.kind === ts.SyntaxKind.TryStatement) {
             const tryStatement = node as ts.TryStatement;
-            const tryBlockTree = handle(tryStatement.tryBlock, context, sourceFile, file);
+            const tryBlockTree = getCodeStructure(tryStatement.tryBlock, context, sourceFile, file);
             pushIntoTrees(trees, tryBlockTree);
 
             if (tryStatement.catchClause) {
-                const catchClauseTree = handle(tryStatement.catchClause, context, sourceFile, file);
+                const catchClauseTree = getCodeStructure(tryStatement.catchClause, context, sourceFile, file);
                 pushIntoTrees(trees, catchClauseTree);
             }
 
             if (tryStatement.finallyBlock) {
-                const finallyBlockTree = handle(tryStatement.finallyBlock, context, sourceFile, file);
+                const finallyBlockTree = getCodeStructure(tryStatement.finallyBlock, context, sourceFile, file);
                 pushIntoTrees(trees, finallyBlockTree);
             }
         } else if (node.kind === ts.SyntaxKind.VariableDeclarationList) {
             const declarationList = node as ts.VariableDeclarationList;
             for (const declaration of declarationList.declarations) {
                 if (declaration.initializer) {
-                    const childTree = handle(declaration.initializer, context, sourceFile, file);
+                    const childTree = getCodeStructure(declaration.initializer, context, sourceFile, file);
                     pushIntoTrees(trees, childTree);
                 }
             }
         } else if (node.kind === ts.SyntaxKind.CatchClause) {
             const catchClause = node as ts.CatchClause;
             if (catchClause.variableDeclaration) {
-                const variableDeclarationTree = handle(catchClause.variableDeclaration, context, sourceFile, file);
+                const variableDeclarationTree = getCodeStructure(catchClause.variableDeclaration, context, sourceFile, file);
                 pushIntoTrees(trees, variableDeclarationTree);
             }
 
-            const blockTree = handle(catchClause.block, context, sourceFile, file);
+            const blockTree = getCodeStructure(catchClause.block, context, sourceFile, file);
             pushIntoTrees(trees, blockTree);
         } else if (node.kind === ts.SyntaxKind.ForInStatement) {
             const forInStatement = node as ts.ForInStatement;
-            const initializerTree = handle(forInStatement.initializer, context, sourceFile, file);
+            const initializerTree = getCodeStructure(forInStatement.initializer, context, sourceFile, file);
             pushIntoTrees(trees, initializerTree);
 
-            const expressionTree = handle(forInStatement.expression, context, sourceFile, file);
+            const expressionTree = getCodeStructure(forInStatement.expression, context, sourceFile, file);
             pushIntoTrees(trees, expressionTree);
 
-            const statementTree = handle(forInStatement.statement, context, sourceFile, file);
+            const statementTree = getCodeStructure(forInStatement.statement, context, sourceFile, file);
             pushIntoTrees(trees, statementTree);
         } else if (node.kind === ts.SyntaxKind.WhileStatement) {
             const whileStatement = node as ts.WhileStatement;
-            const statementTree = handle(whileStatement.statement, context, sourceFile, file);
+            const statementTree = getCodeStructure(whileStatement.statement, context, sourceFile, file);
             pushIntoTrees(trees, statementTree);
 
-            const expressionTree = handle(whileStatement.expression, context, sourceFile, file);
+            const expressionTree = getCodeStructure(whileStatement.expression, context, sourceFile, file);
             pushIntoTrees(trees, expressionTree);
         } else if (node.kind === ts.SyntaxKind.ElementAccessExpression) {
             const elementAccessExpression = node as ts.ElementAccessExpression;
-            const statementTree = handle(elementAccessExpression.expression, context, sourceFile, file);
+            const statementTree = getCodeStructure(elementAccessExpression.expression, context, sourceFile, file);
             pushIntoTrees(trees, statementTree);
 
             if (elementAccessExpression.argumentExpression) {
-                const argumentExpressionTree = handle(elementAccessExpression.argumentExpression, context, sourceFile, file);
+                const argumentExpressionTree = getCodeStructure(elementAccessExpression.argumentExpression, context, sourceFile, file);
                 pushIntoTrees(trees, argumentExpressionTree);
             }
         } else if (node.kind === ts.SyntaxKind.FunctionExpression) {
             const functionExpression = node as ts.FunctionExpression;
-            const bodyTree = handle(functionExpression.body, context, sourceFile, file);
+            const bodyTree = getCodeStructure(functionExpression.body, context, sourceFile, file);
             pushIntoTrees(trees, bodyTree);
 
             if (functionExpression.name) {
-                const nameTree = handle(functionExpression.name, context, sourceFile, file);
+                const nameTree = getCodeStructure(functionExpression.name, context, sourceFile, file);
                 pushIntoTrees(trees, nameTree);
             }
         } else if (node.kind === ts.SyntaxKind.EndOfFileToken
@@ -531,7 +529,7 @@ async function executeCommandLine() {
         if (sourceFile) {
             const trees: Tree[] = [];
             sourceFile.forEachChild(node => {
-                const tree = handle(node, {
+                const tree = getCodeStructure(node, {
                     nodes: [],
                     program,
                     languageService,

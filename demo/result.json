@@ -5,25 +5,25 @@
       {
         "type": "call",
         "file": "src/index.ts",
-        "line": 627,
+        "line": 625,
         "text": "executeCommandLine().then(() => {",
         "children": [
           {
             "type": "call",
             "file": "src/index.ts",
-            "line": 627,
+            "line": 625,
             "text": "executeCommandLine().then(() => {",
             "children": [
               {
                 "type": "definition",
                 "file": "src/index.ts",
-                "line": 474,
+                "line": 472,
                 "text": "async function executeCommandLine() {",
                 "children": [
                   {
                     "type": "call",
                     "file": "src/index.ts",
-                    "line": 475,
+                    "line": 473,
                     "text": "minimist(process.argv.slice(2), { \"--\": true });",
                     "children": [
                       {
@@ -38,7 +38,7 @@
                   {
                     "type": "call",
                     "file": "src/index.ts",
-                    "line": 479,
+                    "line": 477,
                     "text": "showToolVersion();",
                     "children": [
                       {
@@ -69,7 +69,7 @@
                   {
                     "type": "call",
                     "file": "src/index.ts",
-                    "line": 485,
+                    "line": 483,
                     "text": "globAsync(file)))));",
                     "children": [
                       {
@@ -84,7 +84,7 @@
                   {
                     "type": "call",
                     "file": "src/index.ts",
-                    "line": 490,
+                    "line": 488,
                     "text": "minimatch(file, excludeFile)));",
                     "children": [
                       {
@@ -99,114 +99,38 @@
                   {
                     "type": "call",
                     "file": "src/index.ts",
-                    "line": 533,
-                    "text": "handle(node, {",
+                    "line": 531,
+                    "text": "getCodeStructure(node, {",
                     "children": [
                       {
                         "type": "definition",
                         "file": "src/index.ts",
-                        "line": 147,
-                        "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                        "line": 122,
+                        "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                         "children": [
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 161,
-                            "text": "handleCallExpression(callExpression.expression, context, sourceFile, file);",
+                            "line": 139,
+                            "text": "getCodeStructureOfDefinition(identifier, context, file);",
                             "children": [
                               {
                                 "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 120,
-                                "text": "function handleCallExpression(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 63,
+                                "text": "function getCodeStructureOfDefinition(node: ts.Node, context: Context, file: string): Tree | Tree[] | undefined {",
                                 "children": [
                                   {
                                     "type": "call",
                                     "file": "src/index.ts",
-                                    "line": 123,
-                                    "text": "handleDefinition(identifier, context, sourceFile, file);",
-                                    "children": [
-                                      {
-                                        "type": "definition",
-                                        "file": "src/index.ts",
-                                        "line": 74,
-                                        "text": "function handleDefinition(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | Tree[] | undefined {",
-                                        "children": [
-                                          {
-                                            "type": "call",
-                                            "file": "src/index.ts",
-                                            "line": 78,
-                                            "text": "findNodeAtDefinition(context.program, definition);",
-                                            "children": [
-                                              {
-                                                "type": "definition",
-                                                "file": "src/index.ts",
-                                                "line": 38,
-                                                "text": "function findNodeAtDefinition(program: ts.Program, definition: ts.DefinitionInfo) {",
-                                                "children": []
-                                              }
-                                            ]
-                                          },
-                                          {
-                                            "type": "call",
-                                            "file": "src/index.ts",
-                                            "line": 102,
-                                            "text": "handle(statement, context, definitionNode.sourceFile, definition.fileName);",
-                                            "children": [
-                                              {
-                                                "type": "nested",
-                                                "file": "src/index.ts",
-                                                "line": 147,
-                                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
-                                                "children": []
-                                              }
-                                            ]
-                                          },
-                                          {
-                                            "type": "call",
-                                            "file": "src/index.ts",
-                                            "line": 103,
-                                            "text": "pushIntoTrees(tree.children, statementTree);",
-                                            "children": [
-                                              {
-                                                "type": "definition",
-                                                "file": "src/index.ts",
-                                                "line": 58,
-                                                "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
-                                                "children": []
-                                              }
-                                            ]
-                                          },
-                                          {
-                                            "type": "call",
-                                            "file": "src/index.ts",
-                                            "line": 110,
-                                            "text": "handle(definitionNode.node, context, definitionNode.sourceFile, definition.fileName);",
-                                            "children": [
-                                              {
-                                                "type": "nested",
-                                                "file": "src/index.ts",
-                                                "line": 147,
-                                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
-                                                "children": []
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "type": "call",
-                                    "file": "src/index.ts",
-                                    "line": 127,
-                                    "text": "handle(propertyAccessExpression.expression, context, sourceFile, file);",
+                                    "line": 103,
+                                    "text": "getCodeStructure(statement, context, sourceFile, definition.fileName);",
                                     "children": [
                                       {
                                         "type": "nested",
                                         "file": "src/index.ts",
-                                        "line": 147,
-                                        "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                        "line": 122,
+                                        "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                         "children": []
                                       }
                                     ]
@@ -214,13 +138,13 @@
                                   {
                                     "type": "call",
                                     "file": "src/index.ts",
-                                    "line": 128,
-                                    "text": "pushIntoTrees(trees, expressionTree);",
+                                    "line": 104,
+                                    "text": "pushIntoTrees(tree.children, statementTree);",
                                     "children": [
                                       {
                                         "type": "definition",
                                         "file": "src/index.ts",
-                                        "line": 58,
+                                        "line": 45,
                                         "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                         "children": []
                                       }
@@ -229,213 +153,15 @@
                                   {
                                     "type": "call",
                                     "file": "src/index.ts",
-                                    "line": 130,
-                                    "text": "handleDefinition(propertyAccessExpression.name, context, sourceFile, file);",
-                                    "children": [
-                                      {
-                                        "type": "definition",
-                                        "file": "src/index.ts",
-                                        "line": 74,
-                                        "text": "function handleDefinition(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | Tree[] | undefined {",
-                                        "children": [
-                                          {
-                                            "type": "call",
-                                            "file": "src/index.ts",
-                                            "line": 78,
-                                            "text": "findNodeAtDefinition(context.program, definition);",
-                                            "children": [
-                                              {
-                                                "type": "definition",
-                                                "file": "src/index.ts",
-                                                "line": 38,
-                                                "text": "function findNodeAtDefinition(program: ts.Program, definition: ts.DefinitionInfo) {",
-                                                "children": []
-                                              }
-                                            ]
-                                          },
-                                          {
-                                            "type": "call",
-                                            "file": "src/index.ts",
-                                            "line": 102,
-                                            "text": "handle(statement, context, definitionNode.sourceFile, definition.fileName);",
-                                            "children": [
-                                              {
-                                                "type": "nested",
-                                                "file": "src/index.ts",
-                                                "line": 147,
-                                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
-                                                "children": []
-                                              }
-                                            ]
-                                          },
-                                          {
-                                            "type": "call",
-                                            "file": "src/index.ts",
-                                            "line": 103,
-                                            "text": "pushIntoTrees(tree.children, statementTree);",
-                                            "children": [
-                                              {
-                                                "type": "definition",
-                                                "file": "src/index.ts",
-                                                "line": 58,
-                                                "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
-                                                "children": []
-                                              }
-                                            ]
-                                          },
-                                          {
-                                            "type": "call",
-                                            "file": "src/index.ts",
-                                            "line": 110,
-                                            "text": "handle(definitionNode.node, context, definitionNode.sourceFile, definition.fileName);",
-                                            "children": [
-                                              {
-                                                "type": "nested",
-                                                "file": "src/index.ts",
-                                                "line": 147,
-                                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
-                                                "children": []
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "type": "call",
-                                    "file": "src/index.ts",
-                                    "line": 131,
-                                    "text": "pushIntoTrees(trees, nameTree);",
-                                    "children": [
-                                      {
-                                        "type": "definition",
-                                        "file": "src/index.ts",
-                                        "line": 58,
-                                        "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
-                                        "children": []
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "type": "call",
-                                    "file": "src/index.ts",
-                                    "line": 136,
-                                    "text": "handleDefinition(newExpression.expression, context, sourceFile, file);",
-                                    "children": [
-                                      {
-                                        "type": "definition",
-                                        "file": "src/index.ts",
-                                        "line": 74,
-                                        "text": "function handleDefinition(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | Tree[] | undefined {",
-                                        "children": [
-                                          {
-                                            "type": "call",
-                                            "file": "src/index.ts",
-                                            "line": 78,
-                                            "text": "findNodeAtDefinition(context.program, definition);",
-                                            "children": [
-                                              {
-                                                "type": "definition",
-                                                "file": "src/index.ts",
-                                                "line": 38,
-                                                "text": "function findNodeAtDefinition(program: ts.Program, definition: ts.DefinitionInfo) {",
-                                                "children": []
-                                              }
-                                            ]
-                                          },
-                                          {
-                                            "type": "call",
-                                            "file": "src/index.ts",
-                                            "line": 102,
-                                            "text": "handle(statement, context, definitionNode.sourceFile, definition.fileName);",
-                                            "children": [
-                                              {
-                                                "type": "nested",
-                                                "file": "src/index.ts",
-                                                "line": 147,
-                                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
-                                                "children": []
-                                              }
-                                            ]
-                                          },
-                                          {
-                                            "type": "call",
-                                            "file": "src/index.ts",
-                                            "line": 103,
-                                            "text": "pushIntoTrees(tree.children, statementTree);",
-                                            "children": [
-                                              {
-                                                "type": "definition",
-                                                "file": "src/index.ts",
-                                                "line": 58,
-                                                "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
-                                                "children": []
-                                              }
-                                            ]
-                                          },
-                                          {
-                                            "type": "call",
-                                            "file": "src/index.ts",
-                                            "line": 110,
-                                            "text": "handle(definitionNode.node, context, definitionNode.sourceFile, definition.fileName);",
-                                            "children": [
-                                              {
-                                                "type": "nested",
-                                                "file": "src/index.ts",
-                                                "line": 147,
-                                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
-                                                "children": []
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "type": "call",
-                                    "file": "src/index.ts",
-                                    "line": 140,
-                                    "text": "handle(node, context, sourceFile, file);",
+                                    "line": 110,
+                                    "text": "getCodeStructure(definitionNode, context, sourceFile, definition.fileName);",
                                     "children": [
                                       {
                                         "type": "nested",
                                         "file": "src/index.ts",
-                                        "line": 147,
-                                        "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                        "line": 122,
+                                        "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                         "children": []
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "type": "call",
-                                    "file": "src/index.ts",
-                                    "line": 142,
-                                    "text": "showSyntaxKind(node);",
-                                    "children": [
-                                      {
-                                        "type": "definition",
-                                        "file": "src/index.ts",
-                                        "line": 51,
-                                        "text": "function showSyntaxKind(node: ts.Node) {",
-                                        "children": [
-                                          {
-                                            "type": "call",
-                                            "file": "src/index.ts",
-                                            "line": 55,
-                                            "text": "printInConsole(node.kind);",
-                                            "children": [
-                                              {
-                                                "type": "definition",
-                                                "file": "src/index.ts",
-                                                "line": 14,
-                                                "text": "function printInConsole(message: any) {",
-                                                "children": []
-                                              }
-                                            ]
-                                          }
-                                        ]
                                       }
                                     ]
                                   }
@@ -446,13 +172,28 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 162,
-                            "text": "pushIntoTrees(tree.children, functionTree);",
+                            "line": 143,
+                            "text": "getCodeStructure(propertyAccessExpression.expression, context, sourceFile, file);",
+                            "children": [
+                              {
+                                "type": "nested",
+                                "file": "src/index.ts",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "type": "call",
+                            "file": "src/index.ts",
+                            "line": 144,
+                            "text": "pushIntoTrees(propertyAccessTrees, expressionTree);",
                             "children": [
                               {
                                 "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 58,
+                                "line": 45,
                                 "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
@@ -461,14 +202,75 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 171,
-                            "text": "handle(parameter, context, sourceFile, file);",
+                            "line": 146,
+                            "text": "getCodeStructureOfDefinition(propertyAccessExpression.name, context, file);",
                             "children": [
                               {
-                                "type": "nested",
+                                "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 63,
+                                "text": "function getCodeStructureOfDefinition(node: ts.Node, context: Context, file: string): Tree | Tree[] | undefined {",
+                                "children": [
+                                  {
+                                    "type": "call",
+                                    "file": "src/index.ts",
+                                    "line": 103,
+                                    "text": "getCodeStructure(statement, context, sourceFile, definition.fileName);",
+                                    "children": [
+                                      {
+                                        "type": "nested",
+                                        "file": "src/index.ts",
+                                        "line": 122,
+                                        "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                        "children": []
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "call",
+                                    "file": "src/index.ts",
+                                    "line": 104,
+                                    "text": "pushIntoTrees(tree.children, statementTree);",
+                                    "children": [
+                                      {
+                                        "type": "definition",
+                                        "file": "src/index.ts",
+                                        "line": 45,
+                                        "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
+                                        "children": []
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "call",
+                                    "file": "src/index.ts",
+                                    "line": 110,
+                                    "text": "getCodeStructure(definitionNode, context, sourceFile, definition.fileName);",
+                                    "children": [
+                                      {
+                                        "type": "nested",
+                                        "file": "src/index.ts",
+                                        "line": 122,
+                                        "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                        "children": []
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "call",
+                            "file": "src/index.ts",
+                            "line": 147,
+                            "text": "pushIntoTrees(propertyAccessTrees, nameTree);",
+                            "children": [
+                              {
+                                "type": "definition",
+                                "file": "src/index.ts",
+                                "line": 45,
+                                "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
                             ]
@@ -476,13 +278,150 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 172,
+                            "line": 152,
+                            "text": "getCodeStructureOfDefinition(newExpression.expression, context, file);",
+                            "children": [
+                              {
+                                "type": "definition",
+                                "file": "src/index.ts",
+                                "line": 63,
+                                "text": "function getCodeStructureOfDefinition(node: ts.Node, context: Context, file: string): Tree | Tree[] | undefined {",
+                                "children": [
+                                  {
+                                    "type": "call",
+                                    "file": "src/index.ts",
+                                    "line": 103,
+                                    "text": "getCodeStructure(statement, context, sourceFile, definition.fileName);",
+                                    "children": [
+                                      {
+                                        "type": "nested",
+                                        "file": "src/index.ts",
+                                        "line": 122,
+                                        "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                        "children": []
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "call",
+                                    "file": "src/index.ts",
+                                    "line": 104,
+                                    "text": "pushIntoTrees(tree.children, statementTree);",
+                                    "children": [
+                                      {
+                                        "type": "definition",
+                                        "file": "src/index.ts",
+                                        "line": 45,
+                                        "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
+                                        "children": []
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "call",
+                                    "file": "src/index.ts",
+                                    "line": 110,
+                                    "text": "getCodeStructure(definitionNode, context, sourceFile, definition.fileName);",
+                                    "children": [
+                                      {
+                                        "type": "nested",
+                                        "file": "src/index.ts",
+                                        "line": 122,
+                                        "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                        "children": []
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "call",
+                            "file": "src/index.ts",
+                            "line": 156,
+                            "text": "getCodeStructure(callExpression.expression, context, sourceFile, file);",
+                            "children": [
+                              {
+                                "type": "nested",
+                                "file": "src/index.ts",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "type": "call",
+                            "file": "src/index.ts",
+                            "line": 158,
+                            "text": "showSyntaxKind(callExpression.expression);",
+                            "children": [
+                              {
+                                "type": "definition",
+                                "file": "src/index.ts",
+                                "line": 38,
+                                "text": "function showSyntaxKind(node: ts.Node) {",
+                                "children": [
+                                  {
+                                    "type": "call",
+                                    "file": "src/index.ts",
+                                    "line": 42,
+                                    "text": "printInConsole(node.kind);",
+                                    "children": [
+                                      {
+                                        "type": "definition",
+                                        "file": "src/index.ts",
+                                        "line": 14,
+                                        "text": "function printInConsole(message: any) {",
+                                        "children": []
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "call",
+                            "file": "src/index.ts",
+                            "line": 160,
+                            "text": "pushIntoTrees(tree.children, callTree);",
+                            "children": [
+                              {
+                                "type": "definition",
+                                "file": "src/index.ts",
+                                "line": 45,
+                                "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "type": "call",
+                            "file": "src/index.ts",
+                            "line": 169,
+                            "text": "getCodeStructure(parameter, context, sourceFile, file);",
+                            "children": [
+                              {
+                                "type": "nested",
+                                "file": "src/index.ts",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "type": "call",
+                            "file": "src/index.ts",
+                            "line": 170,
                             "text": "pushIntoTrees(trees, parameterTree);",
                             "children": [
                               {
                                 "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 58,
+                                "line": 45,
                                 "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
@@ -491,14 +430,14 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 179,
-                            "text": "handle(forOfStatement.statement, context, sourceFile, file);",
+                            "line": 177,
+                            "text": "getCodeStructure(forOfStatement.statement, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                 "children": []
                               }
                             ]
@@ -506,14 +445,14 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 183,
-                            "text": "handle(declaration.body, context, sourceFile, file) : undefined;",
+                            "line": 181,
+                            "text": "getCodeStructure(declaration.body, context, sourceFile, file) : undefined;",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                 "children": []
                               }
                             ]
@@ -521,14 +460,14 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 186,
-                            "text": "handle(propertyAssignmentExpression.initializer, context, sourceFile, file);",
+                            "line": 184,
+                            "text": "getCodeStructure(propertyAssignmentExpression.initializer, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                 "children": []
                               }
                             ]
@@ -536,14 +475,14 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 190,
-                            "text": "handle(prefixUnaryExpression.operand, context, sourceFile, file);",
+                            "line": 188,
+                            "text": "getCodeStructure(prefixUnaryExpression.operand, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                 "children": []
                               }
                             ]
@@ -551,14 +490,14 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 195,
-                            "text": "handle(expression.name, context, sourceFile, file);",
+                            "line": 193,
+                            "text": "getCodeStructure(expression.name, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                 "children": []
                               }
                             ]
@@ -566,14 +505,14 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 198,
-                            "text": "handle(exportDeclaration.exportClause, context, sourceFile, file) : undefined;",
+                            "line": 196,
+                            "text": "getCodeStructure(exportDeclaration.exportClause, context, sourceFile, file) : undefined;",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                 "children": []
                               }
                             ]
@@ -581,14 +520,14 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 227,
-                            "text": "handle(expression.expression, context, sourceFile, file) : undefined;",
+                            "line": 225,
+                            "text": "getCodeStructure(expression.expression, context, sourceFile, file) : undefined;",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                 "children": []
                               }
                             ]
@@ -596,14 +535,14 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 234,
-                            "text": "handle(statement, context, sourceFile, file);",
+                            "line": 232,
+                            "text": "getCodeStructure(statement, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                 "children": []
                               }
                             ]
@@ -611,13 +550,13 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 235,
+                            "line": 233,
                             "text": "pushIntoTrees(trees, childTree);",
                             "children": [
                               {
                                 "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 58,
+                                "line": 45,
                                 "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
@@ -626,14 +565,29 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 239,
-                            "text": "handle(ifStatement.expression, context, sourceFile, file);",
+                            "line": 237,
+                            "text": "getCodeStructure(ifStatement.expression, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "type": "call",
+                            "file": "src/index.ts",
+                            "line": 238,
+                            "text": "pushIntoTrees(trees, ifTree);",
+                            "children": [
+                              {
+                                "type": "definition",
+                                "file": "src/index.ts",
+                                "line": 45,
+                                "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
                             ]
@@ -642,28 +596,13 @@
                             "type": "call",
                             "file": "src/index.ts",
                             "line": 240,
-                            "text": "pushIntoTrees(trees, ifTree);",
-                            "children": [
-                              {
-                                "type": "definition",
-                                "file": "src/index.ts",
-                                "line": 58,
-                                "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
-                                "children": []
-                              }
-                            ]
-                          },
-                          {
-                            "type": "call",
-                            "file": "src/index.ts",
-                            "line": 242,
-                            "text": "handle(ifStatement.thenStatement, context, sourceFile, file);",
+                            "text": "getCodeStructure(ifStatement.thenStatement, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                 "children": []
                               }
                             ]
@@ -671,13 +610,13 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 243,
+                            "line": 241,
                             "text": "pushIntoTrees(trees, thenTree);",
                             "children": [
                               {
                                 "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 58,
+                                "line": 45,
                                 "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
@@ -686,14 +625,14 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 246,
-                            "text": "handle(ifStatement.elseStatement, context, sourceFile, file);",
+                            "line": 244,
+                            "text": "getCodeStructure(ifStatement.elseStatement, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                 "children": []
                               }
                             ]
@@ -701,13 +640,13 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 247,
+                            "line": 245,
                             "text": "pushIntoTrees(trees, elseTree);",
                             "children": [
                               {
                                 "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 58,
+                                "line": 45,
                                 "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
@@ -716,14 +655,29 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 251,
-                            "text": "handle(binaryExpression.left, context, sourceFile, file);",
+                            "line": 249,
+                            "text": "getCodeStructure(binaryExpression.left, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "type": "call",
+                            "file": "src/index.ts",
+                            "line": 250,
+                            "text": "pushIntoTrees(trees, leftTree);",
+                            "children": [
+                              {
+                                "type": "definition",
+                                "file": "src/index.ts",
+                                "line": 45,
+                                "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
                             ]
@@ -732,28 +686,13 @@
                             "type": "call",
                             "file": "src/index.ts",
                             "line": 252,
-                            "text": "pushIntoTrees(trees, leftTree);",
-                            "children": [
-                              {
-                                "type": "definition",
-                                "file": "src/index.ts",
-                                "line": 58,
-                                "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
-                                "children": []
-                              }
-                            ]
-                          },
-                          {
-                            "type": "call",
-                            "file": "src/index.ts",
-                            "line": 254,
-                            "text": "handle(binaryExpression.right, context, sourceFile, file);",
+                            "text": "getCodeStructure(binaryExpression.right, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                 "children": []
                               }
                             ]
@@ -761,13 +700,13 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 255,
+                            "line": 253,
                             "text": "pushIntoTrees(trees, rightTree);",
                             "children": [
                               {
                                 "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 58,
+                                "line": 45,
                                 "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
@@ -776,14 +715,14 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 258,
-                            "text": "handle(variableStatement.declarationList, context, sourceFile, file);",
+                            "line": 256,
+                            "text": "getCodeStructure(variableStatement.declarationList, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                 "children": []
                               }
                             ]
@@ -791,13 +730,13 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 259,
+                            "line": 257,
                             "text": "pushIntoTrees(trees, declarationListTree);",
                             "children": [
                               {
                                 "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 58,
+                                "line": 45,
                                 "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
@@ -806,14 +745,14 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 263,
-                            "text": "handle(span, context, sourceFile, file);",
+                            "line": 261,
+                            "text": "getCodeStructure(span, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                 "children": []
                               }
                             ]
@@ -821,13 +760,13 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 264,
+                            "line": 262,
                             "text": "pushIntoTrees(trees, spanTree);",
                             "children": [
                               {
                                 "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 58,
+                                "line": 45,
                                 "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
@@ -836,14 +775,14 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 269,
-                            "text": "handle(element, context, sourceFile, file);",
+                            "line": 267,
+                            "text": "getCodeStructure(element, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                 "children": []
                               }
                             ]
@@ -851,13 +790,13 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 270,
+                            "line": 268,
                             "text": "pushIntoTrees(trees, elementTree);",
                             "children": [
                               {
                                 "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 58,
+                                "line": 45,
                                 "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
@@ -866,14 +805,14 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 275,
-                            "text": "handle(property, context, sourceFile, file);",
+                            "line": 273,
+                            "text": "getCodeStructure(property, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                 "children": []
                               }
                             ]
@@ -881,13 +820,13 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 276,
+                            "line": 274,
                             "text": "pushIntoTrees(trees, propertyTree);",
                             "children": [
                               {
                                 "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 58,
+                                "line": 45,
                                 "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
@@ -896,14 +835,14 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 281,
-                            "text": "handle(element, context, sourceFile, file);",
+                            "line": 279,
+                            "text": "getCodeStructure(element, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                 "children": []
                               }
                             ]
@@ -911,13 +850,13 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 282,
+                            "line": 280,
                             "text": "pushIntoTrees(trees, elementTree);",
                             "children": [
                               {
                                 "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 58,
+                                "line": 45,
                                 "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
@@ -926,14 +865,14 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 287,
-                            "text": "handle(statement, context, sourceFile, file);",
+                            "line": 285,
+                            "text": "getCodeStructure(statement, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                 "children": []
                               }
                             ]
@@ -941,13 +880,13 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 288,
+                            "line": 286,
                             "text": "pushIntoTrees(trees, statementTree);",
                             "children": [
                               {
                                 "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 58,
+                                "line": 45,
                                 "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
@@ -956,14 +895,29 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 292,
-                            "text": "handle(switchStatement.expression, context, sourceFile, file);",
+                            "line": 290,
+                            "text": "getCodeStructure(switchStatement.expression, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "type": "call",
+                            "file": "src/index.ts",
+                            "line": 291,
+                            "text": "pushIntoTrees(trees, switchTree);",
+                            "children": [
+                              {
+                                "type": "definition",
+                                "file": "src/index.ts",
+                                "line": 45,
+                                "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
                             ]
@@ -972,28 +926,13 @@
                             "type": "call",
                             "file": "src/index.ts",
                             "line": 293,
-                            "text": "pushIntoTrees(trees, switchTree);",
-                            "children": [
-                              {
-                                "type": "definition",
-                                "file": "src/index.ts",
-                                "line": 58,
-                                "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
-                                "children": []
-                              }
-                            ]
-                          },
-                          {
-                            "type": "call",
-                            "file": "src/index.ts",
-                            "line": 295,
-                            "text": "handle(switchStatement.caseBlock, context, sourceFile, file);",
+                            "text": "getCodeStructure(switchStatement.caseBlock, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                 "children": []
                               }
                             ]
@@ -1001,13 +940,13 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 296,
+                            "line": 294,
                             "text": "pushIntoTrees(trees, caseTree);",
                             "children": [
                               {
                                 "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 58,
+                                "line": 45,
                                 "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
@@ -1016,14 +955,29 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 299,
-                            "text": "handle(conditionalExpression.whenTrue, context, sourceFile, file);",
+                            "line": 297,
+                            "text": "getCodeStructure(conditionalExpression.whenTrue, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "type": "call",
+                            "file": "src/index.ts",
+                            "line": 298,
+                            "text": "pushIntoTrees(trees, trueTree);",
+                            "children": [
+                              {
+                                "type": "definition",
+                                "file": "src/index.ts",
+                                "line": 45,
+                                "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
                             ]
@@ -1032,28 +986,13 @@
                             "type": "call",
                             "file": "src/index.ts",
                             "line": 300,
-                            "text": "pushIntoTrees(trees, trueTree);",
-                            "children": [
-                              {
-                                "type": "definition",
-                                "file": "src/index.ts",
-                                "line": 58,
-                                "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
-                                "children": []
-                              }
-                            ]
-                          },
-                          {
-                            "type": "call",
-                            "file": "src/index.ts",
-                            "line": 302,
-                            "text": "handle(conditionalExpression.whenFalse, context, sourceFile, file);",
+                            "text": "getCodeStructure(conditionalExpression.whenFalse, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                 "children": []
                               }
                             ]
@@ -1061,13 +1000,13 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 303,
+                            "line": 301,
                             "text": "pushIntoTrees(trees, falseTree);",
                             "children": [
                               {
                                 "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 58,
+                                "line": 45,
                                 "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
@@ -1076,14 +1015,14 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 307,
-                            "text": "handle(clause, context, sourceFile, file);",
+                            "line": 305,
+                            "text": "getCodeStructure(clause, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                 "children": []
                               }
                             ]
@@ -1091,13 +1030,13 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 308,
+                            "line": 306,
                             "text": "pushIntoTrees(trees, clauseTree);",
                             "children": [
                               {
                                 "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 58,
+                                "line": 45,
                                 "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
@@ -1106,14 +1045,14 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 313,
-                            "text": "handle(forStatement.initializer, context, sourceFile, file);",
+                            "line": 311,
+                            "text": "getCodeStructure(forStatement.initializer, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                 "children": []
                               }
                             ]
@@ -1121,13 +1060,13 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 314,
+                            "line": 312,
                             "text": "pushIntoTrees(trees, initializerTree);",
                             "children": [
                               {
                                 "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 58,
+                                "line": 45,
                                 "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
@@ -1136,14 +1075,14 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 318,
-                            "text": "handle(forStatement.condition, context, sourceFile, file);",
+                            "line": 316,
+                            "text": "getCodeStructure(forStatement.condition, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                 "children": []
                               }
                             ]
@@ -1151,13 +1090,13 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 319,
+                            "line": 317,
                             "text": "pushIntoTrees(trees, conditionTree);",
                             "children": [
                               {
                                 "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 58,
+                                "line": 45,
                                 "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
@@ -1166,14 +1105,14 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 323,
-                            "text": "handle(forStatement.incrementor, context, sourceFile, file);",
+                            "line": 321,
+                            "text": "getCodeStructure(forStatement.incrementor, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                 "children": []
                               }
                             ]
@@ -1181,13 +1120,13 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 324,
+                            "line": 322,
                             "text": "pushIntoTrees(trees, incrementorTree);",
                             "children": [
                               {
                                 "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 58,
+                                "line": 45,
                                 "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
@@ -1196,14 +1135,14 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 327,
-                            "text": "handle(forStatement.statement, context, sourceFile, file);",
+                            "line": 325,
+                            "text": "getCodeStructure(forStatement.statement, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                 "children": []
                               }
                             ]
@@ -1211,13 +1150,13 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 328,
+                            "line": 326,
                             "text": "pushIntoTrees(trees, statementTree);",
                             "children": [
                               {
                                 "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 58,
+                                "line": 45,
                                 "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
@@ -1226,14 +1165,14 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 331,
-                            "text": "handle(tryStatement.tryBlock, context, sourceFile, file);",
+                            "line": 329,
+                            "text": "getCodeStructure(tryStatement.tryBlock, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                 "children": []
                               }
                             ]
@@ -1241,13 +1180,13 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 332,
+                            "line": 330,
                             "text": "pushIntoTrees(trees, tryBlockTree);",
                             "children": [
                               {
                                 "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 58,
+                                "line": 45,
                                 "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
@@ -1256,14 +1195,14 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 335,
-                            "text": "handle(tryStatement.catchClause, context, sourceFile, file);",
+                            "line": 333,
+                            "text": "getCodeStructure(tryStatement.catchClause, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                 "children": []
                               }
                             ]
@@ -1271,13 +1210,13 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 336,
+                            "line": 334,
                             "text": "pushIntoTrees(trees, catchClauseTree);",
                             "children": [
                               {
                                 "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 58,
+                                "line": 45,
                                 "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
@@ -1286,14 +1225,14 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 340,
-                            "text": "handle(tryStatement.finallyBlock, context, sourceFile, file);",
+                            "line": 338,
+                            "text": "getCodeStructure(tryStatement.finallyBlock, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                 "children": []
                               }
                             ]
@@ -1301,13 +1240,13 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 341,
+                            "line": 339,
                             "text": "pushIntoTrees(trees, finallyBlockTree);",
                             "children": [
                               {
                                 "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 58,
+                                "line": 45,
                                 "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
@@ -1316,14 +1255,14 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 347,
-                            "text": "handle(declaration.initializer, context, sourceFile, file);",
+                            "line": 345,
+                            "text": "getCodeStructure(declaration.initializer, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                 "children": []
                               }
                             ]
@@ -1331,13 +1270,13 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 348,
+                            "line": 346,
                             "text": "pushIntoTrees(trees, childTree);",
                             "children": [
                               {
                                 "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 58,
+                                "line": 45,
                                 "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
@@ -1346,14 +1285,14 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 354,
-                            "text": "handle(catchClause.variableDeclaration, context, sourceFile, file);",
+                            "line": 352,
+                            "text": "getCodeStructure(catchClause.variableDeclaration, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                 "children": []
                               }
                             ]
@@ -1361,13 +1300,13 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 355,
+                            "line": 353,
                             "text": "pushIntoTrees(trees, variableDeclarationTree);",
                             "children": [
                               {
                                 "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 58,
+                                "line": 45,
                                 "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
@@ -1376,14 +1315,14 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 358,
-                            "text": "handle(catchClause.block, context, sourceFile, file);",
+                            "line": 356,
+                            "text": "getCodeStructure(catchClause.block, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                 "children": []
                               }
                             ]
@@ -1391,13 +1330,13 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 359,
+                            "line": 357,
                             "text": "pushIntoTrees(trees, blockTree);",
                             "children": [
                               {
                                 "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 58,
+                                "line": 45,
                                 "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
@@ -1406,14 +1345,29 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 362,
-                            "text": "handle(forInStatement.initializer, context, sourceFile, file);",
+                            "line": 360,
+                            "text": "getCodeStructure(forInStatement.initializer, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "type": "call",
+                            "file": "src/index.ts",
+                            "line": 361,
+                            "text": "pushIntoTrees(trees, initializerTree);",
+                            "children": [
+                              {
+                                "type": "definition",
+                                "file": "src/index.ts",
+                                "line": 45,
+                                "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
                             ]
@@ -1422,13 +1376,13 @@
                             "type": "call",
                             "file": "src/index.ts",
                             "line": 363,
-                            "text": "pushIntoTrees(trees, initializerTree);",
+                            "text": "getCodeStructure(forInStatement.expression, context, sourceFile, file);",
                             "children": [
                               {
-                                "type": "definition",
+                                "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 58,
-                                "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                 "children": []
                               }
                             ]
@@ -1436,14 +1390,14 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 365,
-                            "text": "handle(forInStatement.expression, context, sourceFile, file);",
+                            "line": 364,
+                            "text": "pushIntoTrees(trees, expressionTree);",
                             "children": [
                               {
-                                "type": "nested",
+                                "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 45,
+                                "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
                             ]
@@ -1452,28 +1406,13 @@
                             "type": "call",
                             "file": "src/index.ts",
                             "line": 366,
-                            "text": "pushIntoTrees(trees, expressionTree);",
-                            "children": [
-                              {
-                                "type": "definition",
-                                "file": "src/index.ts",
-                                "line": 58,
-                                "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
-                                "children": []
-                              }
-                            ]
-                          },
-                          {
-                            "type": "call",
-                            "file": "src/index.ts",
-                            "line": 368,
-                            "text": "handle(forInStatement.statement, context, sourceFile, file);",
+                            "text": "getCodeStructure(forInStatement.statement, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                 "children": []
                               }
                             ]
@@ -1481,13 +1420,13 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 369,
+                            "line": 367,
                             "text": "pushIntoTrees(trees, statementTree);",
                             "children": [
                               {
                                 "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 58,
+                                "line": 45,
                                 "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
@@ -1496,14 +1435,29 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 372,
-                            "text": "handle(whileStatement.statement, context, sourceFile, file);",
+                            "line": 370,
+                            "text": "getCodeStructure(whileStatement.statement, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "type": "call",
+                            "file": "src/index.ts",
+                            "line": 371,
+                            "text": "pushIntoTrees(trees, statementTree);",
+                            "children": [
+                              {
+                                "type": "definition",
+                                "file": "src/index.ts",
+                                "line": 45,
+                                "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
                             ]
@@ -1512,28 +1466,13 @@
                             "type": "call",
                             "file": "src/index.ts",
                             "line": 373,
-                            "text": "pushIntoTrees(trees, statementTree);",
-                            "children": [
-                              {
-                                "type": "definition",
-                                "file": "src/index.ts",
-                                "line": 58,
-                                "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
-                                "children": []
-                              }
-                            ]
-                          },
-                          {
-                            "type": "call",
-                            "file": "src/index.ts",
-                            "line": 375,
-                            "text": "handle(whileStatement.expression, context, sourceFile, file);",
+                            "text": "getCodeStructure(whileStatement.expression, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                 "children": []
                               }
                             ]
@@ -1541,13 +1480,13 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 376,
+                            "line": 374,
                             "text": "pushIntoTrees(trees, expressionTree);",
                             "children": [
                               {
                                 "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 58,
+                                "line": 45,
                                 "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
@@ -1556,14 +1495,14 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 379,
-                            "text": "handle(elementAccessExpression.expression, context, sourceFile, file);",
+                            "line": 377,
+                            "text": "getCodeStructure(elementAccessExpression.expression, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                 "children": []
                               }
                             ]
@@ -1571,13 +1510,13 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 380,
+                            "line": 378,
                             "text": "pushIntoTrees(trees, statementTree);",
                             "children": [
                               {
                                 "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 58,
+                                "line": 45,
                                 "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
@@ -1586,14 +1525,14 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 383,
-                            "text": "handle(elementAccessExpression.argumentExpression, context, sourceFile, file);",
+                            "line": 381,
+                            "text": "getCodeStructure(elementAccessExpression.argumentExpression, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                 "children": []
                               }
                             ]
@@ -1601,13 +1540,13 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 384,
+                            "line": 382,
                             "text": "pushIntoTrees(trees, argumentExpressionTree);",
                             "children": [
                               {
                                 "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 58,
+                                "line": 45,
                                 "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
@@ -1616,14 +1555,14 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 388,
-                            "text": "handle(functionExpression.body, context, sourceFile, file);",
+                            "line": 386,
+                            "text": "getCodeStructure(functionExpression.body, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                 "children": []
                               }
                             ]
@@ -1631,13 +1570,13 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 389,
+                            "line": 387,
                             "text": "pushIntoTrees(trees, bodyTree);",
                             "children": [
                               {
                                 "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 58,
+                                "line": 45,
                                 "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
@@ -1646,14 +1585,14 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 392,
-                            "text": "handle(functionExpression.name, context, sourceFile, file);",
+                            "line": 390,
+                            "text": "getCodeStructure(functionExpression.name, context, sourceFile, file);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 147,
-                                "text": "function handle(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
+                                "line": 122,
+                                "text": "function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {",
                                 "children": []
                               }
                             ]
@@ -1661,13 +1600,13 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 393,
+                            "line": 391,
                             "text": "pushIntoTrees(trees, nameTree);",
                             "children": [
                               {
                                 "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 58,
+                                "line": 45,
                                 "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                                 "children": []
                               }
@@ -1676,19 +1615,19 @@
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 418,
+                            "line": 416,
                             "text": "showSyntaxKind(node);",
                             "children": [
                               {
                                 "type": "definition",
                                 "file": "src/index.ts",
-                                "line": 51,
+                                "line": 38,
                                 "text": "function showSyntaxKind(node: ts.Node) {",
                                 "children": [
                                   {
                                     "type": "call",
                                     "file": "src/index.ts",
-                                    "line": 55,
+                                    "line": 42,
                                     "text": "printInConsole(node.kind);",
                                     "children": [
                                       {
@@ -1711,13 +1650,13 @@
                   {
                     "type": "call",
                     "file": "src/index.ts",
-                    "line": 538,
+                    "line": 536,
                     "text": "pushIntoTrees(trees, tree);",
                     "children": [
                       {
                         "type": "definition",
                         "file": "src/index.ts",
-                        "line": 58,
+                        "line": 45,
                         "text": "function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {",
                         "children": []
                       }
@@ -1726,7 +1665,7 @@
                   {
                     "type": "call",
                     "file": "src/index.ts",
-                    "line": 546,
+                    "line": 544,
                     "text": "printInConsole(`${(Date.now() - now) / 1000.0} s`);",
                     "children": [
                       {
@@ -1741,25 +1680,25 @@
                   {
                     "type": "call",
                     "file": "src/index.ts",
-                    "line": 575,
+                    "line": 573,
                     "text": "getJsonResult(tree)),",
                     "children": [
                       {
                         "type": "definition",
                         "file": "src/index.ts",
-                        "line": 444,
+                        "line": 442,
                         "text": "function getJsonResult(tree: Tree): JsonResult {",
                         "children": [
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 456,
+                            "line": 454,
                             "text": "getJsonResult(child));",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 444,
+                                "line": 442,
                                 "text": "function getJsonResult(tree: Tree): JsonResult {",
                                 "children": []
                               }
@@ -1772,7 +1711,7 @@
                   {
                     "type": "call",
                     "file": "src/index.ts",
-                    "line": 580,
+                    "line": 578,
                     "text": "mkdirp(dirname, error => {",
                     "children": [
                       {
@@ -1787,7 +1726,7 @@
                   {
                     "type": "call",
                     "file": "src/index.ts",
-                    "line": 582,
+                    "line": 580,
                     "text": "printInConsole(error);",
                     "children": [
                       {
@@ -1795,6 +1734,21 @@
                         "file": "src/index.ts",
                         "line": 14,
                         "text": "function printInConsole(message: any) {",
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "type": "call",
+                    "file": "src/index.ts",
+                    "line": 590,
+                    "text": "mkdirp(dirname, error => {",
+                    "children": [
+                      {
+                        "type": "definition",
+                        "file": "node_modules/@types/mkdirp/index.d.ts",
+                        "line": 7,
+                        "text": "declare function mkdirp(dir: string, cb: (err: NodeJS.ErrnoException, made: string) => void): void;",
                         "children": []
                       }
                     ]
@@ -1803,21 +1757,6 @@
                     "type": "call",
                     "file": "src/index.ts",
                     "line": 592,
-                    "text": "mkdirp(dirname, error => {",
-                    "children": [
-                      {
-                        "type": "definition",
-                        "file": "node_modules/@types/mkdirp/index.d.ts",
-                        "line": 7,
-                        "text": "declare function mkdirp(dir: string, cb: (err: NodeJS.ErrnoException, made: string) => void): void;",
-                        "children": []
-                      }
-                    ]
-                  },
-                  {
-                    "type": "call",
-                    "file": "src/index.ts",
-                    "line": 594,
                     "text": "printInConsole(error);",
                     "children": [
                       {
@@ -1832,25 +1771,25 @@
                   {
                     "type": "call",
                     "file": "src/index.ts",
-                    "line": 611,
+                    "line": 609,
                     "text": "getTextResult(tree, 1);",
                     "children": [
                       {
                         "type": "definition",
                         "file": "src/index.ts",
-                        "line": 425,
+                        "line": 423,
                         "text": "function getTextResult(tree: Tree, intent: number) {",
                         "children": [
                           {
                             "type": "call",
                             "file": "src/index.ts",
-                            "line": 439,
+                            "line": 437,
                             "text": "getTextResult(child, intent + 1);",
                             "children": [
                               {
                                 "type": "nested",
                                 "file": "src/index.ts",
-                                "line": 425,
+                                "line": 423,
                                 "text": "function getTextResult(tree: Tree, intent: number) {",
                                 "children": []
                               }
@@ -1863,7 +1802,7 @@
                   {
                     "type": "call",
                     "file": "src/index.ts",
-                    "line": 616,
+                    "line": 614,
                     "text": "mkdirp(dirname, error => {",
                     "children": [
                       {
@@ -1878,7 +1817,7 @@
                   {
                     "type": "call",
                     "file": "src/index.ts",
-                    "line": 618,
+                    "line": 616,
                     "text": "printInConsole(error);",
                     "children": [
                       {
@@ -1899,7 +1838,7 @@
       {
         "type": "call",
         "file": "src/index.ts",
-        "line": 628,
+        "line": 626,
         "text": "printInConsole(\"code-structure success.\");",
         "children": [
           {
@@ -1914,7 +1853,7 @@
       {
         "type": "call",
         "file": "src/index.ts",
-        "line": 630,
+        "line": 628,
         "text": "printInConsole(error);",
         "children": [
           {
