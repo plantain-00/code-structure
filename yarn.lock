@@ -3167,9 +3167,9 @@ tough-cookie@~2.3.0:
   dependencies:
     punycode "^1.4.1"
 
-tree-component@3.2.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/tree-component/-/tree-component-3.2.1.tgz#788820378453506c3793c07802f7ac563b007e97"
+tree-component@3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/tree-component/-/tree-component-3.3.0.tgz#ac59daf4392b43e1a0377e98a3d814642d337c59"
   dependencies:
     "@types/node" "*"
     tslib "1"

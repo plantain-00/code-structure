@@ -5,12 +5,32 @@ import { JsonDataResult, JsonResult, JsonResultType } from "../src/types";
 
 import { indexTemplateHtml } from "./variables";
 
+@Component({
+    template: `<span><span :style="color"><template v-if="showFile">{{data.value.file}} </template>{{data.value.line}}</span> {{data.value.text}}</span>`,
+    props: ["data"],
+})
+class CustomNode extends Vue {
+    data: TreeData<Value>;
+
+    get showFile() {
+        return this.data.value!.type !== JsonResultType.call;
+    }
+    get color() {
+        if (this.data.value!.type === JsonResultType.call) {
+            return { color: "red" };
+        } else if (this.data.value!.type === JsonResultType.definition) {
+            return { color: "green" };
+        }
+        return { color: "blue" };
+    }
+}
+Vue.component("custom-node", CustomNode);
+
 declare const data: JsonDataResult[];
 
 function jsonResultToTreeData(jsonResult: JsonResult): TreeData<Value> {
-    const text = jsonResult.type === "call" ? `${jsonResult.line} ${jsonResult.text}` : `${jsonResult.file} ${jsonResult.line} ${jsonResult.text}`;
     const treeData: TreeData = {
-        text,
+        component: "custom-node",
         icon: false,
         value: {
             type: jsonResult.type,

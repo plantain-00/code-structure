@@ -41,7 +41,7 @@
     "puppeteer": "0.10.2",
     "rimraf": "2.6.2",
     "standard": "10.0.3",
-    "tree-component": "3.2.1",
+    "tree-component": "3.3.0",
     "tslint": "5.7.0",
     "vue": "2.4.2",
     "vue-class-component": "5.0.2",
