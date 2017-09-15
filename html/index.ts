@@ -27,6 +27,7 @@ class CustomNode extends Vue {
 Vue.component("custom-node", CustomNode);
 
 declare const data: JsonDataResult[];
+declare const fullTexts: string[];
 
 function jsonResultToTreeData(jsonResult: JsonResult): TreeData<Value> {
     const treeData: TreeData = {
@@ -37,7 +38,7 @@ function jsonResultToTreeData(jsonResult: JsonResult): TreeData<Value> {
             file: jsonResult.file,
             line: jsonResult.line,
             text: jsonResult.text,
-            fullText: jsonResult.fullText,
+            fullText: fullTexts[jsonResult.fullTextIndex],
         },
         state: {
             opened: false,

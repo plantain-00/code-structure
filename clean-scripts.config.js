@@ -9,9 +9,9 @@ module.exports = {
     'tsc -p src/'
   ],
   lint: {
-    ts: `tslint "src/**/*.ts"`,
+    ts: `tslint "src/**/*.ts" "html/**/*.ts"`,
     js: `standard "**/*.config.js"`,
-    export: `no-unused-export "src/**/*.ts" "spec/*.ts"`
+    export: `no-unused-export "src/**/*.ts" "html/**/*.ts" "spec/*.ts"`
   },
   html: {
     js: [
@@ -26,7 +26,7 @@ module.exports = {
   test: [
     'tsc -p spec',
     'jasmine',
-    `node dist/index.js src/*.ts -o demo/result.txt -o demo/result.json -o demo/result.html --exclude src/*.d.ts`,
+    `node dist/index.js src/*.ts -o demo/result.html --exclude src/*.d.ts`,
     async () => {
       const { createServer } = require('http-server')
       const puppeteer = require('puppeteer')

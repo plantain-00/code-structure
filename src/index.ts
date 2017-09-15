@@ -423,36 +423,25 @@ function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.Source
     }
 }
 
-function getTextResult(tree: Tree, intent: number) {
-    const startPosition = tree.node.getStart(tree.sourceFile);
-    const { line } = ts.getLineAndCharacterOfPosition(tree.sourceFile, startPosition);
-    const text = tree.sourceFile.text.substring(startPosition, tree.sourceFile.getLineEndOfPosition(startPosition)).trim();
-    let textResult = "";
-    if (tree.type === JsonResultType.call) {
-        textResult += `${"  ".repeat(intent)}${line + 1} ${text}\n`;
-    } else if (tree.type === JsonResultType.definition) {
-        textResult += `${"  ".repeat(intent)}${text} ${tree.file} ${line + 1}\n`;
-    } else if (tree.type === JsonResultType.nested) {
-        textResult += `${"  ".repeat(intent)}${text} ${tree.file} ${line + 1}\n`;
-    }
-
-    for (const child of tree.children) {
-        textResult += getTextResult(child, intent + 1);
-    }
-    return textResult;
-}
+const fullTexts: string[] = [];
 
 function getJsonResult(tree: Tree): JsonResult {
     const startPosition = tree.node.getStart(tree.sourceFile);
     const { line } = ts.getLineAndCharacterOfPosition(tree.sourceFile, startPosition);
     const text = tree.sourceFile.text.substring(startPosition, tree.sourceFile.getLineEndOfPosition(startPosition)).trim();
+    const fullText = tree.node.getText(tree.sourceFile);
+    let fullTextIndex = fullTexts.indexOf(fullText);
+    if (fullTextIndex === -1) {
+        fullTextIndex = fullTexts.length;
+        fullTexts.push(fullText);
+    }
     const jsonResult: JsonResult = {
         type: tree.type,
         file: tree.file,
         line,
         text,
         children: [],
-        fullText: tree.node.getText(tree.sourceFile),
+        fullTextIndex,
     };
     for (const child of tree.children) {
         jsonResult.children.push(getJsonResult(child));
@@ -497,6 +486,14 @@ async function executeCommandLine() {
     }
 
     const out: string | string | undefined = argv.o;
+    let htmlOutput: string;
+    if (typeof out === "string") {
+        htmlOutput = out;
+    } else if (Array.isArray(out) && out.length > 0) {
+        htmlOutput = out[0];
+    } else {
+        throw new Error("Output file not found.");
+    }
 
     const compilerOptions: ts.CompilerOptions = { target: ts.ScriptTarget.ESNext, allowJs: true };
     const languageService = ts.createLanguageService({
@@ -551,83 +548,24 @@ async function executeCommandLine() {
 
     printInConsole(`${(Date.now() - now) / 1000.0} s`);
 
-    let jsonOutput: string[] = [];
-    let htmlOutput: string[] = [];
-    let othersOutput: string[] = [];
-    let outPaths: string[] = [];
-    if (typeof out === "string") {
-        outPaths.push(out);
-    } else if (Array.isArray(out)) {
-        outPaths = out;
-    }
-    for (const outpath of outPaths) {
-        if (typeof outpath === "string") {
-            if (outpath.endsWith(".json")) {
-                jsonOutput.push(outpath);
-            } else if (outpath.endsWith(".html")) {
-                htmlOutput.push(outpath);
-            } else {
-                othersOutput.push(outpath);
+    const jsonResult: JsonDataResult[] = results.map(result => ({
+        file: result.file,
+        results: result.trees.map(tree => getJsonResult(tree)),
+    }));
+    const dirname = path.dirname(htmlOutput);
+    mkdirp(dirname, error => {
+        if (error) {
+            printInConsole(error);
+        } else {
+            const dataStream = fs.createWriteStream(path.resolve(dirname, "data.bundle.js"));
+            dataStream.write(`var fullTexts = ${JSON.stringify(fullTexts, null, "  ")};\n`);
+            dataStream.write(`var data = ${JSON.stringify(jsonResult, null, "  ")};`);
+            fs.createReadStream(path.resolve(__dirname, "../html/index.html")).pipe(fs.createWriteStream(htmlOutput));
+            for (const filename of ["index.bundle.js", "vendor.bundle.js", "vendor.bundle.css"]) {
+                fs.createReadStream(path.resolve(__dirname, `../html/${filename}`)).pipe(fs.createWriteStream(path.resolve(dirname, filename)));
             }
         }
-    }
-    jsonOutput = uniq(jsonOutput);
-    htmlOutput = uniq(htmlOutput);
-    othersOutput = uniq(othersOutput);
-
-    if (jsonOutput.length > 0 || htmlOutput.length > 0) {
-        const jsonResult: JsonDataResult[] = results.map(result => ({
-            file: result.file,
-            results: result.trees.map(tree => getJsonResult(tree)),
-        }));
-        if (jsonOutput.length > 0) {
-            for (const outpath of jsonOutput) {
-                const dirname = path.dirname(outpath);
-                mkdirp(dirname, error => {
-                    if (error) {
-                        printInConsole(error);
-                    } else {
-                        fs.writeFileSync(outpath, JSON.stringify(jsonResult, null, "  "));
-                    }
-                });
-            }
-        }
-        if (htmlOutput.length > 0) {
-            for (const outpath of htmlOutput) {
-                const dirname = path.dirname(outpath);
-                mkdirp(dirname, error => {
-                    if (error) {
-                        printInConsole(error);
-                    } else {
-                        fs.createWriteStream(path.resolve(dirname, "data.bundle.js")).write(`var data = ${JSON.stringify(jsonResult)};`);
-                        fs.createReadStream(path.resolve(__dirname, "../html/index.html")).pipe(fs.createWriteStream(outpath));
-                        for (const filename of ["index.bundle.js", "vendor.bundle.js", "vendor.bundle.css"]) {
-                            fs.createReadStream(path.resolve(__dirname, `../html/${filename}`)).pipe(fs.createWriteStream(path.resolve(dirname, filename)));
-                        }
-                    }
-                });
-            }
-        }
-    }
-    if (othersOutput.length > 0) {
-        let textResult = "";
-        for (const result of results) {
-            textResult += `${result.file}\n`;
-            for (const tree of result.trees) {
-                textResult += getTextResult(tree, 1);
-            }
-        }
-        for (const outpath of othersOutput) {
-            const dirname = path.dirname(outpath);
-            mkdirp(dirname, error => {
-                if (error) {
-                    printInConsole(error);
-                } else {
-                    fs.writeFileSync(outpath, textResult);
-                }
-            });
-        }
-    }
+    });
 }
 
 executeCommandLine().then(() => {
