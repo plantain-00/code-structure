@@ -88,20 +88,23 @@ function getCodeStructureOfDefinition(node: ts.Node, context: Context, file: str
                 } else {
                     if (definitionNode.kind === ts.SyntaxKind.FunctionDeclaration) {
                         const declaration = definitionNode as ts.FunctionDeclaration;
-                        tree = {
-                            node: declaration,
-                            sourceFile,
-                            type: JsonResultType.definition,
-                            children: [],
-                            file: definition.fileName,
-                        };
-                        if (declaration.body) {
-                            context.nodes.push(definitionNode);
-                            for (const statement of declaration.body.statements) {
-                                const statementTree = getCodeStructure(statement, context, sourceFile, definition.fileName);
-                                pushIntoTrees(tree.children, statementTree);
+                        if (!declaration.modifiers
+                            || declaration.modifiers.every(m => m.kind !== ts.SyntaxKind.DeclareKeyword)) {
+                            tree = {
+                                node: declaration,
+                                sourceFile,
+                                type: JsonResultType.definition,
+                                children: [],
+                                file: definition.fileName,
+                            };
+                            if (declaration.body) {
+                                context.nodes.push(definitionNode);
+                                for (const statement of declaration.body.statements) {
+                                    const statementTree = getCodeStructure(statement, context, sourceFile, definition.fileName);
+                                    pushIntoTrees(tree.children, statementTree);
+                                }
+                                context.nodes.pop();
                             }
-                            context.nodes.pop();
                         }
                     } else {
                         context.nodes.push(definitionNode);

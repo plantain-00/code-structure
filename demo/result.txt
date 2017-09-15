@@ -1,250 +1,240 @@
 src/index.ts
-  630 executeCommandLine().then(() => {
-    630 executeCommandLine().then(() => {
-      async function executeCommandLine() { src/index.ts 473
-        474 minimist(process.argv.slice(2), { "--": true });
-          declare function minimist(args?: string[], opts?: minimist.Opts): minimist.ParsedArgs; node_modules/@types/minimist/index.d.ts 12
-        478 showToolVersion();
+  633 executeCommandLine().then(() => {
+    633 executeCommandLine().then(() => {
+      async function executeCommandLine() { src/index.ts 476
+        481 showToolVersion();
           function showToolVersion() { src/index.ts 23
             24 printInConsole(`Version: ${packageJson.version}`);
               function printInConsole(message: any) { src/index.ts 15
-        484 globAsync(file)))));
+        487 globAsync(file)))));
           function globAsync(pattern: string) { src/index.ts 27
-        489 minimatch(file, excludeFile)));
-          declare function M(target: string, pattern: string, options?: M.IOptions): boolean; node_modules/@types/minimatch/index.d.ts 10
-        493 printInConsole(file);
+        496 printInConsole(file);
           function printInConsole(message: any) { src/index.ts 15
-        536 getCodeStructure(node, {
-          function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            137 getCodeStructureOfDefinition(identifier, context, file);
+        539 getCodeStructure(node, {
+          function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            140 getCodeStructureOfDefinition(identifier, context, file);
               function getCodeStructureOfDefinition(node: ts.Node, context: Context, file: string): Tree | Tree[] | undefined { src/index.ts 61
-                101 getCodeStructure(statement, context, sourceFile, definition.fileName);
-                  function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-                102 pushIntoTrees(tree.children, statementTree);
+                103 getCodeStructure(statement, context, sourceFile, definition.fileName);
+                  function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+                104 pushIntoTrees(tree.children, statementTree);
                   function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-                108 getCodeStructure(definitionNode, context, sourceFile, definition.fileName);
-                  function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            141 getCodeStructure(propertyAccessExpression.expression, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            142 pushIntoTrees(propertyAccessTrees, expressionTree);
+                111 getCodeStructure(definitionNode, context, sourceFile, definition.fileName);
+                  function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            144 getCodeStructure(propertyAccessExpression.expression, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            145 pushIntoTrees(propertyAccessTrees, expressionTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            144 getCodeStructureOfDefinition(propertyAccessExpression.name, context, file);
+            147 getCodeStructureOfDefinition(propertyAccessExpression.name, context, file);
               function getCodeStructureOfDefinition(node: ts.Node, context: Context, file: string): Tree | Tree[] | undefined { src/index.ts 61
-                101 getCodeStructure(statement, context, sourceFile, definition.fileName);
-                  function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-                102 pushIntoTrees(tree.children, statementTree);
+                103 getCodeStructure(statement, context, sourceFile, definition.fileName);
+                  function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+                104 pushIntoTrees(tree.children, statementTree);
                   function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-                108 getCodeStructure(definitionNode, context, sourceFile, definition.fileName);
-                  function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            145 pushIntoTrees(propertyAccessTrees, nameTree);
+                111 getCodeStructure(definitionNode, context, sourceFile, definition.fileName);
+                  function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            148 pushIntoTrees(propertyAccessTrees, nameTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            150 getCodeStructureOfDefinition(newExpression.expression, context, file);
+            153 getCodeStructureOfDefinition(newExpression.expression, context, file);
               function getCodeStructureOfDefinition(node: ts.Node, context: Context, file: string): Tree | Tree[] | undefined { src/index.ts 61
-                101 getCodeStructure(statement, context, sourceFile, definition.fileName);
-                  function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-                102 pushIntoTrees(tree.children, statementTree);
+                103 getCodeStructure(statement, context, sourceFile, definition.fileName);
+                  function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+                104 pushIntoTrees(tree.children, statementTree);
                   function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-                108 getCodeStructure(definitionNode, context, sourceFile, definition.fileName);
-                  function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            154 getCodeStructure(callExpression.expression, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            156 showSyntaxKind(callExpression.expression);
+                111 getCodeStructure(definitionNode, context, sourceFile, definition.fileName);
+                  function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            157 getCodeStructure(callExpression.expression, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            159 showSyntaxKind(callExpression.expression);
               function showSyntaxKind(node: ts.Node) { src/index.ts 39
                 40 printInConsole(node.kind);
                   function printInConsole(message: any) { src/index.ts 15
-            158 pushIntoTrees(tree.children, callTree);
+            161 pushIntoTrees(tree.children, callTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            167 getCodeStructure(parameter, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            168 pushIntoTrees(trees, parameterTree);
+            170 getCodeStructure(parameter, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            171 pushIntoTrees(trees, parameterTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            175 getCodeStructure(forOfStatement.statement, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            179 getCodeStructure(declaration.body, context, sourceFile, file) : undefined;
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            182 getCodeStructure(propertyAssignmentExpression.initializer, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            186 getCodeStructure(prefixUnaryExpression.operand, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            191 getCodeStructure(expression.name, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            194 getCodeStructure(exportDeclaration.exportClause, context, sourceFile, file) : undefined;
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            225 getCodeStructure(expression.expression, context, sourceFile, file) : undefined;
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            232 getCodeStructure(statement, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            233 pushIntoTrees(trees, childTree);
+            178 getCodeStructure(forOfStatement.statement, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            182 getCodeStructure(declaration.body, context, sourceFile, file) : undefined;
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            185 getCodeStructure(propertyAssignmentExpression.initializer, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            189 getCodeStructure(prefixUnaryExpression.operand, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            194 getCodeStructure(expression.name, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            197 getCodeStructure(exportDeclaration.exportClause, context, sourceFile, file) : undefined;
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            228 getCodeStructure(expression.expression, context, sourceFile, file) : undefined;
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            235 getCodeStructure(statement, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            236 pushIntoTrees(trees, childTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            237 getCodeStructure(ifStatement.expression, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            238 pushIntoTrees(trees, ifTree);
+            240 getCodeStructure(ifStatement.expression, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            241 pushIntoTrees(trees, ifTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            240 getCodeStructure(ifStatement.thenStatement, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            241 pushIntoTrees(trees, thenTree);
+            243 getCodeStructure(ifStatement.thenStatement, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            244 pushIntoTrees(trees, thenTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            244 getCodeStructure(ifStatement.elseStatement, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            245 pushIntoTrees(trees, elseTree);
+            247 getCodeStructure(ifStatement.elseStatement, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            248 pushIntoTrees(trees, elseTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            249 getCodeStructure(binaryExpression.left, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            250 pushIntoTrees(trees, leftTree);
+            252 getCodeStructure(binaryExpression.left, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            253 pushIntoTrees(trees, leftTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            252 getCodeStructure(binaryExpression.right, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            253 pushIntoTrees(trees, rightTree);
+            255 getCodeStructure(binaryExpression.right, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            256 pushIntoTrees(trees, rightTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            256 getCodeStructure(variableStatement.declarationList, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            257 pushIntoTrees(trees, declarationListTree);
+            259 getCodeStructure(variableStatement.declarationList, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            260 pushIntoTrees(trees, declarationListTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            261 getCodeStructure(span, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            262 pushIntoTrees(trees, spanTree);
+            264 getCodeStructure(span, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            265 pushIntoTrees(trees, spanTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            267 getCodeStructure(element, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            268 pushIntoTrees(trees, elementTree);
+            270 getCodeStructure(element, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            271 pushIntoTrees(trees, elementTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            273 getCodeStructure(property, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            274 pushIntoTrees(trees, propertyTree);
+            276 getCodeStructure(property, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            277 pushIntoTrees(trees, propertyTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            279 getCodeStructure(element, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            280 pushIntoTrees(trees, elementTree);
+            282 getCodeStructure(element, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            283 pushIntoTrees(trees, elementTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            285 getCodeStructure(statement, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            286 pushIntoTrees(trees, statementTree);
+            288 getCodeStructure(statement, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            289 pushIntoTrees(trees, statementTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            290 getCodeStructure(switchStatement.expression, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            291 pushIntoTrees(trees, switchTree);
+            293 getCodeStructure(switchStatement.expression, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            294 pushIntoTrees(trees, switchTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            293 getCodeStructure(switchStatement.caseBlock, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            294 pushIntoTrees(trees, caseTree);
+            296 getCodeStructure(switchStatement.caseBlock, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            297 pushIntoTrees(trees, caseTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            297 getCodeStructure(conditionalExpression.whenTrue, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            298 pushIntoTrees(trees, trueTree);
+            300 getCodeStructure(conditionalExpression.whenTrue, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            301 pushIntoTrees(trees, trueTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            300 getCodeStructure(conditionalExpression.whenFalse, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            301 pushIntoTrees(trees, falseTree);
+            303 getCodeStructure(conditionalExpression.whenFalse, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            304 pushIntoTrees(trees, falseTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            305 getCodeStructure(clause, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            306 pushIntoTrees(trees, clauseTree);
+            308 getCodeStructure(clause, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            309 pushIntoTrees(trees, clauseTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            311 getCodeStructure(forStatement.initializer, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            312 pushIntoTrees(trees, initializerTree);
+            314 getCodeStructure(forStatement.initializer, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            315 pushIntoTrees(trees, initializerTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            316 getCodeStructure(forStatement.condition, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            317 pushIntoTrees(trees, conditionTree);
+            319 getCodeStructure(forStatement.condition, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            320 pushIntoTrees(trees, conditionTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            321 getCodeStructure(forStatement.incrementor, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            322 pushIntoTrees(trees, incrementorTree);
+            324 getCodeStructure(forStatement.incrementor, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            325 pushIntoTrees(trees, incrementorTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            325 getCodeStructure(forStatement.statement, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            326 pushIntoTrees(trees, statementTree);
+            328 getCodeStructure(forStatement.statement, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            329 pushIntoTrees(trees, statementTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            329 getCodeStructure(tryStatement.tryBlock, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            330 pushIntoTrees(trees, tryBlockTree);
+            332 getCodeStructure(tryStatement.tryBlock, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            333 pushIntoTrees(trees, tryBlockTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            333 getCodeStructure(tryStatement.catchClause, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            334 pushIntoTrees(trees, catchClauseTree);
+            336 getCodeStructure(tryStatement.catchClause, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            337 pushIntoTrees(trees, catchClauseTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            338 getCodeStructure(tryStatement.finallyBlock, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            339 pushIntoTrees(trees, finallyBlockTree);
+            341 getCodeStructure(tryStatement.finallyBlock, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            342 pushIntoTrees(trees, finallyBlockTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            345 getCodeStructure(declaration.initializer, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            346 pushIntoTrees(trees, childTree);
+            348 getCodeStructure(declaration.initializer, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            349 pushIntoTrees(trees, childTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            352 getCodeStructure(catchClause.variableDeclaration, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            353 pushIntoTrees(trees, variableDeclarationTree);
+            355 getCodeStructure(catchClause.variableDeclaration, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            356 pushIntoTrees(trees, variableDeclarationTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            356 getCodeStructure(catchClause.block, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            357 pushIntoTrees(trees, blockTree);
+            359 getCodeStructure(catchClause.block, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            360 pushIntoTrees(trees, blockTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            360 getCodeStructure(forInStatement.initializer, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            361 pushIntoTrees(trees, initializerTree);
+            363 getCodeStructure(forInStatement.initializer, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            364 pushIntoTrees(trees, initializerTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            363 getCodeStructure(forInStatement.expression, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            364 pushIntoTrees(trees, expressionTree);
+            366 getCodeStructure(forInStatement.expression, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            367 pushIntoTrees(trees, expressionTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            366 getCodeStructure(forInStatement.statement, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            367 pushIntoTrees(trees, statementTree);
+            369 getCodeStructure(forInStatement.statement, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            370 pushIntoTrees(trees, statementTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            370 getCodeStructure(whileStatement.statement, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            371 pushIntoTrees(trees, statementTree);
+            373 getCodeStructure(whileStatement.statement, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            374 pushIntoTrees(trees, statementTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            373 getCodeStructure(whileStatement.expression, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            374 pushIntoTrees(trees, expressionTree);
+            376 getCodeStructure(whileStatement.expression, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            377 pushIntoTrees(trees, expressionTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            377 getCodeStructure(elementAccessExpression.expression, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            378 pushIntoTrees(trees, statementTree);
+            380 getCodeStructure(elementAccessExpression.expression, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            381 pushIntoTrees(trees, statementTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            381 getCodeStructure(elementAccessExpression.argumentExpression, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            382 pushIntoTrees(trees, argumentExpressionTree);
+            384 getCodeStructure(elementAccessExpression.argumentExpression, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            385 pushIntoTrees(trees, argumentExpressionTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            386 getCodeStructure(functionExpression.body, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            387 pushIntoTrees(trees, bodyTree);
+            389 getCodeStructure(functionExpression.body, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            390 pushIntoTrees(trees, bodyTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            390 getCodeStructure(functionExpression.name, context, sourceFile, file);
-              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 120
-            391 pushIntoTrees(trees, nameTree);
+            393 getCodeStructure(functionExpression.name, context, sourceFile, file);
+              function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] { src/index.ts 123
+            394 pushIntoTrees(trees, nameTree);
               function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-            416 showSyntaxKind(node);
+            419 showSyntaxKind(node);
               function showSyntaxKind(node: ts.Node) { src/index.ts 39
                 40 printInConsole(node.kind);
                   function printInConsole(message: any) { src/index.ts 15
-        541 pushIntoTrees(trees, tree);
+        544 pushIntoTrees(trees, tree);
           function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) { src/index.ts 43
-        549 printInConsole(`${(Date.now() - now) / 1000.0} s`);
+        552 printInConsole(`${(Date.now() - now) / 1000.0} s`);
           function printInConsole(message: any) { src/index.ts 15
-        578 getJsonResult(tree)),
-          function getJsonResult(tree: Tree): JsonResult { src/index.ts 442
-            455 getJsonResult(child));
-              function getJsonResult(tree: Tree): JsonResult { src/index.ts 442
-        583 mkdirp(dirname, error => {
-          declare function mkdirp(dir: string, cb: (err: NodeJS.ErrnoException, made: string) => void): void; node_modules/@types/mkdirp/index.d.ts 8
-        585 printInConsole(error);
+        581 getJsonResult(tree)),
+          function getJsonResult(tree: Tree): JsonResult { src/index.ts 445
+            458 getJsonResult(child));
+              function getJsonResult(tree: Tree): JsonResult { src/index.ts 445
+        588 printInConsole(error);
           function printInConsole(message: any) { src/index.ts 15
-        595 mkdirp(dirname, error => {
-          declare function mkdirp(dir: string, cb: (err: NodeJS.ErrnoException, made: string) => void): void; node_modules/@types/mkdirp/index.d.ts 8
-        597 printInConsole(error);
+        600 printInConsole(error);
           function printInConsole(message: any) { src/index.ts 15
-        614 getTextResult(tree, 1);
-          function getTextResult(tree: Tree, intent: number) { src/index.ts 423
-            437 getTextResult(child, intent + 1);
-              function getTextResult(tree: Tree, intent: number) { src/index.ts 423
-        619 mkdirp(dirname, error => {
-          declare function mkdirp(dir: string, cb: (err: NodeJS.ErrnoException, made: string) => void): void; node_modules/@types/mkdirp/index.d.ts 8
-        621 printInConsole(error);
+        617 getTextResult(tree, 1);
+          function getTextResult(tree: Tree, intent: number) { src/index.ts 426
+            440 getTextResult(child, intent + 1);
+              function getTextResult(tree: Tree, intent: number) { src/index.ts 426
+        624 printInConsole(error);
           function printInConsole(message: any) { src/index.ts 15
-  631 printInConsole("code-structure success.");
+  634 printInConsole("code-structure success.");
     function printInConsole(message: any) { src/index.ts 15
-  633 printInConsole(error);
+  636 printInConsole(error);
     function printInConsole(message: any) { src/index.ts 15
