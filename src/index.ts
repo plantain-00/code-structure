@@ -37,9 +37,6 @@ function globAsync(pattern: string) {
 }
 
 function showSyntaxKind(node: ts.Node) {
-    // if (node.kind === ts.SyntaxKind.ParenthesizedExpression) {
-    //     printInConsole(node);
-    // }
     printInConsole(node.kind);
 }
 
@@ -208,7 +205,8 @@ function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.Source
         || node.kind === ts.SyntaxKind.ThrowStatement
         || node.kind === ts.SyntaxKind.ExportAssignment
         || node.kind === ts.SyntaxKind.DeleteExpression
-        || node.kind === ts.SyntaxKind.VoidExpression) {
+        || node.kind === ts.SyntaxKind.VoidExpression
+        || node.kind === ts.SyntaxKind.TypeAssertionExpression) {
         const expression = node as ts.TemplateSpan
             | ts.ReturnStatement
             | ts.AsExpression
@@ -222,7 +220,8 @@ function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.Source
             | ts.ThrowStatement
             | ts.ExportAssignment
             | ts.DeleteExpression
-            | ts.VoidExpression;
+            | ts.VoidExpression
+            | ts.TypeAssertion;
         return expression.expression ? getCodeStructure(expression.expression, context, sourceFile, file) : undefined;
     } else {
         const trees: Tree[] = [];
@@ -450,6 +449,7 @@ function getJsonResult(tree: Tree): JsonResult {
         line,
         text,
         children: [],
+        fullText: tree.node.getText(tree.sourceFile),
     };
     for (const child of tree.children) {
         jsonResult.children.push(getJsonResult(child));
@@ -487,6 +487,10 @@ async function executeCommandLine() {
     if (exclude) {
         const excludes = Array.isArray(exclude) ? exclude : [exclude];
         uniqFiles = uniqFiles.filter(file => excludes.every(excludeFile => !minimatch(file, excludeFile)));
+    }
+
+    for (const file of uniqFiles) {
+        printInConsole(file);
     }
 
     const out: string | string | undefined = argv.o;

@@ -37,6 +37,7 @@ function jsonResultToTreeData(jsonResult: JsonResult): TreeData<Value> {
             file: jsonResult.file,
             line: jsonResult.line,
             text: jsonResult.text,
+            fullText: jsonResult.fullText,
         },
         state: {
             opened: false,
@@ -83,6 +84,7 @@ for (const d of data) {
 })
 class App extends Vue {
     data = treeDatas;
+    selectedNodeText = "";
 
     private lastSelectedNode: TreeData<Value> | null = null;
 
@@ -95,6 +97,7 @@ class App extends Vue {
         }
         eventData.data.state.selected = true;
         this.lastSelectedNode = eventData.data;
+        this.selectedNodeText = eventData.data.value!.fullText;
     }
 }
 
@@ -103,6 +106,7 @@ type Value = {
     file: string;
     line: number;
     text: string;
+    fullText: string;
 };
 
 new App({ el: "#container" });
