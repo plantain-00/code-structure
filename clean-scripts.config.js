@@ -7,6 +7,16 @@ module.exports = {
   build: [
     'rimraf dist/',
     'tsc -p src/',
+    {
+      js: [
+        `file2variable-cli html/index.template.html -o html/variables.ts --html-minify --base html`,
+        'tsc -p html',
+        'webpack --display-modules --config html/webpack.config.js'
+      ],
+      css: [
+        'cleancss -o html/vendor.bundle.css ./node_modules/tree-component/tree.min.css ./node_modules/github-fork-ribbon-css/gh-fork-ribbon.css'
+      ]
+    },
     `node dist/index.js src/*.ts -o demo/result.html --exclude src/*.d.ts`,
     async () => {
       const { createServer } = require('http-server')
@@ -30,16 +40,6 @@ module.exports = {
     ts: `tslint "src/**/*.ts" "html/**/*.ts"`,
     js: `standard "**/*.config.js"`,
     export: `no-unused-export "src/**/*.ts" "html/**/*.ts" "spec/*.ts"`
-  },
-  html: {
-    js: [
-      `file2variable-cli html/index.template.html -o html/variables.ts --html-minify --base html`,
-      'tsc -p html',
-      'webpack --display-modules --config html/webpack.config.js'
-    ],
-    css: [
-      'cleancss -o html/vendor.bundle.css ./node_modules/tree-component/tree.min.css ./node_modules/github-fork-ribbon-css/gh-fork-ribbon.css'
-    ]
   },
   test: [
     'tsc -p spec',
