@@ -21,7 +21,7 @@ class CustomNode extends Vue {
 Vue.component("custom-node", CustomNode);
 
 declare const data: JsonDataResult[];
-declare const fullTexts: string[];
+declare const fullTexts: { [file: string]: string };
 
 function jsonResultToTreeData(jsonResult: JsonResult, parent: TreeData<Value>): TreeData<Value> {
     const treeData: TreeData<Value> = {
@@ -32,7 +32,6 @@ function jsonResultToTreeData(jsonResult: JsonResult, parent: TreeData<Value>): 
             file: jsonResult.file,
             line: jsonResult.line,
             text: jsonResult.text,
-            fullText: jsonResult.fullTextIndex === undefined ? "" : fullTexts[jsonResult.fullTextIndex],
             parent,
         },
         state: {
@@ -66,7 +65,6 @@ for (const d of data) {
             file: d.file,
             line: 0,
             text: d.file,
-            fullText: fullTexts[d.fullTextIndex],
             parent: null,
         },
         state: {
@@ -134,28 +132,21 @@ class App extends Vue {
         }
         eventData.data.state.selected = true;
         this.lastSelectedNode = eventData.data;
-        let currentNode = eventData.data;
-        if (eventData.data.value!.type === JsonResultType.definition) {
+
+        if (eventData.data.value!.type === JsonResultType.definition
+            || eventData.data.value!.type === JsonResultType.file) {
             eventData.data.state.opened = true;
-            currentNode = treeDatas.find(t => t.value!.file === eventData.data.value!.file)!;
-            Vue.nextTick(() => {
-                this.contentScroll.start(this.codeElement.scrollTop, eventData.data.value!.line * 18 + 7);
-            });
-        } else if (eventData.data.value!.type === JsonResultType.file) {
-            eventData.data.state.opened = true;
-            Vue.nextTick(() => {
-                this.contentScroll.start(this.codeElement.scrollTop, 0);
-            });
-        } else if (eventData.data.value!.type === JsonResultType.call) {
-            currentNode = treeDatas.find(t => t.value!.file === eventData.data.value!.file)!;
-            Vue.nextTick(() => {
-                this.contentScroll.start(this.codeElement.scrollTop, eventData.data.value!.line * 18 + 7);
-            });
-        } else {
-            Vue.nextTick(() => {
-                this.contentScroll.start(this.codeElement.scrollTop, 0);
-            });
         }
+
+        const currentNode = treeDatas.find(t => t.value!.file === eventData.data.value!.file)!;
+
+        Vue.nextTick(() => {
+            if (eventData.data.value!.type === JsonResultType.file) {
+                this.contentScroll.start(this.codeElement.scrollTop, 0);
+            } else {
+                this.contentScroll.start(this.codeElement.scrollTop, eventData.data.value!.line * 18 + 7);
+            }
+        });
 
         if (this.lastNode === currentNode) {
             return;
@@ -168,10 +159,11 @@ class App extends Vue {
         } else if (currentNode.value!.file.endsWith(".ts")) {
             lang = "ts";
         }
-        this.selectedNodeText = highlight(currentNode.value!.fullText, lang);
+        const fullText = fullTexts[currentNode.value!.file];
+        this.selectedNodeText = highlight(fullText, lang);
         this.file = currentNode.value!.file;
         const lineNumbers: LineNumber[] = [];
-        const totalLineNumber = currentNode.value!.fullText.split("\n").length;
+        const totalLineNumber = fullText.split("\n").length;
         for (let i = 0; i < totalLineNumber; i++) {
             const lineNumber = i + currentNode.value!.line;
             if (i === 0) {
@@ -197,7 +189,6 @@ type Value = {
     file: string;
     line: number;
     text: string;
-    fullText: string;
     parent: TreeData<Value> | null;
 };
 

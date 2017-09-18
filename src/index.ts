@@ -423,29 +423,18 @@ function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.Source
     }
 }
 
-const fullTexts: string[] = [];
+const fullTexts: { [file: string]: string } = {};
 
 function getJsonResult(tree: Tree): JsonResult {
     const startPosition = tree.node.getStart(tree.sourceFile);
     const { line } = ts.getLineAndCharacterOfPosition(tree.sourceFile, startPosition);
     const text = tree.sourceFile.text.substring(startPosition, tree.sourceFile.getLineEndOfPosition(startPosition)).trim();
-    let fullTextIndex: number | undefined;
-    if (tree.type !== JsonResultType.call
-        && tree.type !== JsonResultType.definition) {
-        const fullText = tree.node.getText(tree.sourceFile);
-        fullTextIndex = fullTexts.indexOf(fullText);
-        if (fullTextIndex === -1) {
-            fullTextIndex = fullTexts.length;
-            fullTexts.push(fullText);
-        }
-    }
     const jsonResult: JsonResult = {
         type: tree.type,
         file: tree.file,
         line,
         text,
         children: [],
-        fullTextIndex,
     };
     for (const child of tree.children) {
         jsonResult.children.push(getJsonResult(child));
@@ -463,7 +452,6 @@ type Tree = {
 
 type Result = {
     file: string;
-    fullTextIndex: number;
     trees: Tree[];
 };
 
@@ -546,9 +534,8 @@ async function executeCommandLine() {
                 pushIntoTrees(trees, tree);
             });
             if (trees.length > 0) {
-                const fullText = fs.readFileSync(file).toString();
-                results.push({ file, trees, fullTextIndex: fullTexts.length });
-                fullTexts.push(fullText);
+                fullTexts[file] = fs.readFileSync(file).toString();
+                results.push({ file, trees });
             }
         }
     }
@@ -558,7 +545,6 @@ async function executeCommandLine() {
     const jsonResult: JsonDataResult[] = results.map(result => ({
         file: result.file,
         results: result.trees.map(tree => getJsonResult(tree)),
-        fullTextIndex: result.fullTextIndex,
     }));
     const dirname = path.dirname(htmlOutput);
     mkdirp(dirname, error => {

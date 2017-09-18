@@ -4,13 +4,11 @@ export type JsonResult = {
     file: string;
     line: number;
     text: string;
-    fullTextIndex: number | undefined;
 };
 
 export type JsonDataResult = {
     file: string;
     results: JsonResult[];
-    fullTextIndex: number;
 };
 
 export const enum JsonResultType {
