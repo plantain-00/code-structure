@@ -430,7 +430,8 @@ function getJsonResult(tree: Tree): JsonResult {
     const { line } = ts.getLineAndCharacterOfPosition(tree.sourceFile, startPosition);
     const text = tree.sourceFile.text.substring(startPosition, tree.sourceFile.getLineEndOfPosition(startPosition)).trim();
     let fullTextIndex: number | undefined;
-    if (tree.type !== JsonResultType.call) {
+    if (tree.type !== JsonResultType.call
+        && tree.type !== JsonResultType.definition) {
         const fullText = tree.node.getText(tree.sourceFile);
         fullTextIndex = fullTexts.indexOf(fullText);
         if (fullTextIndex === -1) {
