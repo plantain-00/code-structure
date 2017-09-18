@@ -59,6 +59,13 @@ for (const d of data) {
     treeDatas.push({
         text: d.file,
         icon: "tree-file",
+        value: {
+            type: JsonResultType.file,
+            file: d.file,
+            line: 0,
+            text: d.file,
+            fullText: fullTexts[d.fullTextIndex],
+        },
         state: {
             opened: true,
             selected: false,
@@ -113,35 +120,30 @@ class App extends Vue {
         eventData.data.state.selected = true;
         eventData.data.state.opened = true;
         this.lastSelectedNode = eventData.data;
-        if (eventData.data.value) {
-            let lang = "";
-            if (eventData.data.value.file.endsWith(".js")) {
-                lang = "js";
-            } else if (eventData.data.value.file.endsWith(".ts")) {
-                lang = "ts";
-            }
-            this.selectedNodeText = highlight(eventData.data.value.fullText, lang);
-            this.file = eventData.data.value.file;
-            const lineNumbers: LineNumber[] = [];
-            const totalLineNumber = eventData.data.value.fullText.split("\n").length;
-            for (let i = 0; i < totalLineNumber; i++) {
-                const lineNumber = i + eventData.data.value.line;
-                if (i === 0) {
-                    lineNumbers.push({ lineNumber, className: `line-number-${eventData.data.value.type}` });
+        let lang = "";
+        if (eventData.data.value!.file.endsWith(".js")) {
+            lang = "js";
+        } else if (eventData.data.value!.file.endsWith(".ts")) {
+            lang = "ts";
+        }
+        this.selectedNodeText = highlight(eventData.data.value!.fullText, lang);
+        this.file = eventData.data.value!.file;
+        const lineNumbers: LineNumber[] = [];
+        const totalLineNumber = eventData.data.value!.fullText.split("\n").length;
+        for (let i = 0; i < totalLineNumber; i++) {
+            const lineNumber = i + eventData.data.value!.line;
+            if (i === 0) {
+                lineNumbers.push({ lineNumber, className: `line-number-${eventData.data.value!.type}` });
+            } else {
+                const child = eventData.data.children.find(c => c.value!.line === lineNumber);
+                if (child) {
+                    lineNumbers.push({ lineNumber, className: `line-number-${child.value!.type}` });
                 } else {
-                    const child = eventData.data.children.find(c => c.value!.line === lineNumber);
-                    if (child) {
-                        lineNumbers.push({ lineNumber, className: `line-number-${child.value!.type}` });
-                    } else {
-                        lineNumbers.push({ lineNumber });
-                    }
+                    lineNumbers.push({ lineNumber });
                 }
             }
-            this.lineNumbers = lineNumbers;
-        } else {
-            this.selectedNodeText = `<code class="hljs"></code>`;
-            this.file = eventData.data.text || "";
         }
+        this.lineNumbers = lineNumbers;
     }
     scroll(e: UIEvent) {
         (this.$refs.lineNumber as HTMLElement).scrollTop = (this.$refs.code as HTMLElement).scrollTop;

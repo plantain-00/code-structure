@@ -10,10 +10,12 @@ export type JsonResult = {
 export type JsonDataResult = {
     file: string;
     results: JsonResult[];
+    fullTextIndex: number;
 };
 
 export const enum JsonResultType {
     definition = "definition",
     call = "call",
     nested = "nested",
+    file = "file",
 }

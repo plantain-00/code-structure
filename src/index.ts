@@ -459,6 +459,7 @@ type Tree = {
 
 type Result = {
     file: string;
+    fullTextIndex: number;
     trees: Tree[];
 };
 
@@ -541,7 +542,9 @@ async function executeCommandLine() {
                 pushIntoTrees(trees, tree);
             });
             if (trees.length > 0) {
-                results.push({ file, trees });
+                const fullText = fs.readFileSync(file).toString();
+                results.push({ file, trees, fullTextIndex: fullTexts.length });
+                fullTexts.push(fullText);
             }
         }
     }
@@ -551,6 +554,7 @@ async function executeCommandLine() {
     const jsonResult: JsonDataResult[] = results.map(result => ({
         file: result.file,
         results: result.trees.map(tree => getJsonResult(tree)),
+        fullTextIndex: result.fullTextIndex,
     }));
     const dirname = path.dirname(htmlOutput);
     mkdirp(dirname, error => {
