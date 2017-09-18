@@ -7,19 +7,14 @@ import { JsonDataResult, JsonResult, JsonResultType } from "../src/types";
 import { indexTemplateHtml } from "./variables";
 
 @Component({
-    template: `<span><span :style="color">{{data.value.line}}</span> {{data.value.text}}</span>`,
+    template: `<span><span :class="color">{{data.value.line}}</span> {{data.value.text}}</span>`,
     props: ["data"],
 })
 class CustomNode extends Vue {
     data: TreeData<Value>;
 
     get color() {
-        if (this.data.value!.type === JsonResultType.call) {
-            return { color: "red" };
-        } else if (this.data.value!.type === JsonResultType.definition) {
-            return { color: "green" };
-        }
-        return { color: "blue" };
+        return `line-number-${this.data.value!.type}`;
     }
 }
 Vue.component("custom-node", CustomNode);
@@ -104,6 +99,7 @@ class App extends Vue {
     data = treeDatas;
     selectedNodeText = "";
     file = "";
+    lineNumbers: LineNumber[] = [];
 
     private lastSelectedNode: TreeData<Value> | null = null;
 
@@ -126,10 +122,29 @@ class App extends Vue {
             }
             this.selectedNodeText = highlight(eventData.data.value.fullText, lang);
             this.file = eventData.data.value.file;
+            const lineNumbers: LineNumber[] = [];
+            const totalLineNumber = eventData.data.value.fullText.split("\n").length;
+            for (let i = 0; i < totalLineNumber; i++) {
+                const lineNumber = i + eventData.data.value.line;
+                if (i === 0) {
+                    lineNumbers.push({ lineNumber, className: `line-number-${eventData.data.value.type}` });
+                } else {
+                    const child = eventData.data.children.find(c => c.value!.line === lineNumber);
+                    if (child) {
+                        lineNumbers.push({ lineNumber, className: `line-number-${child.value!.type}` });
+                    } else {
+                        lineNumbers.push({ lineNumber });
+                    }
+                }
+            }
+            this.lineNumbers = lineNumbers;
         } else {
             this.selectedNodeText = `<code class="hljs"></code>`;
             this.file = eventData.data.text || "";
         }
+    }
+    scroll(e: UIEvent) {
+        (this.$refs.lineNumber as HTMLElement).scrollTop = (this.$refs.code as HTMLElement).scrollTop;
     }
 }
 
@@ -139,6 +154,11 @@ type Value = {
     line: number;
     text: string;
     fullText: string;
+};
+
+type LineNumber = {
+    lineNumber: number;
+    className?: string;
 };
 
 new App({ el: "#container" });
