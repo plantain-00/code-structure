@@ -116,6 +116,7 @@ class App extends Vue {
     private contentScroll: EaseInOut;
     private lastSelectedNode: TreeData<Value> | null = null;
     private codeElement: HTMLElement;
+    private lastNode: TreeData<Value> | null = null;
 
     mounted() {
         this.codeElement = this.$refs.code as HTMLElement;
@@ -134,30 +135,33 @@ class App extends Vue {
         eventData.data.state.selected = true;
         this.lastSelectedNode = eventData.data;
         let currentNode = eventData.data;
-        if (eventData.data.value!.type === JsonResultType.definition
-            || eventData.data.value!.type === JsonResultType.file) {
+        if (eventData.data.value!.type === JsonResultType.definition) {
+            eventData.data.state.opened = true;
+            currentNode = treeDatas.find(t => t.value!.file === eventData.data.value!.file)!;
+            Vue.nextTick(() => {
+                this.contentScroll.start(this.codeElement.scrollTop, eventData.data.value!.line * 18 + 7);
+            });
+        } else if (eventData.data.value!.type === JsonResultType.file) {
             eventData.data.state.opened = true;
             Vue.nextTick(() => {
                 this.contentScroll.start(this.codeElement.scrollTop, 0);
             });
         } else if (eventData.data.value!.type === JsonResultType.call) {
-            let parent = eventData.data.value!.parent;
-            while (parent !== null) {
-                if (parent.value!.type === JsonResultType.definition
-                    || parent.value!.type === JsonResultType.file) {
-                    currentNode = parent;
-                    Vue.nextTick(() => {
-                        this.contentScroll.start(this.codeElement.scrollTop, (eventData.data.value!.line - parent!.value!.line) * 18 + 7);
-                    });
-                    break;
-                }
-                parent = parent.value!.parent;
-            }
+            currentNode = treeDatas.find(t => t.value!.file === eventData.data.value!.file)!;
+            Vue.nextTick(() => {
+                this.contentScroll.start(this.codeElement.scrollTop, eventData.data.value!.line * 18 + 7);
+            });
         } else {
             Vue.nextTick(() => {
                 this.contentScroll.start(this.codeElement.scrollTop, 0);
             });
         }
+
+        if (this.lastNode === currentNode) {
+            return;
+        }
+        this.lastNode = currentNode;
+
         let lang = "";
         if (currentNode.value!.file.endsWith(".js")) {
             lang = "js";
