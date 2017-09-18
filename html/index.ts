@@ -7,15 +7,12 @@ import { JsonDataResult, JsonResult, JsonResultType } from "../src/types";
 import { indexTemplateHtml } from "./variables";
 
 @Component({
-    template: `<span><span :style="color"><template v-if="showFile">{{data.value.file}} </template>{{data.value.line}}</span> {{data.value.text}}</span>`,
+    template: `<span><span :style="color">{{data.value.line}}</span> {{data.value.text}}</span>`,
     props: ["data"],
 })
 class CustomNode extends Vue {
     data: TreeData<Value>;
 
-    get showFile() {
-        return this.data.value!.type !== JsonResultType.call;
-    }
     get color() {
         if (this.data.value!.type === JsonResultType.call) {
             return { color: "red" };
@@ -106,6 +103,7 @@ function highlight(str: string, lang: string) {
 class App extends Vue {
     data = treeDatas;
     selectedNodeText = "";
+    file = "";
 
     private lastSelectedNode: TreeData<Value> | null = null;
 
@@ -117,6 +115,7 @@ class App extends Vue {
             this.lastSelectedNode.state.selected = false;
         }
         eventData.data.state.selected = true;
+        eventData.data.state.opened = true;
         this.lastSelectedNode = eventData.data;
         if (eventData.data.value) {
             let lang = "";
@@ -126,8 +125,10 @@ class App extends Vue {
                 lang = "ts";
             }
             this.selectedNodeText = highlight(eventData.data.value.fullText, lang);
+            this.file = eventData.data.value.file;
         } else {
             this.selectedNodeText = `<code class="hljs"></code>`;
+            this.file = eventData.data.text || "";
         }
     }
 }
