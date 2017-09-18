@@ -4,7 +4,7 @@ export type JsonResult = {
     file: string;
     line: number;
     text: string;
-    fullTextIndex: number;
+    fullTextIndex: number | undefined;
 };
 
 export type JsonDataResult = {

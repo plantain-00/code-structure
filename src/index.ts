@@ -429,11 +429,14 @@ function getJsonResult(tree: Tree): JsonResult {
     const startPosition = tree.node.getStart(tree.sourceFile);
     const { line } = ts.getLineAndCharacterOfPosition(tree.sourceFile, startPosition);
     const text = tree.sourceFile.text.substring(startPosition, tree.sourceFile.getLineEndOfPosition(startPosition)).trim();
-    const fullText = tree.node.getText(tree.sourceFile);
-    let fullTextIndex = fullTexts.indexOf(fullText);
-    if (fullTextIndex === -1) {
-        fullTextIndex = fullTexts.length;
-        fullTexts.push(fullText);
+    let fullTextIndex: number | undefined;
+    if (tree.type !== JsonResultType.call) {
+        const fullText = tree.node.getText(tree.sourceFile);
+        fullTextIndex = fullTexts.indexOf(fullText);
+        if (fullTextIndex === -1) {
+            fullTextIndex = fullTexts.length;
+            fullTexts.push(fullText);
+        }
     }
     const jsonResult: JsonResult = {
         type: tree.type,

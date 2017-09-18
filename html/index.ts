@@ -32,7 +32,7 @@ function jsonResultToTreeData(jsonResult: JsonResult, parent: TreeData<Value>): 
             file: jsonResult.file,
             line: jsonResult.line,
             text: jsonResult.text,
-            fullText: fullTexts[jsonResult.fullTextIndex],
+            fullText: jsonResult.fullTextIndex === undefined ? "" : fullTexts[jsonResult.fullTextIndex],
             parent,
         },
         state: {
