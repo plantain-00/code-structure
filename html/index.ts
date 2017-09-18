@@ -2,6 +2,7 @@ import * as Vue from "vue";
 import Component from "vue-class-component";
 import { EventData, TreeData, DropPosition } from "tree-component/vue";
 import * as hljs from "highlight.js";
+import EaseInOut from "ease-in-out";
 import { JsonDataResult, JsonResult, JsonResultType } from "../src/types";
 
 import { indexTemplateHtml } from "./variables";
@@ -22,8 +23,8 @@ Vue.component("custom-node", CustomNode);
 declare const data: JsonDataResult[];
 declare const fullTexts: string[];
 
-function jsonResultToTreeData(jsonResult: JsonResult): TreeData<Value> {
-    const treeData: TreeData = {
+function jsonResultToTreeData(jsonResult: JsonResult, parent: TreeData<Value>): TreeData<Value> {
+    const treeData: TreeData<Value> = {
         component: "custom-node",
         icon: false,
         value: {
@@ -32,6 +33,7 @@ function jsonResultToTreeData(jsonResult: JsonResult): TreeData<Value> {
             line: jsonResult.line,
             text: jsonResult.text,
             fullText: fullTexts[jsonResult.fullTextIndex],
+            parent,
         },
         state: {
             opened: false,
@@ -48,7 +50,7 @@ function jsonResultToTreeData(jsonResult: JsonResult): TreeData<Value> {
     if (jsonResult.children.length > 0) {
         treeData.state.openable = true;
         for (const child of jsonResult.children) {
-            treeData.children.push(jsonResultToTreeData(child));
+            treeData.children.push(jsonResultToTreeData(child, treeData));
         }
     }
     return treeData;
@@ -56,7 +58,7 @@ function jsonResultToTreeData(jsonResult: JsonResult): TreeData<Value> {
 
 const treeDatas: TreeData<Value>[] = [];
 for (const d of data) {
-    treeDatas.push({
+    const treeData: TreeData<Value> = {
         text: d.file,
         icon: "tree-file",
         value: {
@@ -65,6 +67,7 @@ for (const d of data) {
             line: 0,
             text: d.file,
             fullText: fullTexts[d.fullTextIndex],
+            parent: null,
         },
         state: {
             opened: true,
@@ -76,8 +79,10 @@ for (const d of data) {
             dropPosition: DropPosition.empty,
             dropAllowed: false,
         },
-        children: d.results.map(r => jsonResultToTreeData(r)),
-    });
+        children: [],
+    };
+    treeData.children = d.results.map(r => jsonResultToTreeData(r, treeData));
+    treeDatas.push(treeData);
 }
 
 function highlight(str: string, lang: string) {
@@ -108,7 +113,16 @@ class App extends Vue {
     file = "";
     lineNumbers: LineNumber[] = [];
 
+    private contentScroll: EaseInOut;
     private lastSelectedNode: TreeData<Value> | null = null;
+    private codeElement: HTMLElement;
+
+    mounted() {
+        this.codeElement = this.$refs.code as HTMLElement;
+        this.contentScroll = new EaseInOut(currentValue => {
+            this.codeElement.scrollTop = currentValue;
+        });
+    }
 
     toggle(eventData: EventData<Value>) {
         eventData.data.state.opened = !eventData.data.state.opened;
@@ -118,26 +132,48 @@ class App extends Vue {
             this.lastSelectedNode.state.selected = false;
         }
         eventData.data.state.selected = true;
-        if (eventData.data.value!.type === JsonResultType.definition) {
-            eventData.data.state.opened = true;
-        }
         this.lastSelectedNode = eventData.data;
+        let currentNode = eventData.data;
+        if (eventData.data.value!.type === JsonResultType.definition
+            || eventData.data.value!.type === JsonResultType.file) {
+            eventData.data.state.opened = true;
+            Vue.nextTick(() => {
+                this.contentScroll.start(this.codeElement.scrollTop, 0);
+            });
+        } else if (eventData.data.value!.type === JsonResultType.call) {
+            let parent = eventData.data.value!.parent;
+            while (parent !== null) {
+                if (parent.value!.type === JsonResultType.definition
+                    || parent.value!.type === JsonResultType.file) {
+                    currentNode = parent;
+                    Vue.nextTick(() => {
+                        this.contentScroll.start(this.codeElement.scrollTop, (eventData.data.value!.line - parent!.value!.line) * 18 + 7);
+                    });
+                    break;
+                }
+                parent = parent.value!.parent;
+            }
+        } else {
+            Vue.nextTick(() => {
+                this.contentScroll.start(this.codeElement.scrollTop, 0);
+            });
+        }
         let lang = "";
-        if (eventData.data.value!.file.endsWith(".js")) {
+        if (currentNode.value!.file.endsWith(".js")) {
             lang = "js";
-        } else if (eventData.data.value!.file.endsWith(".ts")) {
+        } else if (currentNode.value!.file.endsWith(".ts")) {
             lang = "ts";
         }
-        this.selectedNodeText = highlight(eventData.data.value!.fullText, lang);
-        this.file = eventData.data.value!.file;
+        this.selectedNodeText = highlight(currentNode.value!.fullText, lang);
+        this.file = currentNode.value!.file;
         const lineNumbers: LineNumber[] = [];
-        const totalLineNumber = eventData.data.value!.fullText.split("\n").length;
+        const totalLineNumber = currentNode.value!.fullText.split("\n").length;
         for (let i = 0; i < totalLineNumber; i++) {
-            const lineNumber = i + eventData.data.value!.line;
+            const lineNumber = i + currentNode.value!.line;
             if (i === 0) {
-                lineNumbers.push({ lineNumber, className: `line-number-${eventData.data.value!.type}` });
+                lineNumbers.push({ lineNumber, className: `line-number-${currentNode.value!.type}` });
             } else {
-                const child = eventData.data.children.find(c => c.value!.line === lineNumber);
+                const child = currentNode.children.find(c => c.value!.line === lineNumber);
                 if (child) {
                     lineNumbers.push({ lineNumber, className: `line-number-${child.value!.type}` });
                 } else {
@@ -148,7 +184,7 @@ class App extends Vue {
         this.lineNumbers = lineNumbers;
     }
     scroll(e: UIEvent) {
-        (this.$refs.lineNumber as HTMLElement).scrollTop = (this.$refs.code as HTMLElement).scrollTop;
+        (this.$refs.lineNumber as HTMLElement).scrollTop = this.codeElement.scrollTop;
     }
 }
 
@@ -158,6 +194,7 @@ type Value = {
     line: number;
     text: string;
     fullText: string;
+    parent: TreeData<Value> | null;
 };
 
 type LineNumber = {
