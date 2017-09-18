@@ -14,7 +14,7 @@ module.exports = {
         'webpack --display-modules --config html/webpack.config.js'
       ],
       css: [
-        'cleancss -o html/vendor.bundle.css ./node_modules/tree-component/tree.min.css ./node_modules/github-fork-ribbon-css/gh-fork-ribbon.css'
+        'cleancss -o html/vendor.bundle.css ./node_modules/tree-component/tree.min.css ./node_modules/github-fork-ribbon-css/gh-fork-ribbon.css ./node_modules/highlight.js/styles/routeros.css'
       ]
     },
     `node dist/index.js src/*.ts -o demo/result.html --exclude src/*.d.ts`,

@@ -2,5 +2,5 @@
     <tree :data="data"
         @toggle="toggle($event)"
         @change="change($event)"></tree>
-    <pre>{{selectedNodeText}}</pre>
+    <pre v-html="selectedNodeText"></pre>
 </div>

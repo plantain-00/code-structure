@@ -1,6 +1,7 @@
 import * as Vue from "vue";
 import Component from "vue-class-component";
 import { EventData, TreeData, DropPosition } from "tree-component/vue";
+import * as hljs from "highlight.js";
 import { JsonDataResult, JsonResult, JsonResultType } from "../src/types";
 
 import { indexTemplateHtml } from "./variables";
@@ -80,6 +81,25 @@ for (const d of data) {
     });
 }
 
+function highlight(str: string, lang: string) {
+    if (lang && hljs.getLanguage(lang)) {
+        try {
+            return `<code class="hljs ${lang}">${hljs.highlight(lang, str).value}</code>`;
+        } catch (error) {
+            // tslint:disable-next-line:no-console
+            console.log(error);
+        }
+    } else {
+        try {
+            return `<code class="hljs">${hljs.highlightAuto(str).value}</code>`;
+        } catch (error) {
+            // tslint:disable-next-line:no-console
+            console.log(error);
+        }
+    }
+    return `<code class="hljs">${str}</code>`;
+}
+
 @Component({
     template: indexTemplateHtml,
 })
@@ -98,7 +118,17 @@ class App extends Vue {
         }
         eventData.data.state.selected = true;
         this.lastSelectedNode = eventData.data;
-        this.selectedNodeText = eventData.data.value!.fullText;
+        if (eventData.data.value) {
+            let lang = "";
+            if (eventData.data.value.file.endsWith(".js")) {
+                lang = "js";
+            } else if (eventData.data.value.file.endsWith(".ts")) {
+                lang = "ts";
+            }
+            this.selectedNodeText = highlight(eventData.data.value.fullText, lang);
+        } else {
+            this.selectedNodeText = `<code class="hljs"></code>`;
+        }
     }
 }
 
