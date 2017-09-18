@@ -432,7 +432,7 @@ function getJsonResult(tree: Tree): JsonResult {
     const jsonResult: JsonResult = {
         type: tree.type,
         file: tree.file,
-        line,
+        line: line + 1,
         text,
         children: [],
     };
