@@ -118,7 +118,9 @@ class App extends Vue {
             this.lastSelectedNode.state.selected = false;
         }
         eventData.data.state.selected = true;
-        eventData.data.state.opened = true;
+        if (eventData.data.value!.type === JsonResultType.definition) {
+            eventData.data.state.opened = true;
+        }
         this.lastSelectedNode = eventData.data;
         let lang = "";
         if (eventData.data.value!.file.endsWith(".js")) {
