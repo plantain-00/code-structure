@@ -464,7 +464,10 @@ async function executeCommandLine() {
 
     suppressError = argv.suppressError;
 
-    const pattern = `{${argv._.join(",")}}`;
+    if (argv._.length === 0) {
+        throw new Error("Expect at least one pattern.");
+    }
+    const pattern = argv._.length === 1 ? argv._[0] : `{${argv._.join(",")}}`;
     const exclude: string | string[] | undefined = argv.exclude;
     const uniqFiles = await globAsync(pattern, exclude);
 
