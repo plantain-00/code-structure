@@ -24,7 +24,6 @@
     "@types/glob": "5.0.32",
     "@types/highlight.js": "9.1.10",
     "@types/jasmine": "2.6.0",
-    "@types/minimatch": "3.0.1",
     "@types/minimist": "1.2.0",
     "@types/mkdirp": "0.5.1",
     "@types/node": "8.0.28",
@@ -50,9 +49,6 @@
   },
   "dependencies": {
     "glob": "7.1.2",
-    "lodash.flatten": "4.4.0",
-    "lodash.uniq": "4.5.0",
-    "minimatch": "3.0.4",
     "minimist": "1.2.0",
     "mkdirp": "0.5.1",
     "typescript": "2.5.2"

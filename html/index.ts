@@ -162,7 +162,7 @@ class App extends Vue {
 
         const lineNumbers: LineNumber[] = [];
         const totalLineNumber = fullText.split("\n").length;
-        for (let i = 1; i <= totalLineNumber; i++) {
+        for (let i = 1; i < totalLineNumber; i++) {
             if (i === eventData.data.value!.line) {
                 lineNumbers.push({ lineNumber: i, className: `line-number-${eventData.data.value!.type}` });
             } else {

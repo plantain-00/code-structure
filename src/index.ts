@@ -1,10 +1,7 @@
 import * as minimist from "minimist";
 import * as ts from "typescript";
 import * as fs from "fs";
-import flatten = require("lodash.flatten");
-import uniq = require("lodash.uniq");
 import * as glob from "glob";
-import * as minimatch from "minimatch";
 import * as path from "path";
 import * as mkdirp from "mkdirp";
 import * as packageJson from "../package.json";
@@ -24,9 +21,9 @@ function showToolVersion() {
     printInConsole(`Version: ${packageJson.version}`);
 }
 
-function globAsync(pattern: string) {
+function globAsync(pattern: string, ignore?: string | string[]) {
     return new Promise<string[]>((resolve, reject) => {
-        glob(pattern, (error, matches) => {
+        glob(pattern, { ignore }, (error, matches) => {
             if (error) {
                 reject(error);
             } else {
@@ -229,7 +226,8 @@ function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.Source
     } else {
         const trees: Tree[] = [];
         if (node.kind === ts.SyntaxKind.Block
-            || node.kind === ts.SyntaxKind.CaseClause) {
+            || node.kind === ts.SyntaxKind.CaseClause
+            || node.kind === ts.SyntaxKind.DefaultClause) {
             const statements = (node as ts.Block | ts.CaseClause).statements;
             for (const statement of statements) {
                 const childTree = getCodeStructure(statement, context, sourceFile, file);
@@ -466,17 +464,14 @@ async function executeCommandLine() {
 
     suppressError = argv.suppressError;
 
-    let uniqFiles = uniq(flatten(await Promise.all(argv._.map(file => globAsync(file)))));
-
+    const pattern = `{${argv._.join(",")}}`;
     const exclude: string | string[] | undefined = argv.exclude;
-    if (exclude) {
-        const excludes = Array.isArray(exclude) ? exclude : [exclude];
-        uniqFiles = uniqFiles.filter(file => excludes.every(excludeFile => !minimatch(file, excludeFile)));
-    }
+    const uniqFiles = await globAsync(pattern, exclude);
 
     for (const file of uniqFiles) {
         printInConsole(file);
     }
+    printInConsole(`Total: ${uniqFiles.length}`);
 
     const out: string | string | undefined = argv.o;
     let htmlOutput: string;
