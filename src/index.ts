@@ -4,6 +4,7 @@ import * as fs from "fs";
 import * as glob from "glob";
 import * as path from "path";
 import * as mkdirp from "mkdirp";
+import stringify from "stringify2stream/nodejs";
 import * as packageJson from "../package.json";
 import { JsonResult, JsonDataResult, JsonResultType } from "./types";
 
@@ -551,7 +552,9 @@ async function executeCommandLine() {
         } else {
             const dataStream = fs.createWriteStream(path.resolve(dirname, "data.bundle.js"));
             dataStream.write(`var fullTexts = ${JSON.stringify(fullTexts, null, "  ")};\n`);
-            dataStream.write(`var data = ${JSON.stringify(jsonResult, null, "  ")};`);
+            dataStream.write(`var data = `);
+            stringify(jsonResult, data => dataStream.write(data), null, "  ");
+            dataStream.write(`;`);
             fs.createReadStream(path.resolve(__dirname, "../html/index.html")).pipe(fs.createWriteStream(htmlOutput));
             for (const filename of ["index.bundle.js", "vendor.bundle.js", "vendor.bundle.css"]) {
                 fs.createReadStream(path.resolve(__dirname, `../html/${filename}`)).pipe(fs.createWriteStream(path.resolve(dirname, filename)));

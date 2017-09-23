@@ -51,6 +51,7 @@
     "glob": "7.1.2",
     "minimist": "1.2.0",
     "mkdirp": "0.5.1",
+    "stringify2stream": "1.0.1",
     "typescript": "2.5.2"
   },
   "bin": {
