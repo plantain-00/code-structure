@@ -57,30 +57,32 @@ function jsonResultToTreeData(jsonResult: JsonResult, parent: TreeData<Value>): 
 
 const treeDatas: TreeData<Value>[] = [];
 for (const d of data) {
-    const treeData: TreeData<Value> = {
-        text: d.file,
-        icon: "tree-file",
-        value: {
-            type: JsonResultType.file,
-            file: d.file,
-            line: 0,
+    if (d.results.length > 0) {
+        const treeData: TreeData<Value> = {
             text: d.file,
-            parent: null,
-        },
-        state: {
-            opened: true,
-            selected: false,
-            disabled: false,
-            loading: false,
-            highlighted: false,
-            openable: true,
-            dropPosition: DropPosition.empty,
-            dropAllowed: false,
-        },
-        children: [],
-    };
-    treeData.children = d.results.map(r => jsonResultToTreeData(r, treeData));
-    treeDatas.push(treeData);
+            icon: "tree-file",
+            value: {
+                type: JsonResultType.file,
+                file: d.file,
+                line: 0,
+                text: d.file,
+                parent: null,
+            },
+            state: {
+                opened: true,
+                selected: false,
+                disabled: false,
+                loading: false,
+                highlighted: false,
+                openable: true,
+                dropPosition: DropPosition.empty,
+                dropAllowed: false,
+            },
+            children: [],
+        };
+        treeData.children = d.results.map(r => jsonResultToTreeData(r, treeData));
+        treeDatas.push(treeData);
+    }
 }
 
 function highlight(str: string, lang: string) {

@@ -532,10 +532,8 @@ async function executeCommandLine() {
                 }, sourceFile, file);
                 pushIntoTrees(trees, tree);
             });
-            if (trees.length > 0) {
-                fullTexts[file] = fs.readFileSync(file).toString();
-                results.push({ file, trees });
-            }
+            fullTexts[file] = fs.readFileSync(file).toString();
+            results.push({ file, trees });
         }
     }
 
