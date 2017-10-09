@@ -8,7 +8,8 @@
     "lint": "clean-scripts lint",
     "test": "clean-scripts test",
     "fix": "clean-scripts fix",
-    "release": "clean-scripts release"
+    "release": "clean-scripts release",
+    "screenshot": "clean-scripts screenshot"
   },
   "repository": {
     "type": "git",
@@ -27,16 +28,16 @@
     "@types/minimist": "1.2.0",
     "@types/mkdirp": "0.5.1",
     "@types/node": "8.0.33",
+    "@types/puppeteer": "0.10.2",
     "clean-css-cli": "4.1.10",
     "clean-release": "1.3.5",
-    "clean-scripts": "1.2.6",
+    "clean-scripts": "1.3.3",
     "ease-in-out": "1.0.0",
     "file2variable-cli": "1.5.4",
     "github-fork-ribbon-css": "0.2.1",
     "highlight.js": "9.12.0",
     "http-server": "0.10.0",
     "jasmine": "2.8.0",
-    "js-beautify": "1.7.3",
     "no-unused-export": "1.3.0",
     "puppeteer": "0.11.0",
     "rimraf": "2.6.2",
