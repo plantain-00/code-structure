@@ -8,5 +8,13 @@ import * as puppeteer from "puppeteer";
     await page.waitFor(2000);
     await page.screenshot({ path: `screenshots/initial.png`, fullPage: true });
 
+    await page.click(".tree-anchor");
+    await page.waitFor(500);
+    await page.screenshot({ path: `screenshots/main.png`, fullPage: true });
+
+    await page.click(".tree-closed .tree-icon");
+    await page.waitFor(500);
+    await page.screenshot({ path: `screenshots/open.png`, fullPage: true });
+
     browser.close();
 })();
