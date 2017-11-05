@@ -4,7 +4,7 @@
         @change="change($event)"></tree>
     <div class="file">{{file}}</div>
     <div ref="lineNumber" class="line-number">
-        <div v-for="lineNumber in lineNumbers" :class="lineNumber.className">{{lineNumber.lineNumber}}</div>
+        <div v-for="lineNumber in lineNumbers" :class="lineNumber.className" :key="lineNumber.lineNumber">{{lineNumber.lineNumber}}</div>
     </div>
     <pre ref="code" v-html="selectedNodeText" @scroll="scroll($event)"></pre>
 </div>
