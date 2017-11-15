@@ -6,15 +6,15 @@ import * as puppeteer from "puppeteer";
     await page.emulate({ viewport: { width: 1440, height: 900 }, userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36" });
     await page.goto(`http://localhost:8000/demo/result.html`);
     await page.waitFor(2000);
-    await page.screenshot({ path: `screenshots/initial.png`, fullPage: true });
+    await page.screenshot({ path: `screenshots/initial.png` });
 
     await page.click(".tree-anchor");
     await page.waitFor(500);
-    await page.screenshot({ path: `screenshots/main.png`, fullPage: true });
+    await page.screenshot({ path: `screenshots/main.png` });
 
     await page.click(".tree-closed .tree-icon");
     await page.waitFor(500);
-    await page.screenshot({ path: `screenshots/open.png`, fullPage: true });
+    await page.screenshot({ path: `screenshots/open.png` });
 
     browser.close();
 })();
