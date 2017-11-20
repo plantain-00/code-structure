@@ -22,6 +22,8 @@
   },
   "homepage": "https://github.com/plantain-00/code-structure#readme",
   "devDependencies": {
+    "@commitlint/cli": "5.0.1",
+    "@commitlint/config-angular": "5.0.1",
     "@types/glob": "5.0.33",
     "@types/highlight.js": "9.12.1",
     "@types/jasmine": "2.8.2",
