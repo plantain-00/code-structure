@@ -34,7 +34,6 @@ module.exports = {
     ts: `tslint --fix ${tsFiles}`,
     js: `standard --fix ${jsFiles}`
   },
-  release: `clean-release`,
   screenshot: [
     new Service(`http-server -p 8000`),
     `tsc -p screenshots`,
