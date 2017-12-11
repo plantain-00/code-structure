@@ -2,7 +2,7 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import { EventData, TreeData, DropPosition } from "tree-vue-component";
 import * as hljs from "highlight.js";
-import EaseInOut from "ease-in-out";
+import { EaseInOut } from "ease-in-out";
 import { JsonDataResult, JsonResult, JsonResultType } from "../src/types";
 
 import { indexTemplateHtml } from "./variables";
