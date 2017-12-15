@@ -9,7 +9,8 @@ module.exports = {
     'tsc -p src/',
     {
       js: [
-        `file2variable-cli html/index.template.html -o html/variables.ts --html-minify --base html`,
+        `file2variable-cli html/index.template.html -o html/variables.ts --html-minify --base html --vue --vue-type-name "App" --vue-type-path "./index"`,
+        `file2variable-cli html/node.template.html -o html/node.variables.ts --html-minify --base html --vue --vue-type-name "CustomNode" --vue-type-path "./index"`,
         'tsc -p html',
         'webpack --config html/webpack.config.js'
       ],

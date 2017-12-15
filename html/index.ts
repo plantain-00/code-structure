@@ -6,12 +6,13 @@ import { EaseInOut } from "ease-in-out";
 import { JsonDataResult, JsonResult, JsonResultType } from "../src/types";
 
 import { indexTemplateHtml } from "./variables";
+import { nodeTemplateHtml } from "./node.variables";
 
 @Component({
-    template: `<span><span :class="color">{{data.value.line}}</span> {{data.value.text}}</span>`,
+    render: nodeTemplateHtml,
     props: ["data"],
 })
-class CustomNode extends Vue {
+export class CustomNode extends Vue {
     data: TreeData<Value>;
 
     get color() {
@@ -105,9 +106,9 @@ function highlight(str: string, lang: string) {
 }
 
 @Component({
-    template: indexTemplateHtml,
+    render: indexTemplateHtml,
 })
-class App extends Vue {
+export class App extends Vue {
     data = treeDatas;
     selectedNodeText = "";
     file = "";
