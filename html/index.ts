@@ -5,11 +5,11 @@ import * as hljs from "highlight.js";
 import { EaseInOut } from "ease-in-out";
 import { JsonDataResult, JsonResult, JsonResultType } from "../src/types";
 
-import { indexTemplateHtml } from "./variables";
-import { nodeTemplateHtml } from "./node.variables";
+import { indexTemplateHtml, indexTemplateHtmlStatic, nodeTemplateHtml, nodeTemplateHtmlStatic } from "./variables";
 
 @Component({
     render: nodeTemplateHtml,
+    staticRenderFns: nodeTemplateHtmlStatic,
     props: ["data"],
 })
 export class CustomNode extends Vue {
@@ -107,6 +107,7 @@ function highlight(str: string, lang: string) {
 
 @Component({
     render: indexTemplateHtml,
+    staticRenderFns: indexTemplateHtmlStatic,
 })
 export class App extends Vue {
     data = treeDatas;

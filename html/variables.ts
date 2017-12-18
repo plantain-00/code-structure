@@ -4,7 +4,14 @@
  */
 // tslint:disable
 import { App } from "./index";
+import { CustomNode } from "./index";
 
 // @ts-ignore
-export function indexTemplateHtml(this: App) {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('tree',{attrs:{"data":_vm.data},on:{"toggle":function($event){_vm.toggle($event)},"change":function($event){_vm.change($event)}}}),_c('div',{staticClass:"file"},[_vm._v(_vm._s(_vm.file))]),_c('div',{ref:"lineNumber",staticClass:"line-number"},_vm._l((_vm.lineNumbers),function(lineNumber){return _c('div',{key:lineNumber.lineNumber,class:lineNumber.className},[_vm._v(_vm._s(lineNumber.lineNumber))])})),_c('pre',{ref:"code",domProps:{"innerHTML":_vm._s(_vm.selectedNodeText)},on:{"scroll":function($event){_vm.scroll($event)}}})],1)}
+export function indexTemplateHtml(this: App) {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('tree',{attrs:{"data":_vm.data},on:{"toggle":function($event){_vm.toggle($event)},"change":function($event){_vm.change($event)}}}),_vm._v(" "),_c('div',{staticClass:"file"},[_vm._v(_vm._s(_vm.file))]),_vm._v(" "),_c('div',{ref:"lineNumber",staticClass:"line-number"},_vm._l((_vm.lineNumbers),function(lineNumber){return _c('div',{key:lineNumber.lineNumber,class:lineNumber.className},[_vm._v(_vm._s(lineNumber.lineNumber))])})),_vm._v(" "),_c('pre',{ref:"code",domProps:{"innerHTML":_vm._s(_vm.selectedNodeText)},on:{"scroll":function($event){_vm.scroll($event)}}})],1)}
+// @ts-ignore
+export var indexTemplateHtmlStatic = [  ]
+// @ts-ignore
+export function nodeTemplateHtml(this: CustomNode) {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('span',[_c('span',{class:_vm.color},[_vm._v(_vm._s(_vm.data.value.line))]),_vm._v("\n    "+_vm._s(_vm.data.value.text)+"\n")])}
+// @ts-ignore
+export var nodeTemplateHtmlStatic = [  ]
 // tslint:enable
