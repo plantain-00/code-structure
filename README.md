@@ -1,3 +1,5 @@
+# code-structure
+
 [![Dependency Status](https://david-dm.org/plantain-00/code-structure.svg)](https://david-dm.org/plantain-00/code-structure)
 [![devDependency Status](https://david-dm.org/plantain-00/code-structure/dev-status.svg)](https://david-dm.org/plantain-00/code-structure#info=devDependencies)
 [![Build Status: Linux](https://travis-ci.org/plantain-00/code-structure.svg?branch=master)](https://travis-ci.org/plantain-00/code-structure)
@@ -5,14 +7,13 @@
 [![npm version](https://badge.fury.io/js/code-structure.svg)](https://badge.fury.io/js/code-structure)
 [![Downloads](https://img.shields.io/npm/dm/code-structure.svg)](https://www.npmjs.com/package/code-structure)
 
-# code-structure
 A CLI tool to generate code structure for typescript.
 
-#### install
+## install
 
 `yarn add code-structure -g`
 
-#### usage
+## usage
 
 run `code-structure "*.ts" foo.html`
 

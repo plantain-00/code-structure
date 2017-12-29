@@ -13,6 +13,7 @@ module.exports = {
   exclude: [
   ],
   askVersion: true,
+  changesGitStaged: true,
   postScript: [
     'npm publish "[dir]" --access public',
     'git add package.json',
