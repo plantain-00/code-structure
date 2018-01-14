@@ -11,7 +11,7 @@ A CLI tool to generate code structure for typescript.
 
 ## install
 
-`yarn add code-structure -g`
+`yarn global add code-structure`
 
 ## usage
 
