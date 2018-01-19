@@ -1,19 +1,19 @@
 export type JsonResult = {
-    children: JsonResult[];
-    type: JsonResultType;
-    file: string;
-    line: number;
-    text: string;
-};
+  children: JsonResult[];
+  type: JsonResultType;
+  file: string;
+  line: number;
+  text: string;
+}
 
 export type JsonDataResult = {
-    file: string;
-    results: JsonResult[];
-};
+  file: string;
+  results: JsonResult[];
+}
 
 export const enum JsonResultType {
-    definition = "definition",
-    call = "call",
-    nested = "nested",
-    file = "file",
+    definition = 'definition',
+    call = 'call',
+    nested = 'nested',
+    file = 'file'
 }

@@ -45,6 +45,7 @@
     "standard": "10.0.3",
     "tree-vue-component": "5.1.1",
     "tslint": "5.8.0",
+    "tslint-config-standard": "7.0.0",
     "vue": "2.5.13",
     "vue-class-component": "6.1.2",
     "webpack": "3.10.0"
