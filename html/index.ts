@@ -91,14 +91,12 @@ function highlight (str: string, lang: string) {
     try {
       return `<code class="hljs ${lang}">${hljs.highlight(lang, str).value}</code>`
     } catch (error) {
-            // tslint:disable-next-line:no-console
       console.log(error)
     }
   } else {
     try {
       return `<code class="hljs">${hljs.highlightAuto(str).value}</code>`
     } catch (error) {
-            // tslint:disable-next-line:no-console
       console.log(error)
     }
   }

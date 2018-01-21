@@ -14,7 +14,6 @@ function printInConsole (message: any) {
   if (message instanceof Error) {
     message = message.message
   }
-    // tslint:disable-next-line:no-console
   console.log(message)
 }
 
