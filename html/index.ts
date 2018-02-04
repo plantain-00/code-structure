@@ -13,7 +13,7 @@ import { indexTemplateHtml, indexTemplateHtmlStatic, nodeTemplateHtml, nodeTempl
   props: ['data']
 })
 export class CustomNode extends Vue {
-  data: TreeData<Value>
+  data!: TreeData<Value>
 
   get color () {
     return `line-number-${this.data.value!.type}`
@@ -113,14 +113,14 @@ export class App extends Vue {
   file = ''
   lineNumbers: LineNumber[] = []
 
-  private contentScroll: EaseInOut
+  private contentScroll: EaseInOut | undefined
   private lastSelectedNode: TreeData<Value> | null = null
-  private codeElement: HTMLElement
+  private codeElement: HTMLElement | undefined
 
   mounted () {
     this.codeElement = this.$refs.code as HTMLElement
     this.contentScroll = new EaseInOut(currentValue => {
-      this.codeElement.scrollTop = currentValue
+      this.codeElement!.scrollTop = currentValue
     })
   }
 
@@ -144,9 +144,9 @@ export class App extends Vue {
 
     Vue.nextTick(() => {
       if (eventData.data.value!.type === JsonResultType.file) {
-        this.contentScroll.start(this.codeElement.scrollTop, 0)
+        this.contentScroll!.start(this.codeElement!.scrollTop, 0)
       } else {
-        this.contentScroll.start(this.codeElement.scrollTop, eventData.data.value!.line * 18 - 11)
+        this.contentScroll!.start(this.codeElement!.scrollTop, eventData.data.value!.line * 18 - 11)
       }
     })
 
@@ -179,7 +179,7 @@ export class App extends Vue {
     this.lineNumbers = lineNumbers
   }
   scroll (e: UIEvent) {
-    (this.$refs.lineNumber as HTMLElement).scrollTop = this.codeElement.scrollTop
+    (this.$refs.lineNumber as HTMLElement).scrollTop = this.codeElement!.scrollTop
   }
 }
 
