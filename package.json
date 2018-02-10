@@ -28,7 +28,7 @@
     "@types/jasmine": "2.8.6",
     "@types/minimist": "1.2.0",
     "@types/mkdirp": "0.5.2",
-    "@types/node": "9.4.0",
+    "@types/node": "9.4.5",
     "@types/puppeteer": "1.0.0",
     "clean-css-cli": "4.1.10",
     "clean-scripts": "1.7.0",
@@ -37,8 +37,8 @@
     "github-fork-ribbon-css": "0.2.1",
     "highlight.js": "9.12.0",
     "http-server": "0.11.1",
-    "jasmine": "2.9.0",
-    "markdownlint-cli": "0.7.0",
+    "jasmine": "3.0.0",
+    "markdownlint-cli": "0.7.1",
     "no-unused-export": "1.5.0",
     "puppeteer": "1.0.0",
     "rimraf": "2.6.2",
@@ -48,7 +48,7 @@
     "tslint-config-standard": "7.0.0",
     "vue": "2.5.13",
     "vue-class-component": "6.1.2",
-    "webpack": "3.10.0"
+    "webpack": "3.11.0"
   },
   "dependencies": {
     "glob": "7.1.2",
