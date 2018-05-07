@@ -10,18 +10,18 @@ import { JsonResult, JsonDataResult, JsonResultType } from './types'
 
 let suppressError = false
 
-function printInConsole (message: any) {
+function printInConsole(message: any) {
   if (message instanceof Error) {
     message = message.message
   }
   console.log(message)
 }
 
-function showToolVersion () {
+function showToolVersion() {
   printInConsole(`Version: ${packageJson.version}`)
 }
 
-function globAsync (pattern: string, ignore?: string | string[]) {
+function globAsync(pattern: string, ignore?: string | string[]) {
   return new Promise<string[]>((resolve, reject) => {
     glob(pattern, { ignore }, (error, matches) => {
       if (error) {
@@ -33,11 +33,11 @@ function globAsync (pattern: string, ignore?: string | string[]) {
   })
 }
 
-function showSyntaxKind (node: ts.Node) {
+function showSyntaxKind(node: ts.Node) {
   printInConsole(node.kind)
 }
 
-function pushIntoTrees (trees: Tree[], tree: undefined | Tree | Tree[]) {
+function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {
   if (tree) {
     if (Array.isArray(tree)) {
       trees.push(...tree)
@@ -55,7 +55,8 @@ type Context = {
 
 const definitionsCache = new Map<ts.Node, Tree | Tree[] | undefined>()
 
-function getCodeStructureOfDefinition (node: ts.Node, context: Context, file: string): Tree | Tree[] | undefined {
+// tslint:disable-next-line:cognitive-complexity
+function getCodeStructureOfDefinition(node: ts.Node, context: Context, file: string): Tree | Tree[] | undefined {
   const definitions = context.languageService.getDefinitionAtPosition(file, node.end)
   if (definitions && definitions.length > 0) {
     const definition = definitions[0]
@@ -86,7 +87,7 @@ function getCodeStructureOfDefinition (node: ts.Node, context: Context, file: st
           if (definitionNode.kind === ts.SyntaxKind.FunctionDeclaration) {
             const declaration = definitionNode as ts.FunctionDeclaration
             if (!declaration.modifiers
-                            || declaration.modifiers.every(m => m.kind !== ts.SyntaxKind.DeclareKeyword)) {
+              || declaration.modifiers.every(m => m.kind !== ts.SyntaxKind.DeclareKeyword)) {
               tree = {
                 node: declaration,
                 sourceFile,
@@ -117,7 +118,8 @@ function getCodeStructureOfDefinition (node: ts.Node, context: Context, file: st
   return undefined
 }
 
-function getCodeStructure (node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {
+// tslint:disable-next-line:no-big-function cognitive-complexity
+function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {
   if (node === undefined) {
     return undefined
   }
@@ -149,8 +151,8 @@ function getCodeStructure (node: ts.Node, context: Context, sourceFile: ts.Sourc
       const newExpression = callExpression.expression as ts.NewExpression
       callTree = getCodeStructureOfDefinition(newExpression.expression, context, file)
     } else if (callExpression.expression.kind === ts.SyntaxKind.CallExpression
-            || callExpression.expression.kind === ts.SyntaxKind.ElementAccessExpression
-            || callExpression.expression.kind === ts.SyntaxKind.ParenthesizedExpression) {
+      || callExpression.expression.kind === ts.SyntaxKind.ElementAccessExpression
+      || callExpression.expression.kind === ts.SyntaxKind.ParenthesizedExpression) {
       callTree = getCodeStructure(callExpression.expression, context, sourceFile, file)
     } else {
       showSyntaxKind(callExpression.expression)
@@ -174,60 +176,60 @@ function getCodeStructure (node: ts.Node, context: Context, sourceFile: ts.Sourc
     const forOfStatement = node as ts.ForOfStatement
     return getCodeStructure(forOfStatement.statement, context, sourceFile, file)
   } else if (node.kind === ts.SyntaxKind.ArrowFunction
-        || node.kind === ts.SyntaxKind.ModuleDeclaration) {
+    || node.kind === ts.SyntaxKind.ModuleDeclaration) {
     const declaration = node as ts.ArrowFunction | ts.ModuleDeclaration
     return declaration.body ? getCodeStructure(declaration.body, context, sourceFile, file) : undefined
   } else if (node.kind === ts.SyntaxKind.PropertyAssignment) {
     const propertyAssignmentExpression = node as ts.PropertyAssignment
     return getCodeStructure(propertyAssignmentExpression.initializer, context, sourceFile, file)
   } else if (node.kind === ts.SyntaxKind.PrefixUnaryExpression
-        || node.kind === ts.SyntaxKind.PostfixUnaryExpression) {
+    || node.kind === ts.SyntaxKind.PostfixUnaryExpression) {
     const prefixUnaryExpression = node as ts.PrefixUnaryExpression | ts.PostfixUnaryExpression
     return getCodeStructure(prefixUnaryExpression.operand, context, sourceFile, file)
   } else if (node.kind === ts.SyntaxKind.PropertyAccessExpression
-        || node.kind === ts.SyntaxKind.ExportSpecifier
-        || node.kind === ts.SyntaxKind.VariableDeclaration) {
+    || node.kind === ts.SyntaxKind.ExportSpecifier
+    || node.kind === ts.SyntaxKind.VariableDeclaration) {
     const expression = node as ts.PropertyAccessExpression | ts.ExportSpecifier | ts.VariableDeclaration
     return getCodeStructure(expression.name, context, sourceFile, file)
   } else if (node.kind === ts.SyntaxKind.ExportDeclaration) {
     const exportDeclaration = node as ts.ExportDeclaration
     return exportDeclaration.exportClause ? getCodeStructure(exportDeclaration.exportClause, context, sourceFile, file) : undefined
   } else if (node.kind === ts.SyntaxKind.TemplateSpan
-        || node.kind === ts.SyntaxKind.ReturnStatement
-        || node.kind === ts.SyntaxKind.AsExpression
-        || node.kind === ts.SyntaxKind.SpreadElement
-        || node.kind === ts.SyntaxKind.ExpressionStatement
-        || node.kind === ts.SyntaxKind.AwaitExpression
-        || node.kind === ts.SyntaxKind.NewExpression
-        || node.kind === ts.SyntaxKind.ParenthesizedExpression
-        || node.kind === ts.SyntaxKind.TypeOfExpression
-        || node.kind === ts.SyntaxKind.NonNullExpression
-        || node.kind === ts.SyntaxKind.ThrowStatement
-        || node.kind === ts.SyntaxKind.ExportAssignment
-        || node.kind === ts.SyntaxKind.DeleteExpression
-        || node.kind === ts.SyntaxKind.VoidExpression
-        || node.kind === ts.SyntaxKind.TypeAssertionExpression) {
+    || node.kind === ts.SyntaxKind.ReturnStatement
+    || node.kind === ts.SyntaxKind.AsExpression
+    || node.kind === ts.SyntaxKind.SpreadElement
+    || node.kind === ts.SyntaxKind.ExpressionStatement
+    || node.kind === ts.SyntaxKind.AwaitExpression
+    || node.kind === ts.SyntaxKind.NewExpression
+    || node.kind === ts.SyntaxKind.ParenthesizedExpression
+    || node.kind === ts.SyntaxKind.TypeOfExpression
+    || node.kind === ts.SyntaxKind.NonNullExpression
+    || node.kind === ts.SyntaxKind.ThrowStatement
+    || node.kind === ts.SyntaxKind.ExportAssignment
+    || node.kind === ts.SyntaxKind.DeleteExpression
+    || node.kind === ts.SyntaxKind.VoidExpression
+    || node.kind === ts.SyntaxKind.TypeAssertionExpression) {
     const expression = node as ts.TemplateSpan
-            | ts.ReturnStatement
-            | ts.AsExpression
-            | ts.SpreadElement
-            | ts.ExpressionStatement
-            | ts.AwaitExpression
-            | ts.NewExpression
-            | ts.ParenthesizedExpression
-            | ts.TypeOfExpression
-            | ts.NonNullExpression
-            | ts.ThrowStatement
-            | ts.ExportAssignment
-            | ts.DeleteExpression
-            | ts.VoidExpression
-            | ts.TypeAssertion
+      | ts.ReturnStatement
+      | ts.AsExpression
+      | ts.SpreadElement
+      | ts.ExpressionStatement
+      | ts.AwaitExpression
+      | ts.NewExpression
+      | ts.ParenthesizedExpression
+      | ts.TypeOfExpression
+      | ts.NonNullExpression
+      | ts.ThrowStatement
+      | ts.ExportAssignment
+      | ts.DeleteExpression
+      | ts.VoidExpression
+      | ts.TypeAssertion
     return expression.expression ? getCodeStructure(expression.expression, context, sourceFile, file) : undefined
   } else {
     const trees: Tree[] = []
     if (node.kind === ts.SyntaxKind.Block
-            || node.kind === ts.SyntaxKind.CaseClause
-            || node.kind === ts.SyntaxKind.DefaultClause) {
+      || node.kind === ts.SyntaxKind.CaseClause
+      || node.kind === ts.SyntaxKind.DefaultClause) {
       const statements = (node as ts.Block | ts.CaseClause).statements
       for (const statement of statements) {
         const childTree = getCodeStructure(statement, context, sourceFile, file)
@@ -392,26 +394,26 @@ function getCodeStructure (node: ts.Node, context: Context, sourceFile: ts.Sourc
         pushIntoTrees(trees, nameTree)
       }
     } else if (node.kind === ts.SyntaxKind.EndOfFileToken
-            || node.kind === ts.SyntaxKind.NumericLiteral
-            || node.kind === ts.SyntaxKind.StringLiteral
-            || node.kind === ts.SyntaxKind.ImportDeclaration
-            || node.kind === ts.SyntaxKind.MethodDeclaration
-            || node.kind === ts.SyntaxKind.FunctionDeclaration
-            || node.kind === ts.SyntaxKind.InterfaceDeclaration
-            || node.kind === ts.SyntaxKind.ShorthandPropertyAssignment
-            || node.kind === ts.SyntaxKind.Identifier
-            || node.kind === ts.SyntaxKind.NoSubstitutionTemplateLiteral
-            || node.kind === ts.SyntaxKind.EnumDeclaration
-            || node.kind === ts.SyntaxKind.TypeAliasDeclaration
-            || node.kind === ts.SyntaxKind.ImportEqualsDeclaration
-            || node.kind === ts.SyntaxKind.ClassDeclaration
-            || node.kind === ts.SyntaxKind.NullKeyword
-            || node.kind === ts.SyntaxKind.TrueKeyword
-            || node.kind === ts.SyntaxKind.FalseKeyword
-            || node.kind === ts.SyntaxKind.ThisKeyword
-            || node.kind === ts.SyntaxKind.BreakStatement
-            || node.kind === ts.SyntaxKind.ContinueStatement
-            || node.kind === ts.SyntaxKind.RegularExpressionLiteral) {
+      || node.kind === ts.SyntaxKind.NumericLiteral
+      || node.kind === ts.SyntaxKind.StringLiteral
+      || node.kind === ts.SyntaxKind.ImportDeclaration
+      || node.kind === ts.SyntaxKind.MethodDeclaration
+      || node.kind === ts.SyntaxKind.FunctionDeclaration
+      || node.kind === ts.SyntaxKind.InterfaceDeclaration
+      || node.kind === ts.SyntaxKind.ShorthandPropertyAssignment
+      || node.kind === ts.SyntaxKind.Identifier
+      || node.kind === ts.SyntaxKind.NoSubstitutionTemplateLiteral
+      || node.kind === ts.SyntaxKind.EnumDeclaration
+      || node.kind === ts.SyntaxKind.TypeAliasDeclaration
+      || node.kind === ts.SyntaxKind.ImportEqualsDeclaration
+      || node.kind === ts.SyntaxKind.ClassDeclaration
+      || node.kind === ts.SyntaxKind.NullKeyword
+      || node.kind === ts.SyntaxKind.TrueKeyword
+      || node.kind === ts.SyntaxKind.FalseKeyword
+      || node.kind === ts.SyntaxKind.ThisKeyword
+      || node.kind === ts.SyntaxKind.BreakStatement
+      || node.kind === ts.SyntaxKind.ContinueStatement
+      || node.kind === ts.SyntaxKind.RegularExpressionLiteral) {
       return undefined
     } else {
       showSyntaxKind(node)
@@ -423,7 +425,7 @@ function getCodeStructure (node: ts.Node, context: Context, sourceFile: ts.Sourc
 
 const fullTexts: { [file: string]: string } = {}
 
-function getJsonResult (tree: Tree): JsonResult {
+function getJsonResult(tree: Tree): JsonResult {
   const startPosition = tree.node.getStart(tree.sourceFile)
   const { line } = ts.getLineAndCharacterOfPosition(tree.sourceFile, startPosition)
   const text = tree.sourceFile.text.substring(startPosition, tree.sourceFile.getLineEndOfPosition(startPosition)).trim()
@@ -453,7 +455,8 @@ type Result = {
   trees: Tree[];
 }
 
-async function executeCommandLine () {
+// tslint:disable-next-line:cognitive-complexity
+async function executeCommandLine() {
   const argv = minimist(process.argv.slice(2), { '--': true })
 
   const showVersion = argv.v || argv.version
@@ -488,23 +491,23 @@ async function executeCommandLine () {
 
   const compilerOptions: ts.CompilerOptions = { target: ts.ScriptTarget.ESNext, allowJs: true }
   const languageService = ts.createLanguageService({
-    getCompilationSettings () {
+    getCompilationSettings() {
       return compilerOptions
     },
-    getScriptFileNames () {
+    getScriptFileNames() {
       return uniqFiles
     },
-    getScriptVersion (fileName: string) {
+    getScriptVersion(fileName: string) {
       return ''
     },
-    getScriptSnapshot (fileName: string) {
+    getScriptSnapshot(fileName: string) {
       if (fileName === '.ts') {
         return ts.ScriptSnapshot.fromString('')
       }
       return ts.ScriptSnapshot.fromString(fs.readFileSync(fileName, { encoding: 'utf8' }))
     },
     getCurrentDirectory: () => '.',
-    getDefaultLibFileName (options: ts.CompilerOptions) {
+    getDefaultLibFileName(options: ts.CompilerOptions) {
       return ts.getDefaultLibFilePath(options)
     },
     fileExists: ts.sys.fileExists,

@@ -15,7 +15,7 @@ import { indexTemplateHtml, indexTemplateHtmlStatic, nodeTemplateHtml, nodeTempl
 export class CustomNode extends Vue {
   data!: TreeData<Value>
 
-  get color () {
+  get color() {
     return `line-number-${this.data.value!.type}`
   }
 }
@@ -24,7 +24,7 @@ Vue.component('custom-node', CustomNode)
 declare const data: JsonDataResult[]
 declare const fullTexts: { [file: string]: string }
 
-function jsonResultToTreeData (jsonResult: JsonResult, parent: TreeData<Value>): TreeData<Value> {
+function jsonResultToTreeData(jsonResult: JsonResult, parent: TreeData<Value>): TreeData<Value> {
   const treeData: TreeData<Value> = {
     component: 'custom-node',
     icon: false,
@@ -86,7 +86,7 @@ for (const d of data) {
   }
 }
 
-function highlight (str: string, lang: string) {
+function highlight(str: string, lang: string) {
   if (lang && hljs.getLanguage(lang)) {
     try {
       return `<code class="hljs ${lang}">${hljs.highlight(lang, str).value}</code>`
@@ -117,17 +117,18 @@ export class App extends Vue {
   private lastSelectedNode: TreeData<Value> | null = null
   private codeElement: HTMLElement | undefined
 
-  mounted () {
+  mounted() {
     this.codeElement = this.$refs.code as HTMLElement
     this.contentScroll = new EaseInOut(currentValue => {
       this.codeElement!.scrollTop = currentValue
     })
   }
 
-  toggle (eventData: EventData<Value>) {
+  toggle(eventData: EventData<Value>) {
     eventData.data.state.opened = !eventData.data.state.opened
   }
-  change (eventData: EventData<Value>) {
+  // tslint:disable-next-line:cognitive-complexity
+  change(eventData: EventData<Value>) {
     if (this.lastSelectedNode) {
       this.lastSelectedNode.state.selected = false
     }
@@ -135,7 +136,7 @@ export class App extends Vue {
     this.lastSelectedNode = eventData.data
 
     if (eventData.data.value!.type === JsonResultType.definition
-            || eventData.data.value!.type === JsonResultType.file) {
+      || eventData.data.value!.type === JsonResultType.file) {
       eventData.data.state.opened = true
     }
 
@@ -178,7 +179,7 @@ export class App extends Vue {
     }
     this.lineNumbers = lineNumbers
   }
-  scroll (e: UIEvent) {
+  scroll(e: UIEvent) {
     (this.$refs.lineNumber as HTMLElement).scrollTop = this.codeElement!.scrollTop
   }
 }
