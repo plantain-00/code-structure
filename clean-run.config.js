@@ -12,6 +12,6 @@ module.exports = {
   ],
   postScript: [
     'cd "[dir]" && yarn --production',
-    '[dir]/bin/code-structure src/*.ts -o demo/result.html --exclude src/*.d.ts'
+    'node [dir]/dist/index.js src/*.ts -o demo/result.html --exclude src/*.d.ts'
   ]
 }
