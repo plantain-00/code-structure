@@ -29,6 +29,7 @@ module.exports = {
   test: [
     'tsc -p spec',
     'jasmine',
+    'clean-release --config clean-run.config.js',
     () => checkGitStatus()
   ],
   fix: {
