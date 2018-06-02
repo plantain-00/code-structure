@@ -209,6 +209,7 @@ function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.Source
     || node.kind === ts.SyntaxKind.DeleteExpression
     || node.kind === ts.SyntaxKind.VoidExpression
     || node.kind === ts.SyntaxKind.TypeAssertionExpression) {
+    // tslint:disable-next-line:max-union-size
     const expression = node as ts.TemplateSpan
       | ts.ReturnStatement
       | ts.AsExpression
@@ -479,7 +480,7 @@ async function executeCommandLine() {
   }
   printInConsole(`Total: ${uniqFiles.length}`)
 
-  const out: string | string | undefined = argv.o
+  const out: string | string[] | undefined = argv.o
   let htmlOutput: string
   if (typeof out === 'string') {
     htmlOutput = out
