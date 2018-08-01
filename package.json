@@ -59,7 +59,7 @@
     "mkdirp": "0.5.1",
     "stringify2stream": "1.0.3",
     "tslib": "1.9.3",
-    "typescript": "2.9.2"
+    "typescript": "3.0.1"
   },
   "bin": {
     "code-structure": "bin/code-structure"
