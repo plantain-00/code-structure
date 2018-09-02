@@ -1,10 +1,10 @@
 import minimist from 'minimist'
-import * as ts from 'typescript'
+import ts from 'typescript'
 import * as fs from 'fs'
 import glob from 'glob'
 import * as path from 'path'
 import mkdirp from 'mkdirp'
-import stringify from 'stringify2stream/nodejs'
+import stringify from 'stringify2stream'
 import * as packageJson from '../package.json'
 import { JsonResult, JsonDataResult, JsonResultType } from './types'
 

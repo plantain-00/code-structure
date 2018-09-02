@@ -4070,9 +4070,9 @@ string_decoder@^1.0.0, string_decoder@~1.1.1:
   dependencies:
     safe-buffer "~5.1.0"
 
-stringify2stream@1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/stringify2stream/-/stringify2stream-1.0.3.tgz#7e100c819aee9c7577a6d6f69d38f725a54402ec"
+stringify2stream@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/stringify2stream/-/stringify2stream-1.1.0.tgz#7d1bb56bda9fafdbf215f7118cdaeb77f27a4045"
 
 strip-ansi@^3.0.0, strip-ansi@^3.0.1:
   version "3.0.1"
