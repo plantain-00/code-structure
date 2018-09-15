@@ -113,9 +113,9 @@ export class App extends Vue {
   file = ''
   lineNumbers: LineNumber[] = []
 
-  private contentScroll: EaseInOut | undefined
+  private contentScroll?: EaseInOut
   private lastSelectedNode: TreeData<Value> | null = null
-  private codeElement: HTMLElement | undefined
+  private codeElement?: HTMLElement
 
   mounted() {
     this.codeElement = this.$refs.code as HTMLElement
