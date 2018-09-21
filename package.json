@@ -23,15 +23,15 @@
   "devDependencies": {
     "@commitlint/cli": "7.1.2",
     "@commitlint/config-conventional": "7.1.2",
-    "@types/glob": "5.0.35",
+    "@types/glob": "7.1.0",
     "@types/highlight.js": "9.12.3",
     "@types/jasmine": "2.8.8",
     "@types/minimist": "1.2.0",
     "@types/mkdirp": "0.5.2",
-    "@types/node": "10.9.4",
+    "@types/node": "10.10.2",
     "@types/puppeteer": "1.6.4",
     "clean-css-cli": "4.2.1",
-    "clean-release": "2.6.0",
+    "clean-release": "2.7.0",
     "clean-scripts": "1.9.2",
     "ease-in-out": "2.2.1",
     "file2variable-cli": "1.8.5",
@@ -50,7 +50,7 @@
     "tslint-sonarts": "1.8.0",
     "vue": "2.5.17",
     "vue-class-component": "6.2.0",
-    "webpack": "4.19.0",
+    "webpack": "4.19.1",
     "webpack-cli": "3.1.0"
   },
   "dependencies": {
