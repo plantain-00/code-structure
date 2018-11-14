@@ -19,6 +19,9 @@
   "bugs": {
     "url": "https://github.com/plantain-00/code-structure/issues"
   },
+  "typeCoverage": {
+    "atLeast": 94
+  },
   "homepage": "https://github.com/plantain-00/code-structure#readme",
   "devDependencies": {
     "@commitlint/cli": "7.2.1",
