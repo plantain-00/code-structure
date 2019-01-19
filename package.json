@@ -24,11 +24,11 @@
   },
   "homepage": "https://github.com/plantain-00/code-structure#readme",
   "devDependencies": {
-    "@commitlint/cli": "7.3.1",
+    "@commitlint/cli": "7.3.2",
     "@commitlint/config-conventional": "7.3.1",
     "@types/glob": "7.1.1",
     "@types/highlight.js": "9.12.3",
-    "@types/jasmine": "3.3.5",
+    "@types/jasmine": "3.3.7",
     "@types/minimist": "1.2.0",
     "@types/mkdirp": "0.5.2",
     "@types/node": "10.12.18",
@@ -63,7 +63,7 @@
     "mkdirp": "0.5.1",
     "stringify2stream": "1.1.0",
     "tslib": "1.9.3",
-    "typescript": "3.2.2"
+    "typescript": "3.2.4"
   },
   "bin": {
     "code-structure": "bin/code-structure"
