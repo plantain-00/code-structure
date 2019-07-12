@@ -3,6 +3,7 @@
  * It is not mean to be edited by hand
  */
 // tslint:disable
+/* eslint-disable */
 import { App, CustomNode } from "./index"
 
 // @ts-ignore
@@ -13,4 +14,5 @@ export var indexTemplateHtmlStatic = [  ]
 export function nodeTemplateHtml(this: CustomNode) {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('span',[_c('span',{class:_vm.color},[_vm._v(_vm._s(_vm.data.value.line))]),_vm._v("\n    "+_vm._s(_vm.data.value.text)+"\n")])}
 // @ts-ignore
 export var nodeTemplateHtmlStatic = [  ]
+/* eslint-enable */
 // tslint:enable
