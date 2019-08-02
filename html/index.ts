@@ -127,7 +127,6 @@ export class App extends Vue {
   toggle(eventData: EventData<Value>) {
     eventData.data.state.opened = !eventData.data.state.opened
   }
-  // tslint:disable-next-line:cognitive-complexity
   change(eventData: EventData<Value>) {
     if (this.lastSelectedNode) {
       this.lastSelectedNode.state.selected = false
@@ -184,7 +183,7 @@ export class App extends Vue {
   }
 }
 
-type Value = {
+interface Value {
   type: JsonResultType;
   file: string;
   line: number;
@@ -192,10 +191,9 @@ type Value = {
   parent: TreeData<Value> | null;
 }
 
-type LineNumber = {
+interface LineNumber {
   lineNumber: number;
   className?: string;
 }
 
-// tslint:disable-next-line:no-unused-expression
 new App({ el: '#container' })

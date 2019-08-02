@@ -47,7 +47,7 @@ function pushIntoTrees(trees: Tree[], tree: undefined | Tree | Tree[]) {
   }
 }
 
-type Context = {
+interface Context {
   program: ts.Program;
   languageService: ts.LanguageService;
   nodes: ts.Node[];
@@ -55,7 +55,6 @@ type Context = {
 
 const definitionsCache = new Map<ts.Node, Tree | Tree[] | undefined>()
 
-// tslint:disable-next-line:cognitive-complexity
 function getCodeStructureOfDefinition(node: ts.Node, context: Context, file: string): Tree | Tree[] | undefined {
   const definitions = context.languageService.getDefinitionAtPosition(file, node.end)
   if (definitions && definitions.length > 0) {
@@ -118,7 +117,6 @@ function getCodeStructureOfDefinition(node: ts.Node, context: Context, file: str
   return undefined
 }
 
-// tslint:disable-next-line:no-big-function cognitive-complexity
 function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.SourceFile, file: string): Tree | undefined | Tree[] {
   if (node === undefined) {
     return undefined
@@ -209,7 +207,6 @@ function getCodeStructure(node: ts.Node, context: Context, sourceFile: ts.Source
     || node.kind === ts.SyntaxKind.DeleteExpression
     || node.kind === ts.SyntaxKind.VoidExpression
     || node.kind === ts.SyntaxKind.TypeAssertionExpression) {
-    // tslint:disable-next-line:max-union-size
     const expression = node as ts.TemplateSpan
       | ts.ReturnStatement
       | ts.AsExpression
@@ -443,7 +440,7 @@ function getJsonResult(tree: Tree): JsonResult {
   return jsonResult
 }
 
-type Tree = {
+interface Tree {
   children: Tree[];
   node: ts.Node;
   sourceFile: ts.SourceFile;
@@ -451,12 +448,11 @@ type Tree = {
   file: string;
 }
 
-type Result = {
+interface Result {
   file: string;
   trees: Tree[];
 }
 
-// tslint:disable-next-line:cognitive-complexity
 async function executeCommandLine() {
   const argv = minimist(process.argv.slice(2), { '--': true })
 

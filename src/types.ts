@@ -1,4 +1,4 @@
-export type JsonResult = {
+export interface JsonResult {
   children: JsonResult[];
   type: JsonResultType;
   file: string;
@@ -6,7 +6,7 @@ export type JsonResult = {
   text: string;
 }
 
-export type JsonDataResult = {
+export interface JsonDataResult {
   file: string;
   results: JsonResult[];
 }
