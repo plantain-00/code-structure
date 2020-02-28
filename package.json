@@ -28,12 +28,12 @@
     "@commitlint/config-conventional": "8.3.4",
     "@types/glob": "7.1.1",
     "@types/highlight.js": "9.12.3",
-    "@types/jasmine": "3.5.6",
+    "@types/jasmine": "3.5.7",
     "@types/minimist": "1.2.0",
-    "@types/node": "13.7.4",
-    "@types/puppeteer": "2.0.0",
-    "@typescript-eslint/eslint-plugin": "2.20.0",
-    "@typescript-eslint/parser": "2.20.0",
+    "@types/node": "13.7.7",
+    "@types/puppeteer": "2.0.1",
+    "@typescript-eslint/eslint-plugin": "2.21.0",
+    "@typescript-eslint/parser": "2.21.0",
     "clean-css-cli": "4.3.0",
     "clean-release": "2.7.1",
     "clean-scripts": "1.12.1",
@@ -47,7 +47,7 @@
     "http-server": "0.12.1",
     "jasmine": "3.5.0",
     "markdownlint-cli": "0.22.0",
-    "no-unused-export": "1.10.0",
+    "no-unused-export": "1.10.1",
     "puppeteer": "2.1.1",
     "rimraf": "3.0.2",
     "tree-vue-component": "5.9.0",
@@ -62,8 +62,8 @@
     "minimist": "1.2.0",
     "mkdirp": "1.0.3",
     "stringify2stream": "1.1.0",
-    "tslib": "1.11.0",
-    "typescript": "3.8.2"
+    "tslib": "1.11.1",
+    "typescript": "3.8.3"
   },
   "bin": {
     "code-structure": "bin/code-structure"
