@@ -1,12 +1,9 @@
-module.exports = {
+export default {
   base: 'html',
   files: [
     'html/*.template.html'
   ],
-  /**
-   * @argument {string} file
-   */
-  handler: file => {
+  handler: (file: string) => {
     if (file.endsWith('index.template.html')) {
       return {
         type: 'vue',

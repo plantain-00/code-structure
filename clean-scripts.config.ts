@@ -1,17 +1,16 @@
-const { Service, checkGitStatus } = require('clean-scripts')
+import { checkGitStatus } from 'clean-scripts'
 
-const tsFiles = `"src/**/*.ts" "spec/**/*.ts" "html/**/*.ts" "screenshots/**/*.ts"`
-const jsFiles = `"*.config.js" "html/*.config.js"`
+const tsFiles = `"src/**/*.ts" "html/**/*.ts"`
+const jsFiles = `"*.config.js"`
 
-module.exports = {
+export default {
   build: [
     'rimraf dist/',
     'tsc -p src/',
     {
       js: [
-        `file2variable-cli --config html/file2variable.config.js`,
-        'tsc -p html',
-        'webpack --config html/webpack.config.js'
+        `file2variable-cli --config html/file2variable.config.ts`,
+        'webpack --config html/webpack.config.ts'
       ],
       css: [
         'cleancss -o html/vendor.bundle.css ./node_modules/tree-component/dist/tree.min.css ./node_modules/github-fork-ribbon-css/gh-fork-ribbon.css ./node_modules/highlight.js/styles/routeros.css'
@@ -28,15 +27,8 @@ module.exports = {
     typeCoverageHtml: 'type-coverage -p html --strict'
   },
   test: [
-    'tsc -p spec',
-    'jasmine',
-    'clean-release --config clean-run.config.js',
+    'clean-release --config clean-run.config.ts',
     () => checkGitStatus()
   ],
-  fix: `eslint --ext .js,.ts ${tsFiles} ${jsFiles} --fix`,
-  screenshot: [
-    new Service(`http-server -p 8000`),
-    `tsc -p screenshots`,
-    `node screenshots/index.js`
-  ]
+  fix: `eslint --ext .js,.ts ${tsFiles} ${jsFiles} --fix`
 }
