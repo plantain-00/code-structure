@@ -20,4 +20,13 @@ run `code-structure "*.ts" foo.html`
 
 or `code-structure "*.ts" -o foo.html --exclude bar.ts`
 
-then open the generated html files in the browser.
+then open the generated html file in the browser.
+
+## options
+
+key | description
+--- | ---
+-o | generated html file
+-e,--exclude | excluded files
+-h,--help | Print this message.
+-v,--version | Print the version

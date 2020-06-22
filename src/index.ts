@@ -21,6 +21,19 @@ function showToolVersion() {
   printInConsole(`Version: ${packageJson.version}`)
 }
 
+function showHelp() {
+  console.log(`Version ${packageJson.version}
+Syntax:   code-structure [options] [file...]
+Examples: code-structure "*.ts" -o foo.html
+          code-structure "*.ts" -o foo.html --exclude bar.ts
+Options:
+ -h, --help                                         Print this message.
+ -v, --version                                      Print the version
+ -o                                                 Generated html file
+ -e, --exclude                                      Excluded files
+`)
+}
+
 function globAsync(pattern: string, ignore?: string | string[]) {
   return new Promise<string[]>((resolve, reject) => {
     glob(pattern, { ignore }, (error, matches) => {
@@ -454,11 +467,26 @@ interface Result {
 }
 
 async function executeCommandLine() {
-  const argv = minimist(process.argv.slice(2), { '--': true })
+  const argv = minimist(process.argv.slice(2), { '--': true }) as unknown as {
+    v?: unknown
+    version?: unknown
+    h?: unknown
+    help?: unknown
+    _: string[]
+    suppressError: boolean
+    e?: string | string[]
+    exclude?: string | string[]
+    o?: string | string[]
+  }
 
   const showVersion = argv.v || argv.version
   if (showVersion) {
     showToolVersion()
+    return
+  }
+
+  if (argv.h || argv.help) {
+    showHelp()
     return
   }
 
@@ -468,7 +496,7 @@ async function executeCommandLine() {
     throw new Error('Expect at least one pattern.')
   }
   const pattern = argv._.length === 1 ? argv._[0] : `{${argv._.join(',')}}`
-  const exclude: string | string[] | undefined = argv.exclude
+  const exclude: string | string[] | undefined = argv.exclude || argv.e
   const uniqFiles = await globAsync(pattern, exclude)
 
   for (const file of uniqFiles) {

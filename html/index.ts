@@ -114,9 +114,9 @@ export class App extends Vue {
   file = ''
   lineNumbers: LineNumber[] = []
 
-  private contentScroll?: EaseInOut
+  private contentScroll!: EaseInOut
   private lastSelectedNode: TreeData<Value> | null = null
-  private codeElement?: HTMLElement
+  private codeElement!: HTMLElement
 
   mounted() {
     this.codeElement = this.$refs.code as HTMLElement
@@ -145,9 +145,9 @@ export class App extends Vue {
 
     Vue.nextTick(() => {
       if (eventData.data.value!.type === JsonResultType.file) {
-        this.contentScroll!.start(this.codeElement!.scrollTop, 0)
+        this.contentScroll.start(this.codeElement.scrollTop, 0)
       } else {
-        this.contentScroll!.start(this.codeElement!.scrollTop, eventData.data.value!.line * 18 - 11)
+        this.contentScroll.start(this.codeElement.scrollTop, eventData.data.value!.line * 18 - 11)
       }
     })
 

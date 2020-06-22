@@ -23,8 +23,8 @@ export default {
     export: `no-unused-export ${tsFiles}`,
     commit: `commitlint --from=HEAD~1`,
     markdown: `markdownlint README.md`,
-    typeCoverage: 'type-coverage -p src --strict',
-    typeCoverageHtml: 'type-coverage -p html --strict'
+    typeCoverage: 'type-coverage -p src --strict --ingore-catch',
+    typeCoverageHtml: 'type-coverage -p html --strict --ingore-catch --ignore-files html/variables.ts'
   },
   test: [
     'clean-release --config clean-run.config.ts',
