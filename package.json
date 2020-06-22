@@ -19,7 +19,7 @@
     "url": "https://github.com/plantain-00/code-structure/issues"
   },
   "typeCoverage": {
-    "atLeast": 95.95
+    "atLeast": 95.94
   },
   "homepage": "https://github.com/plantain-00/code-structure#readme",
   "devDependencies": {
