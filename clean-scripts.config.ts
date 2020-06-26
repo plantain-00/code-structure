@@ -1,7 +1,6 @@
 import { checkGitStatus } from 'clean-scripts'
 
 const tsFiles = `"src/**/*.ts" "html/**/*.ts"`
-const jsFiles = `"*.config.js"`
 
 export default {
   build: [
@@ -19,9 +18,8 @@ export default {
     `node dist/index.js src/*.ts -o demo/result.html --exclude src/*.d.ts`
   ],
   lint: {
-    ts: `eslint --ext .js,.ts ${tsFiles} ${jsFiles}`,
+    ts: `eslint --ext .js,.ts ${tsFiles}`,
     export: `no-unused-export ${tsFiles}`,
-    commit: `commitlint --from=HEAD~1`,
     markdown: `markdownlint README.md`,
     typeCoverage: 'type-coverage -p src --strict --ingore-catch',
     typeCoverageHtml: 'type-coverage -p html --strict --ingore-catch --ignore-files html/variables.ts'
@@ -30,5 +28,5 @@ export default {
     'clean-release --config clean-run.config.ts',
     () => checkGitStatus()
   ],
-  fix: `eslint --ext .js,.ts ${tsFiles} ${jsFiles} --fix`
+  fix: `eslint --ext .js,.ts ${tsFiles} --fix`
 }
