@@ -1,4 +1,6 @@
-export default {
+import { Configuration } from 'clean-release'
+
+const config: Configuration = {
   include: [
     'bin/*',
     'dist/*.js',
@@ -27,3 +29,5 @@ export default {
     ({ version }) => `git push origin v${version}`
   ]
 }
+
+export default config
