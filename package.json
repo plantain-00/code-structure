@@ -65,5 +65,8 @@
   },
   "bin": {
     "code-structure": "bin/code-structure"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }
