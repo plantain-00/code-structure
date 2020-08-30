@@ -91,13 +91,13 @@ function highlight(str: string, lang: string) {
   if (lang && hljs.getLanguage(lang)) {
     try {
       return `<code class="hljs ${lang}">${hljs.highlight(lang, str).value}</code>`
-    } catch (error) {
+    } catch (error: unknown) {
       console.log(error)
     }
   } else {
     try {
       return `<code class="hljs">${hljs.highlightAuto(str).value}</code>`
-    } catch (error) {
+    } catch (error: unknown) {
       console.log(error)
     }
   }

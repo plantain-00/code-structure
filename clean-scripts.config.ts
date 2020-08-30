@@ -21,8 +21,8 @@ export default {
     ts: `eslint --ext .js,.ts ${tsFiles}`,
     export: `no-unused-export ${tsFiles}`,
     markdown: `markdownlint README.md`,
-    typeCoverage: 'type-coverage -p src --strict --ingore-catch',
-    typeCoverageHtml: 'type-coverage -p html --strict --ingore-catch --ignore-files html/variables.ts'
+    typeCoverage: 'type-coverage -p src --strict',
+    typeCoverageHtml: 'type-coverage -p html --strict --ignore-files html/variables.ts'
   },
   test: [
     'clean-release --config clean-run.config.ts',
