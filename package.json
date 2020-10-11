@@ -20,7 +20,7 @@
     "url": "https://github.com/plantain-00/code-structure/issues"
   },
   "typeCoverage": {
-    "atLeast": 96.84
+    "atLeast": 96.73
   },
   "homepage": "https://github.com/plantain-00/code-structure#readme",
   "devDependencies": {
@@ -50,8 +50,7 @@
     "ts-node": "9.0.0",
     "tsconfig-plantain": "0.0.1",
     "type-coverage": "2.13.3",
-    "vue": "2.6.12",
-    "vue-class-component": "7.2.6",
+    "vue": "3.0.0",
     "webpack": "4.44.2",
     "webpack-cli": "3.3.12"
   },

@@ -1,26 +1,25 @@
-import Vue from 'vue'
-import Component from 'vue-class-component'
-import { EventData, TreeData, DropPosition } from 'tree-vue-component'
-import 'tree-vue-component'
+import { createApp, defineComponent, nextTick, PropType } from 'vue'
+import { EventData, TreeData, DropPosition, Tree, Node } from 'tree-vue-component'
 import * as hljs from 'highlight.js'
 import { EaseInOut } from 'ease-in-out'
 import { JsonDataResult, JsonResult, JsonResultType } from '../src/types'
 
-import { indexTemplateHtml, indexTemplateHtmlStatic, nodeTemplateHtml, nodeTemplateHtmlStatic } from './variables'
+import { indexTemplateHtml, nodeTemplateHtml } from './variables'
 
-@Component({
+const CustomNode = defineComponent({
   render: nodeTemplateHtml,
-  staticRenderFns: nodeTemplateHtmlStatic,
-  props: ['data']
-})
-export class CustomNode extends Vue {
-  data!: TreeData<Value>
-
-  get color() {
-    return `line-number-${this.data.value!.type}`
+  props: {
+    data: {
+      value: Object as PropType<TreeData<Value>>,
+      required: true,
+    }
+  },
+  computed: {
+    color(): string {
+      return `line-number-${(this.data as TreeData<Value>).value!.type}`
+    }
   }
-}
-Vue.component('custom-node', CustomNode)
+})
 
 declare const data: JsonDataResult[]
 declare const fullTexts: { [file: string]: string }
@@ -104,85 +103,88 @@ function highlight(str: string, lang: string) {
   return `<code class="hljs">${str}</code>`
 }
 
-@Component({
+const App = defineComponent({
   render: indexTemplateHtml,
-  staticRenderFns: indexTemplateHtmlStatic
-})
-export class App extends Vue {
-  data = treeDatas
-  selectedNodeText = ''
-  file = ''
-  lineNumbers: LineNumber[] = []
-
-  private contentScroll!: EaseInOut
-  private lastSelectedNode: TreeData<Value> | null = null
-  private codeElement!: HTMLElement
-
+  data: () => {
+    return {
+      data: treeDatas,
+      selectedNodeText: '',
+      file: '',
+      lineNumbers: [] as LineNumber[],
+      contentScroll: undefined as undefined | EaseInOut,
+      lastSelectedNode: null as TreeData<Value> | null,
+      codeElement: undefined as undefined | HTMLElement,
+    }
+  },
   mounted() {
     this.codeElement = this.$refs.code as HTMLElement
     this.contentScroll = new EaseInOut(currentValue => {
       this.codeElement!.scrollTop = currentValue
     })
-  }
-
-  toggle(eventData: EventData<Value>) {
-    eventData.data.state.opened = !eventData.data.state.opened
-  }
-  change(eventData: EventData<Value>) {
-    if (this.lastSelectedNode) {
-      this.lastSelectedNode.state.selected = false
-    }
-    eventData.data.state.selected = true
-    this.lastSelectedNode = eventData.data
-
-    if (eventData.data.value!.type === JsonResultType.definition
-      || eventData.data.value!.type === JsonResultType.file) {
-      eventData.data.state.opened = true
-    }
-
-    const currentFile = eventData.data.value!.file
-    const fullText = fullTexts[currentFile]
-
-    Vue.nextTick(() => {
-      if (eventData.data.value!.type === JsonResultType.file) {
-        this.contentScroll.start(this.codeElement.scrollTop, 0)
-      } else {
-        this.contentScroll.start(this.codeElement.scrollTop, eventData.data.value!.line * 18 - 11)
+  },
+  methods: {
+    toggle(eventData: EventData<Value>) {
+      eventData.data.state.opened = !eventData.data.state.opened
+    },
+    change(eventData: EventData<Value>) {
+      if (this.lastSelectedNode) {
+        this.lastSelectedNode.state.selected = false
       }
-    })
-
-    if (this.file !== currentFile) {
-      this.file = currentFile
-
-      let lang = ''
-      if (this.file.endsWith('.js')) {
-        lang = 'js'
-      } else if (this.file.endsWith('.ts')) {
-        lang = 'ts'
+      eventData.data.state.selected = true
+      this.lastSelectedNode = eventData.data
+  
+      if (eventData.data.value!.type === JsonResultType.definition
+        || eventData.data.value!.type === JsonResultType.file) {
+        eventData.data.state.opened = true
       }
-      this.selectedNodeText = highlight(fullText, lang)
-    }
-
-    const lineNumbers: LineNumber[] = []
-    const totalLineNumber = fullText.split('\n').length
-    for (let i = 1; i < totalLineNumber; i++) {
-      if (i === eventData.data.value!.line) {
-        lineNumbers.push({ lineNumber: i, className: `line-number-${eventData.data.value!.type}` })
-      } else {
-        const child = eventData.data.children.find(c => c.value!.line === i)
-        if (child) {
-          lineNumbers.push({ lineNumber: i, className: `line-number-${child.value!.type}` })
+  
+      const currentFile = eventData.data.value!.file
+      const fullText = fullTexts[currentFile]
+  
+      nextTick(() => {
+        if (!this.contentScroll || !this.codeElement) {
+          return
+        }
+        if (eventData.data.value!.type === JsonResultType.file) {
+          this.contentScroll.start(this.codeElement.scrollTop, 0)
         } else {
-          lineNumbers.push({ lineNumber: i })
+          this.contentScroll.start(this.codeElement.scrollTop, eventData.data.value!.line * 18 - 11)
+        }
+      })
+  
+      if (this.file !== currentFile) {
+        this.file = currentFile
+  
+        let lang = ''
+        if (this.file.endsWith('.js')) {
+          lang = 'js'
+        } else if (this.file.endsWith('.ts')) {
+          lang = 'ts'
+        }
+        this.selectedNodeText = highlight(fullText, lang)
+      }
+  
+      const lineNumbers: LineNumber[] = []
+      const totalLineNumber = fullText.split('\n').length
+      for (let i = 1; i < totalLineNumber; i++) {
+        if (i === eventData.data.value!.line) {
+          lineNumbers.push({ lineNumber: i, className: `line-number-${eventData.data.value!.type}` })
+        } else {
+          const child = eventData.data.children.find(c => c.value!.line === i)
+          if (child) {
+            lineNumbers.push({ lineNumber: i, className: `line-number-${child.value!.type}` })
+          } else {
+            lineNumbers.push({ lineNumber: i })
+          }
         }
       }
+      this.lineNumbers = lineNumbers
+    },
+    scroll() {
+      (this.$refs.lineNumber as HTMLElement).scrollTop = this.codeElement!.scrollTop
     }
-    this.lineNumbers = lineNumbers
   }
-  scroll(e: UIEvent) {
-    (this.$refs.lineNumber as HTMLElement).scrollTop = this.codeElement!.scrollTop
-  }
-}
+})
 
 interface Value {
   type: JsonResultType;
@@ -197,4 +199,8 @@ interface LineNumber {
   className?: string;
 }
 
-new App({ el: '#container' })
+const app = createApp(App)
+app.component('tree', Tree)
+app.component('node', Node)
+app.component('custom-node', CustomNode)
+app.mount('#container')

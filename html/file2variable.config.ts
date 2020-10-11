@@ -1,24 +1,18 @@
-export default {
+import { Configuration } from 'file2variable-cli'
+
+const config: Configuration = {
   base: 'html',
   files: [
     'html/*.template.html'
   ],
   handler: (file: string) => {
-    if (file.endsWith('index.template.html')) {
+    if (file.endsWith('.template.html')) {
       return {
-        type: 'vue',
-        name: 'App',
-        path: './index'
-      }
-    }
-    if (file.endsWith('node.template.html')) {
-      return {
-        type: 'vue',
-        name: 'CustomNode',
-        path: './index'
+        type: 'vue3',
       }
     }
     return { type: 'text' }
   },
   out: 'html/variables.ts'
 }
+export default config
