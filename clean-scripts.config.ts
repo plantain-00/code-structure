@@ -1,5 +1,3 @@
-import { checkGitStatus } from 'clean-scripts'
-
 const tsFiles = `"src/**/*.ts" "html/**/*.ts"`
 
 export default {
@@ -25,8 +23,7 @@ export default {
     typeCoverageHtml: 'type-coverage -p html --strict --ignore-files html/variables.ts'
   },
   test: [
-    'clean-release --config clean-run.config.ts',
-    () => checkGitStatus()
+    'clean-release --config clean-run.config.ts'
   ],
   fix: `eslint --ext .js,.ts ${tsFiles} --fix`
 }
