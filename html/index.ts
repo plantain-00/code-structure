@@ -1,6 +1,6 @@
 import { createApp, defineComponent, nextTick, PropType } from 'vue'
 import { EventData, TreeData, DropPosition, Tree, Node } from 'tree-vue-component'
-import * as hljs from 'highlight.js'
+import hljs from 'highlight.js'
 import { EaseInOut } from 'ease-in-out'
 import { JsonDataResult, JsonResult, JsonResultType } from '../src/types'
 
