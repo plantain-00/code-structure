@@ -26,10 +26,10 @@
   "devDependencies": {
     "@types/glob": "7.1.4",
     "@types/minimist": "1.2.2",
-    "@types/node": "16.7.4",
+    "@types/node": "16.7.10",
     "@types/webpack": "5.28.0",
-    "@typescript-eslint/eslint-plugin": "4.29.3",
-    "@typescript-eslint/parser": "4.29.3",
+    "@typescript-eslint/eslint-plugin": "4.30.0",
+    "@typescript-eslint/parser": "4.30.0",
     "clean-css-cli": "5.3.3",
     "clean-release": "2.15.2",
     "clean-scripts": "1.20.1",
@@ -47,10 +47,10 @@
     "tree-vue-component": "6.0.1",
     "ts-loader": "9.2.5",
     "ts-node": "10.2.1",
-    "tsconfig-plantain": "0.0.1",
-    "type-coverage": "2.18.0",
-    "vue": "3.2.6",
-    "webpack": "5.51.1",
+    "tsconfig-plantain": "0.0.2",
+    "type-coverage": "2.18.2",
+    "vue": "3.2.8",
+    "webpack": "5.52.0",
     "webpack-cli": "4.8.0"
   },
   "dependencies": {
